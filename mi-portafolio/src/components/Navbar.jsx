@@ -1,11 +1,11 @@
 import { Box, List, ListItem } from "@mui/material";
 
-const Navbar = () => {
+export const Navbar = () => {
     return (
     
     <Box>
         <Box>
-
+        Portafolio - Jefferson Lizarazu
         </Box>
       <List>
         <ListItem>Inicio</ListItem>
