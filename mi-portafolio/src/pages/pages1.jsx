@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { Navbar } from "../components/navbar";
 import { MainCard } from "../components/MainCard";
+import { ContactForm } from "../components/Form";
 
 export const FrontPage = () => {
     return (
@@ -18,6 +19,10 @@ export const FrontPage = () => {
                 <Typography>
                     Proyectos
                 </Typography>
+            </Box>
+
+            <Box>
+                <ContactForm/>
             </Box>
 
 
