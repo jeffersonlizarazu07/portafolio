@@ -1,34 +1,35 @@
 import { Box, Typography } from "@mui/material";
-import { Navbar } from "../components/navbar";
-import { MainCard } from "../components/MainCard";
-import { ContactForm } from "../components/Form";
+import { Header, MainCard, ContactForm, Footer } from "../components";
 
 export const FrontPage = () => {
-    return (
-        <Box>
-            <Navbar />
-            <Box>
-                <Typography>Sobre mi</Typography>
-                <Typography>
-                    Hola. Mi nombre es Jefferson Lizarazu. Soy desarrollador full stack y he decidido crear un lugar donde pueda compartir con ustedes mis proyectos realizados y aquellos proyectos que me encuentro realizando actualmente.
-                </Typography>
-            </Box>
+  return (
+    <Box>
+      <Box>
+        <Header />
+      </Box>
 
-            <Box>
-                <MainCard/>
-                <Typography>
-                    Proyectos
-                </Typography>
-            </Box>
+      <Box>
+        <Typography>Sobre mi</Typography>
+        <Typography>
+          Hola. Mi nombre es Jefferson Lizarazu. Soy desarrollador full stack y
+          he decidido crear un lugar donde pueda compartir con ustedes mis
+          proyectos realizados y aquellos proyectos que me encuentro realizando
+          actualmente.
+        </Typography>
+      </Box>
 
-            <Box>
-                <ContactForm/>
-            </Box>
+      <Box>
+        <MainCard />
+        <Typography>Proyectos</Typography>
+      </Box>
 
+      <Box>
+        <ContactForm />
+      </Box>
 
-        </Box>
-        
-
-        
-    )
-}
+      <Box>
+        <Footer />
+      </Box>
+    </Box>
+  );
+};

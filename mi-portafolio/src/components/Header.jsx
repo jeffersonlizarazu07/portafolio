@@ -1,6 +1,6 @@
 import { Box, List, ListItem } from "@mui/material";
 
-export const Navbar = () => {
+export const Header = () => {
     return (
     
     <Box>
