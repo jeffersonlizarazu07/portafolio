@@ -1,0 +1,1 @@
+export {Pages1} from './pages1.jsx'
