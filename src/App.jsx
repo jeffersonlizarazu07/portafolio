@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Layout } from "./features/layout/Layout";
+import { Layout } from "./components/layout/Layout";
 
 // Lazy load de páginas - se cargan bajo demanda
 // Nota: pages usan named exports, por eso el .then()

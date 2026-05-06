@@ -9,8 +9,8 @@ import {
   Skeleton,
   CardActionArea,
 } from "@mui/material";
-import { getLanguageLogo } from "@/utils/languageLogos";
-import type { GitHubRepo } from "@/types/GitHub";
+import { getLanguageLogo } from "../../utils/languageLogos";
+import type { GitHubRepo } from "../../types/GitHub";
 
 // Recibe los proyectos DESDE Props (no del hook)
 type ProjectsListProps = {
@@ -121,7 +121,7 @@ export const ProjectsList = ({
                     variant="h6"
                     fontWeight={700}
                     mb={1}
-                    color="white"
+                    color="#ffffff"
                   >
                     {project.title}
                   </Typography>

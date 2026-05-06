@@ -18,7 +18,7 @@ export const NeonField: FC<NeonFieldProps> = ({
   rows = 1,
   type = "text",
   color,
-  inputColor = "white",
+  inputColor = "#ffffff",
 }) => {
   return (
     <TextField
@@ -43,6 +43,12 @@ export const NeonField: FC<NeonFieldProps> = ({
           "&.Mui-focused fieldset": {
             borderColor: "primary.main",
             boxShadow: "0 0 10px rgba(43,108,238,0.4)",
+          },
+          "& input:-webkit-autofill": {
+      WebkitBoxShadow: "0 0 0 1000px #0b1a2b inset",
+      WebkitTextFillColor: inputColor,
+      borderRadius: "inherit",
+      transition: "background-color 9999s ease-in-out 0s",
           },
         },
       }}

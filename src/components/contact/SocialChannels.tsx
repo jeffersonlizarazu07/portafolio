@@ -36,7 +36,7 @@ export const SocialChannels: FC = () => {
                 p: 2,
                 border: "1px solid",
                 borderRadius: 2,
-                borderColor: "grey.500",
+                borderColor: "#94a3b8",
                 transition: "0.3s",
                 bgcolor: "#0B1623",
                 cursor: "pointer",
@@ -67,10 +67,10 @@ export const SocialChannels: FC = () => {
                     }}
                   >
                     <Icon
-                      sx={{ color: "grey.500", fontSize: "2rem", boxShadow: 5 }}
+                      sx={{ color: "#94a3b8", fontSize: "2rem", boxShadow: 5 }}
                     />
                   </Avatar>
-                  <Typography fontWeight={500} color="white">
+                  <Typography fontWeight={500} color="#ffffff">
                     {name}
                   </Typography>
                 </Box>

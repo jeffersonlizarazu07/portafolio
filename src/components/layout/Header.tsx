@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
-import { CVLink } from "@/constants/curriculumVitaeLink";
+import { CVLink } from "../../constants/curriculumVitaeLink";
 import { NavLinks } from "./common/NavLinks";
 
 export const Header = () => {
@@ -53,7 +53,7 @@ export const Header = () => {
             <Link to="/">
               <Typography
                 variant="h6"
-                sx={{ display: { xs: "none", sm: "block", color: "white" } }}
+                sx={{ display: { xs: "none", sm: "block", color: "#ffffff" } }}
               >
                 PORTAFOLIO
               </Typography>

@@ -9,8 +9,8 @@ import {
 } from "@mui/material";
 import { Link as Router } from "react-router-dom";
 import DownloadIcon from "@mui/icons-material/Download";
-import { CVLink } from "@/constants/curriculumVitaeLink";
-import photo from "@/assets/photo.jpg";
+import { CVLink } from "../../constants/curriculumVitaeLink";
+import photo from "../../assets/photo.jpg";
 import { navLinksArray } from "@/constants/navLinksArray";
 
 export const AboutSection = () => {
@@ -78,7 +78,15 @@ export const AboutSection = () => {
             </Box>
           </Typography>
 
-          <Typography color="white" fontSize={18}>
+          <Typography color="#ffffff" fontSize={18}>
+            Desarrollador de software enfocado en crear experiencias web
+            modernas, rápidas y escalables. Trabajo principalmente con React,
+            TypeScript, Node.js y otras tecnologías del ecosistema web,
+            desarrollando interfaces limpias y soluciones full stack orientadas
+            a la experiencia del usuario.
+          </Typography>
+
+          <Typography color="#ffffff" fontSize={18}>
             Me apasiona construir productos intuitivos y escalables, combinando
             diseño, lógica de negocio y buenas prácticas de desarrollo para
             crear soluciones funcionales, mantenibles y centradas en el usuario.

@@ -10,8 +10,8 @@ import {
 import { Link as Router } from "react-router-dom";
 import CircleIcon from "@mui/icons-material/Circle";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { CodeImage } from "@/features/home/CodeImage";
-import { SocialLinks } from "@/features/layout/common/SocialLinks";
+import { CodeImage } from "../home/CodeImage";
+import { SocialLinks } from "../layout/common/SocialLinks";
 import { navLinksArray } from "@/constants/navLinksArray";
 
 export const Hero = () => {
@@ -97,7 +97,7 @@ export const Hero = () => {
                   <Button
                     variant="outlined"
                     size="large"
-                    sx={{ color: "white" }}
+                    sx={{ color: "#ffffff" }}
                   >
                     Contactarme
                   </Button>

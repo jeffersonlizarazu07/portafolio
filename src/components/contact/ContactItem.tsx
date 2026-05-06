@@ -37,7 +37,7 @@ export const ContactItem = ({
       </Box>
 
       <Box>
-        <Typography variant="caption" color="text.secondary" fontSize="15px">
+        <Typography variant="caption" color="#64748b" fontSize="15px">
           {title}
         </Typography>
         <Typography fontWeight={600}>{value}</Typography>

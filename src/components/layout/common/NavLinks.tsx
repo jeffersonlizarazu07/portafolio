@@ -1,6 +1,6 @@
 import { Stack, StackProps, Link } from "@mui/material";
 import { Link as Router, useLocation } from "react-router-dom";
-import { navLinksArray } from "@/constants/navLinksArray";
+import { navLinksArray } from "../../../constants/navLinksArray";
 
 type NavLinksProps = {
   direction?: StackProps["direction"];
