@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 import { ErrorBoundary } from './components/shared/ErrorBoundary'
+import { PageLoader } from './components/shared/PageLoader'
 
 // Lazy load de páginas - se cargan bajo demanda
 // Nota: pages usan named exports, por eso el .then()
@@ -15,24 +16,6 @@ const ProjectsPage = lazy(() =>
 )
 const NotFoundPage = lazy(() =>
   import('./pages/NotFoundPage').then(m => ({ default: m.NotFoundPage }))
-)
-
-/**
- * Componente de loading para mostrar mientras carga la página
- */
-const PageLoader = () => (
-  <div
-    style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      background: '#0B1623',
-      color: 'white',
-    }}
-  >
-    Loading...
-  </div>
 )
 
 function App() {
