@@ -6,6 +6,7 @@ import { Box, Grid, Stack, Snackbar, Alert, Typography } from "@mui/material";
 import { NeonField } from "./NeonField";
 import { GlassButton } from "../../ui/GlassButton";
 import { ContactHeader } from "./ContactHeader";
+import { emailConfig, spamProtection } from "@/constants/emailConfig";
 import emailjs from "@emailjs/browser";
 
 // Schema de validación con Zod
@@ -49,14 +50,6 @@ const FORM_FIELDS: Array<{
   { name: "title", label: "Asunto", color: "#94a3b8" },
   { name: "message", label: "Cuéntame sobre tu proyecto...", color: "#94a3b8", multiline: true, rows: 5 },
 ];
-
-// Constantes de protección anti-spam
-const MIN_SUBMIT_TIME = 5;
-
-// Variables de entorno
-const PUBLIC_KEY_EMAILJS = import.meta.env.VITE_API_KEY_EMAILJS as string;
-const OUTLOOK_SERVICE_ID = import.meta.env.VITE_OUTLOOK_SERVICE_ID as string;
-const TEMPLATE_ID = import.meta.env.VITE_TEMPLATE_ID as string;
 
 // Componente: Honeypot field - tipo genérico para cualquier función de registro
 const HoneypotField = ({ register }: { register: UseFormRegister<ContactFormData> }) => {
@@ -108,7 +101,7 @@ const useSpamProtection = () => {
     }
 
     // Tiempo mínimo
-    if ((Date.now() - submitTime) / 1000 < MIN_SUBMIT_TIME) {
+    if ((Date.now() - submitTime) / 1000 < spamProtection.minSubmitTime) {
       setSpamError("Por favor, espera un momento antes de enviar.");
       return false;
     }
@@ -148,7 +141,7 @@ export const ContactForm = () => {
     if (!validateSubmission(data)) return;
 
     try {
-      await emailjs.send(OUTLOOK_SERVICE_ID, TEMPLATE_ID, data, PUBLIC_KEY_EMAILJS);
+      await emailjs.send(emailConfig.serviceId, emailConfig.templateId, data, emailConfig.publicKey);
       console.log("Email enviado a Outlook - SUCCESS!");
       reset();
       setOpenSnackbar(true);
