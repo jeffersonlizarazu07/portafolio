@@ -1,30 +1,29 @@
 /**
  * MUI Theme Configuration
- * 
+ *
  * Sistema de diseño centralizado para el portfolio.
  * Permite cambiar colores y estilos desde un solo lugar.
- * 
- * ¿Por qué no usar directamente colores hex en componentes?
- * - Si necesitas cambiar el color primario, cambias aquí y se actualiza en todo.
- * - Para implementar dark/light mode, solo cambias el theme activo.
- * - El IDE autocomplete ayuda a elegir tokens correctos.
+ *
+ * No usar directamente colores hex en componentes.
+ * Si necesitas cambiar el color primario, cambias aquí y se actualiza en todo.
+ * Para implementar dark/light mode, solo cambias el theme activo.
  */
 import { createTheme } from '@mui/material/styles'
 
 /**
- * Paleta de colores del tema
- * 
- * ¿Por qué estos colores específicos?
+ * Paleta de colores del tema.
+ *
+ * Colores específicos para mantener coherencia visual:
  * - background.default (#0B1623): Azul muy oscuro, no negro puro.
  *   Un negro puro puede sentirse "agresivo", este tono es más profesional.
  * - primary (#2b6cee): Azul eléctrico que contrasta bien con el fondo oscuro.
  *   Es moderno pero no agresivo.
  * - text.secondary (#64748b): Gris que no compite con el texto principal.
- * 
- * ¿Por qué separar background en default, secondary, paper, tech, contact?
- * - Cada sección tiene un propósito visual diferente.
- * - Projects necesita menor contraste que Home.
- * - Tech y Contact tienen elementos más densos que necesitan fondos sutilmente distintos.
+ *
+ * Separar background en default, secondary, paper, tech, contact:
+ * Cada sección tiene un propósito visual diferente.
+ * Projects necesita menor contraste que Home.
+ * Tech y Contact tienen elementos más densos que necesitan fondos sutilmente distintos.
  */
 export const palette = {
   primary: {
@@ -56,19 +55,16 @@ export const palette = {
 } as const
 
 /**
- * Tema oscuro (default del portfolio)
- * 
- * ¿Por qué borderRadius: 12 para buttons?
- * - Redondeado pronuncié que se siente moderno pero no infantil.
- * - 12px es un buen balance entre moderno y profesional.
- * 
- * ¿Por qué textTransform: 'none'?
- * - Evitamos que MUI uppercase los botones automáticamente.
- * - Queremos controlar el texto visible nosotros.
- * 
- * ¿Por qué maxWidth: 'xl' en Container default?
- * - Evita que el contenido se estire demasiado en pantallas grandes.
- * - xl = 1920px, suficiente para la mayoría de monitores.
+ * Tema oscuro (default del portfolio).
+ *
+ * borderRadius: 12 para buttons - redondeado pronunciado que se siente moderno
+ * pero no infantil. Un buen balance entre moderno y profesional.
+ *
+ * textTransform: 'none' - evitamos que MUI uppercase los botones automáticamente.
+ * Queremos controlar el texto visible nosotros.
+ *
+ * maxWidth: 'xl' en Container default - evita que el contenido se estire demasiado
+ * en pantallas grandes. xl = 1920px, suficiente para la mayoría de monitores.
  */
 export const darkTheme = createTheme({
   palette: {
@@ -132,11 +128,11 @@ export const darkTheme = createTheme({
 })
 
 /**
- * Tema claro (para futuro)
- * 
- * ¿Por qué invertir los colores de background pero mantener text.secondary?
- * - En modo claro, el texto secundario debe ser menos visible que en modo oscuro.
- * - Los grises funcionan bien en ambos temas sin cambios.
+ * Tema claro (para futuro).
+ *
+ * Invierte los colores de background pero mantiene text.secondary.
+ * En modo claro, el texto secundario debe ser menos visible que en modo oscuro.
+ * Los grises funcionan bien en ambos temas sin cambios.
  */
 export const lightTheme = createTheme({
   palette: {
@@ -175,10 +171,9 @@ export const lightTheme = createTheme({
 })
 
 /**
- * Exportar tema activo por defecto
- * 
- * ¿Por qué exportar theme si ya está darkTheme?
- * - Para implementar el toggle futuro sin cambiar imports en toda la app.
- * - Solo cambias aquí el tema activo.
+ * Exportar tema activo por defecto.
+ *
+ * Para implementar el toggle futuro sin cambiar imports en toda la app.
+ * Solo cambias aquí el tema activo.
  */
 export const theme = darkTheme

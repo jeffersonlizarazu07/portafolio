@@ -1,12 +1,12 @@
 /**
  * Formulario de contacto con validación robusta y protección anti-spam.
- * 
- * ¿Por qué usar React Hook Form + Zod?
+ *
+ * Usa React Hook Form + Zod porque:
  * - RHF maneja el estado del formulario y reduce re-renders.
  * - Zod proporciona validación declarativa y tipado automático.
  * - Juntos son el estándar actual para formularios en React.
- * 
- * ¿Por qué validación en el cliente si el backend podría validar?
+ *
+ * Validación en el cliente aunque el backend podría validar:
  * - Feedback inmediato para el usuario (sin esperar round-trip).
  * - Reduce carga en el servidor.
  * - UX superior en formularios complejos.
@@ -24,15 +24,13 @@ import emailjs from '@emailjs/browser'
 
 /**
  * Schema de validación con Zod.
- * 
- * ¿Por qué múltiples .min() en cadena?
+ *
+ * Múltiples .min() en cadena permiten mensajes de error específicos:
  * - .min(1) detecta si está vacío y muestra "requerido".
  * - .min(2) luego valida la longitud real.
- * - Esto permite mensajes de error específicos para cada caso.
- * 
- * ¿Por qué max() en todos los campos?
- * - Previene payloads enormes que podrían romper EmailJS.
- * - Límite de 500 caracteres en mensaje es suficiente para un email.
+ *
+ * max() en todos los campos previene payloads enormes que podrían romper EmailJS.
+ * Límite de 500 caracteres en mensaje es suficiente para un email.
  */
 const contactSchema = z.object({
   from_name: z
@@ -62,11 +60,9 @@ type ContactFormData = z.infer<typeof contactSchema>
 
 /**
  * Configuración de campos del formulario.
- * 
- * ¿Por qué separar la config de los componentes?
- * - Fácil de agregar/modificar campos sin tocar JSX.
- * - Permite iterar sobre los campos en vez de escribir código repetitivo.
- * - Los estilos se mantienen consistentes (mismo color para todos los labels).
+ * Separar la config de los componentes facilita agregar/modificar campos sin tocar JSX.
+ * Permite iterar sobre los campos en vez de escribir código repetitivo.
+ * Los estilos se mantienen consistentes (mismo color para todos los labels).
  */
 const FORM_FIELDS: Array<{
   name: 'from_name' | 'from_email' | 'title' | 'message'
@@ -90,15 +86,14 @@ const FORM_FIELDS: Array<{
 
 /**
  * Campo honeypot para detectar bots.
- * 
- * ¿Cómo funciona?
+ *
+ * Cómo funciona:
  * - Los bots scrapers ven todos los inputs y los llenan automáticamente.
  * - Los humanos no ven este campo (hidden, fuera de pantalla).
  * - Si hp_field tiene contenido, es un bot.
- * 
- * ¿Por qué estilizado con position: absolute y left: -9999px?
- * - Oculta el campo visualmente pero sigue siendo parte del DOM.
- * - Los bots no distinguen CSS de contenido visible.
+ *
+ * Estilizado con position: absolute y left: -9999px para ocultar visualmente
+ * pero seguir siendo parte del DOM. Los bots no distinguen CSS de contenido visible.
  */
 const HoneypotField = ({ register }: { register: UseFormRegister<ContactFormData> }) => {
   const hpRegister = register('hp_field')
@@ -123,8 +118,7 @@ const HoneypotField = ({ register }: { register: UseFormRegister<ContactFormData
 
 /**
  * Notificación de éxito al enviar mensaje.
- * 
- * ¿Por qué Snackbar en lugar de Alert/Toast inline?
+ * Snackbar en lugar de Alert/Toast inline porque:
  * - No interrumpe el flujo del formulario.
  * - Desaparece automáticamente después de 6 segundos.
  * - No requiere clicks adicionales para cerrar.
@@ -144,19 +138,18 @@ const SuccessNotification = ({ open, onClose }: { open: boolean; onClose: () => 
 
 /**
  * Hook para protección anti-spam.
- * 
- * ¿Por qué proteger si ya hay honeypot?
- * - Honeypot atrapa bots scrapers, pero no bots que envían forms directamente.
- * - Hay bots que usan HTTP requests directos al endpoint.
- * 
- * ¿Por qué validar tiempo mínimo (5 segundos)?
- * - Un humano tarda al menos unos segundos en completar el form.
- * - Bots pueden enviar instantly.
- * 
- * ¿Por qué validar interacción?
- * - Algunos bots ejecutan JS y pueden enviar el form.
- * - Pero si no interactuaron con los campos, probablemente son automatizados.
- * - onFocus (hacer click en un campo) = interacción confirmada.
+ *
+ * Protege contra bots que usan HTTP requests directos al endpoint.
+ * Honeypot atrapa bots scrapers, pero no bots que envían forms directamente.
+ *
+ * Validación de tiempo mínimo (5 segundos):
+ * Un humano tarda al menos unos segundos en completar el form,
+ * mientras que bots pueden enviar instantáneamente.
+ *
+ * Validación de interacción:
+ * Algunos bots ejecutan JS y pueden enviar el form, pero si no interactuaron
+ * con los campos, probablemente son automatizados.
+ * onFocus (hacer click en un campo) = interacción confirmada.
  */
 const useSpamProtection = () => {
   // Tiempo cuando se montó el componente
@@ -197,11 +190,10 @@ const useSpamProtection = () => {
 
 /**
  * Componente principal del formulario de contacto.
- * 
- * ¿Por qué mode: 'onTouched'?
- * - Valida campos solo después de que el usuario los toca.
- * - Evita mensajes de error al cargar la página.
- * - Mejor UX que 'onChange' (valida mientras escribís).
+ *
+ * mode: 'onTouched' - valida campos solo después de que el usuario los toca.
+ * Evita mensajes de error al cargar la página.
+ * Mejor UX que 'onChange' (valida mientras escribís).
  */
 export const ContactForm = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false)

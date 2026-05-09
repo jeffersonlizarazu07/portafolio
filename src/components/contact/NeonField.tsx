@@ -1,12 +1,12 @@
 /**
  * Campo de formulario con estilo neon/glow.
- * 
- * ¿Por qué un componente custom en lugar de TextField directo?
+ *
+ * Componente custom en lugar de TextField directo porque:
  * - Los campos tienen un estilo distintivo que no viene con MUI por defecto.
  * - Necesitamos integración con React Hook Form para validación.
  * - El efecto glow en focus es parte de la identidad visual del contacto.
- * 
- * ¿Por qué los sx styles son tan complejos?
+ *
+ * Los sx styles son complejos porque:
  * - MUI TextField tiene múltiples partes (label, input, helperText, fieldset).
  * - Cada estado (normal, hover, focus, error) necesita estilos específicos.
  * - El efecto glow usa boxShadow de CSS, no hay token MUI para esto.
@@ -43,7 +43,6 @@ export const NeonField: FC<NeonFieldProps> = ({
   helperText,
   onFocus,
 }) => {
-  // ¿Por qué este fallback?
   // Si registerProps no viene, creamos un mock para que el componente funcione
   // sin React Hook Form (útil para testing o uso fuera del formulario)
   const registerFn = registerProps || { name, onChange: () => {}, onBlur: () => {}, ref: null }

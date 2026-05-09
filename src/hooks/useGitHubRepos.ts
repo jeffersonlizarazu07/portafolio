@@ -1,18 +1,16 @@
 /**
  * Hook para obtener y filtrar repositorios de GitHub del usuario.
- * 
- * ¿Por qué existe?
- * - Los proyectos del portafolio se muestran directamente desde GitHub,
- *   evitando tener que mantener manualmente una lista de proyectos.
- * - Si el usuario actualiza su GitHub, el portafolio se actualiza automáticamente.
- * 
- * ¿Por qué usa GitHub API?
- * - API pública sin autenticación para repositorios públicos.
- * - Rate limit manejable para portfolios (máximo 100 repos).
- * 
- * ¿Por qué busca preview.png dinámicamente?
- * - Cada repo puede tener su propia captura de pantalla en cualquier ubicación.
- * - Permite que cualquier repo tenga un preview sin configuración adicional.
+ *
+ * Los proyectos del portafolio se muestran directamente desde GitHub,
+ * evitando mantener manualmente una lista de proyectos.
+ * Si el usuario actualiza su GitHub, el portafolio se actualiza automáticamente.
+ *
+ * Usa la API pública de GitHub (sin autenticación) para repositorios públicos.
+ * El rate limit es manejable para portfolios con máximo 100 repos.
+ *
+ * Busca preview.png dinámicamente en cada repo porque los proyectos pueden
+ * tener su captura en cualquier ubicación (src/assets/preview.png, docs/preview.png, etc.),
+ * permitiendo que cualquier repo tenga un preview sin convenciones obligatorias.
  */
 import { useState, useEffect } from 'react'
 import type { GitHubRepo, UseGitHubReposReturn } from '@/types/GitHub'
@@ -50,16 +48,14 @@ interface GitHubTree {
 
 // ── Constantes ───────────────────────────────────────────────────────
 
-// Por qué URLs hardcoded: Son APIs públicas de GitHub, no cambian
+// URLs hardcoded porque son APIs públicas de GitHub que no cambian
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com'
 const GITHUB_API_BASE = 'https://api.github.com'
 
 /**
  * Busca la ruta de preview.png en el árbol del repositorio.
- * 
- * ¿Por qué buscar en lugar de asumir una ruta fija?
- * - Los repos pueden tener diferentes estructuras (src/assets/preview.png, docs/preview.png, etc.)
- * - Permite que cada proyecto tenga su propia captura sin convenciones obligatorias.
+ * El árbol recursivo incluye TODOS los archivos, no solo los del root.
+ * Busca cualquier archivo que termine en preview.png.
  */
 const findPreviewImagePath = async (
   username: string,
@@ -68,7 +64,6 @@ const findPreviewImagePath = async (
   options: RequestInit
 ): Promise<string | null> => {
   try {
-    // El árbol recursivo incluye TODOS los archivos, no solo los del root
     const treeUrl = `${GITHUB_API_BASE}/repos/${username}/${repoName}/git/trees/${branch}?recursive=1`
     const treeResponse = await fetch(treeUrl, options)
 
@@ -89,9 +84,7 @@ const findPreviewImagePath = async (
 
 /**
  * Construye la URL para acceder a la imagen raw.
- * 
- * ¿Por qué no retornar la URL directamente?
- * - Si no hay imagen, retornamos null para que el componente muestre el fallback (logo del lenguaje).
+ * Si no hay imagen, retorna null para que el componente muestre el fallback.
  */
 const buildImageUrl = (
   username: string,
@@ -107,17 +100,14 @@ const buildImageUrl = (
 
 /**
  * Obtiene repositorios de GitHub con sus lenguajes e imágenes.
- * 
+ *
  * @param username - Usuario de GitHub whose repositorios obtener
  * @returns Estado y datos de repositorios para filtrar y mostrar
- * 
- * ¿Por qué retorna filteredRepos en lugar de filtrar en el componente?
- * - El filtrado es parte de la lógica de datos, no de presentación.
- * - Mantiene el componente dumb y reusable.
- * 
- * ¿Por qué tecnologías es un array?
- * - Necesitamos listar todos los lenguajes únicos para generar los filtros.
- * - Se calcula una vez y se memoiza en el estado.
+ *
+ * Retorna filteredRepos porque el filtrado es parte de la lógica de datos,
+ * no de presentación. Mantiene el componente dumb y reusable.
+ * Las tecnologías son un array porque necesitamos listar todos los lenguajes
+ * únicos para generar los filtros, y se calcula una vez memoizado en el estado.
  */
 export const useGitHubRepos = (username: string): UseGitHubReposReturn => {
   const [repos, setRepos] = useState<GitHubRepo[]>([])
