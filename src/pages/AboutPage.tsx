@@ -11,8 +11,8 @@ export const AboutPage = () => {
         px: 6,
         position: "relative",
         overflow: "hidden",
-        bgcolor: "#0B1623",
-        color: "white",
+        bgcolor: "background.default",
+        color: "text.primary",
         overflowX: "hidden",
       }}
     >

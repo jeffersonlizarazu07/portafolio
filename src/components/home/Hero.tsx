@@ -40,7 +40,7 @@ export const Hero = () => {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: 1,
-                  color: "#4a7cd2",
+                  color: "primary.light",
                   fontFamily: "sans-serif",
                 }}
               >
@@ -97,7 +97,7 @@ export const Hero = () => {
                   <Button
                     variant="outlined"
                     size="large"
-                    sx={{ color: "#ffffff" }}
+                    sx={{ color: "text.primary" }}
                   >
                     Contactarme
                   </Button>

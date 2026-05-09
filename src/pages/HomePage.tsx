@@ -7,8 +7,8 @@ export const HomePage = () => {
   return (
     <Box
       sx={{
-        bgcolor: "#0B1623",
-        color: "white",
+        bgcolor: "background.default",
+        color: "text.primary",
         overflowX: "hidden",
         pt: 6, px: 6, pb: 0
       }}

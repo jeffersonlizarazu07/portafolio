@@ -6,8 +6,8 @@ export const ContactPage = () => {
   return (
     <Box
       sx={{
-        bgcolor: "#0B1623",
-        color: "white",
+        bgcolor: "background.default",
+        color: "text.primary",
         overflowX: "hidden",
         minHeight: "100vh",
         display: "flex",

@@ -36,9 +36,9 @@ export const SocialChannels: FC = () => {
                 p: 2,
                 border: "1px solid",
                 borderRadius: 2,
-                borderColor: "#94a3b8",
+                borderColor: "text.label",
                 transition: "0.3s",
-                bgcolor: "#0B1623",
+                bgcolor: "background.default",
                 cursor: "pointer",
 
                 "&:hover": {
@@ -59,7 +59,7 @@ export const SocialChannels: FC = () => {
                   <Avatar
                     variant="rounded"
                     sx={{
-                      backgroundColor: "#1e293b",
+                      backgroundColor: "background.contact",
                       padding: "1px",
                       width: 45,
                       height: 45,
@@ -67,10 +67,10 @@ export const SocialChannels: FC = () => {
                     }}
                   >
                     <Icon
-                      sx={{ color: "#94a3b8", fontSize: "2rem", boxShadow: 5 }}
+                      sx={{ color: "text.label", fontSize: "2rem", boxShadow: 5 }}
                     />
                   </Avatar>
-                  <Typography fontWeight={500} color="#ffffff">
+                  <Typography fontWeight={500} color="text.primary">
                     {name}
                   </Typography>
                 </Box>

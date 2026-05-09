@@ -54,7 +54,7 @@ export const TechSection = () => {
             <Typography variant="h4" fontWeight={800}>
               Mi Ecosistema
             </Typography>
-            <Typography color="#ffffff" maxWidth={500}>
+            <Typography color="text.primary" maxWidth={500}>
               Me especializo en el desarrollo full stack con JavaScript y
               tecnologías modernas del ecosistema web, complementando mi
               experiencia con conocimientos en otras herramientas y lenguajes
@@ -69,7 +69,7 @@ export const TechSection = () => {
             <Grid size={{ xs: 6, md: 4, lg: 2 }} key={index}>
               <Card
                 sx={{
-                  backgroundColor: "#16223a",
+                  backgroundColor: "background.tech",
                   textAlign: "center",
                   transition: "0.3s",
                   border: "1px solid",
@@ -111,7 +111,7 @@ export const TechSection = () => {
                   >
                     {tech.icon}
                   </Box>
-                  <Typography fontWeight={700} color="#64748b">
+                  <Typography fontWeight={700} color="text.secondary">
                     {tech.name}
                   </Typography>
                 </CardContent>
@@ -128,7 +128,7 @@ export const TechSection = () => {
               sx={{
                 p: 4,
                 height: "100%",
-                backgroundColor: "#16223a",
+                backgroundColor: "background.tech",
                 border: "1px solid",
                 borderColor: "divider",
                 borderRadius: 2,
@@ -141,11 +141,11 @@ export const TechSection = () => {
                 <Typography variant="h2" fontWeight={800} color="primary.main">
                   1+
                 </Typography>
-                <Typography variant="h5" color="#ffffff">
+                <Typography variant="h5" color="text.primary">
                   años de experiencia
                 </Typography>
               </Stack>
-              <Typography variant="body1" color="#64748b" mt={2}>
+              <Typography variant="body1" color="text.secondary" mt={2}>
                 Desarrollando soluciones web modernas y escalables
               </Typography>
             </Box>
@@ -157,7 +157,7 @@ export const TechSection = () => {
               sx={{
                 p: 4,
                 height: "100%",
-                backgroundColor: "#16223a",
+                backgroundColor: "background.tech",
                 border: "1px solid",
                 borderColor: "divider",
                 borderRadius: 2,
@@ -166,7 +166,7 @@ export const TechSection = () => {
               <Stack spacing={3}>
                 <Typography
                   variant="caption"
-                  color="#64748b"
+                  color="text.secondary"
                   fontWeight={700}
                   letterSpacing={2}
                 >
@@ -233,7 +233,7 @@ export const TechSection = () => {
                           </Stack>
                           <Typography
                             variant="body2"
-                            color="#ffffff"
+                            color="text.primary"
                             fontWeight={500}
                           >
                             {cert.title}

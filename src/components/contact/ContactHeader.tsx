@@ -23,7 +23,7 @@ export const ContactHeader = () => {
         .
       </Typography>
 
-      <Typography color="#94a3b8" mt={2} maxWidth={500}>
+      <Typography color="text.label" mt={2} maxWidth={500}>
         ¿Tienes algún proyecto en mente o simplemente quieres saludar? Mi
         bandeja de entrada siempre está abierta.
       </Typography>

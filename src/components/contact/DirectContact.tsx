@@ -38,7 +38,7 @@ export const DirectContact: FC = () => {
 
       <Stack spacing={3}>
         <ContactItem
-          icon={<EmailIcon sx={{ color: "#2b6cee" }} />}
+          icon={<EmailIcon sx={{ color: "primary.main" }} />}
           title="Correos electrónicos"
           value={
             <span>
@@ -47,7 +47,7 @@ export const DirectContact: FC = () => {
                   <Link
                     href={email.href}
                     underline="none"
-                    sx={{ color: "#ffffff" }}
+                    sx={{ color: "text.primary" }}
                   >
                     {email.label}
                   </Link>
@@ -59,7 +59,7 @@ export const DirectContact: FC = () => {
         />
 
         <ContactItem
-          icon={<LocationOnIcon sx={{ color: "#2b6cee" }} />}
+          icon={<LocationOnIcon sx={{ color: "primary.main" }} />}
           title="Localización actual"
           value="Bogotá D.C, Colombia"
         />

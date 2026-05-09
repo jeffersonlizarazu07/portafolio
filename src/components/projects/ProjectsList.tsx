@@ -70,7 +70,7 @@ export const ProjectsList = ({
               position: "relative",
               overflow: "hidden",
               borderRadius: 3,
-              bgcolor: "#1A2233",
+              bgcolor: "background.paper",
               "&:hover .overlay": {
                 opacity: 1,
               },
@@ -117,12 +117,12 @@ export const ProjectsList = ({
                 }}
               >
                 <Box>
-                  <Typography
-                    variant="h6"
-                    fontWeight={700}
-                    mb={1}
-                    color="#ffffff"
-                  >
+                    <Typography
+                      variant="h6"
+                      fontWeight={700}
+                      mb={1}
+                      color="text.primary"
+                    >
                     {project.title}
                   </Typography>
 
@@ -138,7 +138,7 @@ export const ProjectsList = ({
                         size="small"
                         sx={{
                           bgcolor: "rgba(43,108,238,0.2)",
-                          color: "#2b6cee",
+                          color: "primary.main",
                           fontWeight: 600,
                         }}
                       />

@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography, Link } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import { SocialLinks } from "./common/SocialLinks";
 import { NavLinks } from "./common/NavLinks";
 
@@ -10,10 +10,10 @@ export const Footer = () => {
     <Box
       component="footer"
       sx={{
-        bgcolor: "#0B1623",
+        bgcolor: "background.default",
         borderTop: "1px solid rgba(255,255,255,0.1)",
         py: 4,
-        color: "white",
+        color: "text.primary",
       }}
     >
       <Container maxWidth="xl">

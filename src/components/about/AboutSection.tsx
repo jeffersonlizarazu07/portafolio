@@ -78,7 +78,7 @@ export const AboutSection = () => {
             </Box>
           </Typography>
 
-          <Typography color="#ffffff" fontSize={18}>
+          <Typography color="text.primary" fontSize={18}>
             Desarrollador de software enfocado en crear experiencias web
             modernas, rápidas y escalables. Trabajo principalmente con React,
             TypeScript, Node.js y otras tecnologías del ecosistema web,
@@ -86,7 +86,7 @@ export const AboutSection = () => {
             a la experiencia del usuario.
           </Typography>
 
-          <Typography color="#ffffff" fontSize={18}>
+          <Typography color="text.primary" fontSize={18}>
             Me apasiona construir productos intuitivos y escalables, combinando
             diseño, lógica de negocio y buenas prácticas de desarrollo para
             crear soluciones funcionales, mantenibles y centradas en el usuario.
