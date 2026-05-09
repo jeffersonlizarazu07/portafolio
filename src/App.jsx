@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
+import { ErrorBoundary } from './components/shared/ErrorBoundary'
 
 // Lazy load de páginas - se cargan bajo demanda
 // Nota: pages usan named exports, por eso el .then()
@@ -36,17 +37,19 @@ const PageLoader = () => (
 
 function App() {
   return (
-    <Suspense fallback={<PageLoader />}>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/about' element={<AboutPage />} />
-          <Route path='/projects' element={<ProjectsPage />} />
-          <Route path='/contact' element={<ContactPage />} />
-        </Route>
-        <Route path='*' element={<NotFoundPage />} />
-      </Routes>
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/about' element={<AboutPage />} />
+            <Route path='/projects' element={<ProjectsPage />} />
+            <Route path='/contact' element={<ContactPage />} />
+          </Route>
+          <Route path='*' element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
+    </ErrorBoundary>
   )
 }
 
