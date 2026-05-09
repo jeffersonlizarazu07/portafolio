@@ -1,10 +1,18 @@
-import { Button } from "@mui/material";
+import { Button, type ButtonProps } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
-export const GlassButton = () => {
+type GlassButtonProps = ButtonProps;
+
+export const GlassButton = ({
+  children = "Enviar mensaje",
+  type = "submit",
+  disabled,
+  ...props
+}: GlassButtonProps) => {
   return (
     <Button
-      type="submit"
+      type={type}
+      disabled={disabled}
       endIcon={<SendIcon />}
       sx={{
         px: 6,
@@ -20,9 +28,10 @@ export const GlassButton = () => {
           bgcolor: "primary.main",
           color: "white",
         },
+        ...props.sx,
       }}
     >
-      Enviar mensaje
+      {children}
     </Button>
   );
 };

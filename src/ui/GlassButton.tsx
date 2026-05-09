@@ -1,25 +1,18 @@
-/**
- * Button component - botón estilizado con efecto glass
- * Usado en: ContactForm, y cualquier página que necesite un botón estilizado
- */
-import { Button, ButtonProps } from "@mui/material";
+import { Button, type ButtonProps } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
-type GlassButtonProps = {
-  /** Texto del botón */
-  children?: React.ReactNode;
-  /** Variante de MUI Button */
-  variant?: ButtonProps["variant"];
-} & Omit<ButtonProps, "variant">;
+type GlassButtonProps = ButtonProps;
 
-export const GlassButton = ({ 
-  children = "Enviar mensaje", 
-  variant = "contained",
-  ...props 
+export const GlassButton = ({
+  children = "Enviar mensaje",
+  type = "submit",
+  disabled,
+  ...props
 }: GlassButtonProps) => {
   return (
     <Button
-      variant={variant}
+      type={type}
+      disabled={disabled}
       endIcon={<SendIcon />}
       sx={{
         px: 6,
@@ -37,7 +30,6 @@ export const GlassButton = ({
         },
         ...props.sx,
       }}
-      {...props}
     >
       {children}
     </Button>
