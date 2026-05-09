@@ -14,6 +14,7 @@ interface NeonFieldProps extends Omit<TextFieldProps, "color" | "name"> {
   registerProps?: UseFormRegisterReturn;
   error?: boolean;
   helperText?: string;
+  onFocus?: () => void;
 }
 
 export const NeonField: FC<NeonFieldProps> = ({
@@ -27,6 +28,7 @@ export const NeonField: FC<NeonFieldProps> = ({
   registerProps,
   error,
   helperText,
+  onFocus,
 }) => {
   // registerProps ya viene con el nombre incluido (resultado de register("name"))
   // No necesita llamarse de nuevo
@@ -44,6 +46,7 @@ export const NeonField: FC<NeonFieldProps> = ({
       type={type}
       onChange={registerFn.onChange}
       onBlur={registerFn.onBlur}
+      onFocus={onFocus}
       ref={registerFn.ref}
       sx={{
         "& .MuiInputLabel-root": { color: color },

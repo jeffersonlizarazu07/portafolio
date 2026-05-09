@@ -168,7 +168,7 @@ export const ContactForm = () => {
                 registerProps={register(field.name)}
                 error={!!errors[field.name]}
                 helperText={errors[field.name]?.message}
-                onClick={handleInteraction}
+                onFocus={handleInteraction}
               />
             </Grid>
           ))}
