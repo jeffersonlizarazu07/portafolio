@@ -1,7 +1,7 @@
 import { Grid, Box, Typography, Button, Stack, Chip, Link } from '@mui/material'
 import { Link as Router } from 'react-router-dom'
 import DownloadIcon from '@mui/icons-material/Download'
-import { CVLink } from '../../constants/curriculumVitaeLink'
+import { config } from '@/config'
 import photo from '../../assets/photo.jpg'
 import { navLinksArray } from '@/constants/navLinksArray'
 
@@ -88,7 +88,7 @@ export const AboutSection = () => {
               variant='contained'
               size='large'
               startIcon={<DownloadIcon />}
-              href={CVLink}
+              href={config.cv.url}
               target='_blank'
             >
               Descargar HV

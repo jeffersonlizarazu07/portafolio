@@ -19,7 +19,7 @@ import { Box, Grid, Stack, Snackbar, Alert, Typography } from '@mui/material'
 import { NeonField } from './NeonField'
 import { GlassButton } from '../../ui/GlassButton'
 import { ContactHeader } from './ContactHeader'
-import { emailConfig, spamProtection } from '@/constants/emailConfig'
+import { config } from '@/config'
 import emailjs from '@emailjs/browser'
 
 /**
@@ -172,7 +172,7 @@ const useSpamProtection = () => {
     }
 
     // Tiempo mínimo: menos de spamProtection.minSubmitTime segundos = sospechoso
-    if ((Date.now() - submitTime) / 1000 < spamProtection.minSubmitTime) {
+    if ((Date.now() - submitTime) / 1000 < config.spamProtection.minSubmitTime) {
       setSpamError('Por favor, espera un momento antes de enviar.')
       return false
     }
@@ -222,7 +222,7 @@ export const ContactForm = () => {
     if (!validateSubmission(data)) return
 
     try {
-      await emailjs.send(emailConfig.serviceId, emailConfig.templateId, data, emailConfig.publicKey)
+      await emailjs.send(config.email.serviceId, config.email.templateId, data, config.email.publicKey)
       console.log('Email enviado a Outlook - SUCCESS!')
       // Resetear formulario después de éxito
       reset()

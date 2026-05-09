@@ -1,4 +1,4 @@
-import { CVLink } from '@/constants/curriculumVitaeLink'
+import { config } from '@/config'
 import { Box, Typography, Stack, Button, Link } from '@mui/material'
 import { navLinksArray } from '@/constants/navLinksArray'
 import { Link as Router } from 'react-router-dom'
@@ -21,7 +21,7 @@ export const FreelanceSection = () => {
             Iniciar Proyecto
           </Button>
         </Link>
-        <Button href={CVLink} variant='outlined' size='large' target='_blank'>
+        <Button href={config.cv.url} variant='outlined' size='large' target='_blank'>
           Ver CV
         </Button>
       </Stack>

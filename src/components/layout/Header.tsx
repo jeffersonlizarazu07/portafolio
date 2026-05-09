@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { Link } from 'react-router-dom'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
-import { CVLink } from '../../constants/curriculumVitaeLink'
+import { config } from '@/config'
 import { NavLinks } from './common/NavLinks'
 
 export const Header = () => {
@@ -66,7 +66,7 @@ export const Header = () => {
             <IconButton color='inherit'>
               <DarkModeIcon />
             </IconButton>
-            <Button href={CVLink} variant='contained' target='_blank'>
+            <Button href={config.cv.url} variant='contained' target='_blank'>
               Resume
             </Button>
           </Stack>

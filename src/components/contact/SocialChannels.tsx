@@ -3,12 +3,12 @@ import { Stack, Typography, Card, Avatar, Box, Link } from '@mui/material'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import RemoveIcon from '@mui/icons-material/Remove'
 import GitHubIcon from '@mui/icons-material/GitHub'
-import { socialLinks } from '@/constants/socialLinks'
+import { config } from '@/config'
 
 export const SocialChannels: FC = () => {
   const socialsAndIcons = [
-    { name: 'LinkedIn', Icon: LinkedInIcon, href: socialLinks.linkedin },
-    { name: 'GitHub', Icon: GitHubIcon, href: socialLinks.github },
+    { name: 'LinkedIn', Icon: LinkedInIcon, href: config.social.linkedin },
+    { name: 'GitHub', Icon: GitHubIcon, href: config.social.github },
   ]
 
   return (

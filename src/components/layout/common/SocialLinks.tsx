@@ -2,7 +2,7 @@ import { Stack, Link, Typography } from '@mui/material'
 import EmailIcon from '@mui/icons-material/Email'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import { socialLinks } from '@/constants/socialLinks'
+import { config } from '@/config'
 
 type SocialLinksProps = {
   showLabels?: boolean
@@ -13,19 +13,19 @@ export const SocialLinks = ({ showLabels = true }: SocialLinksProps) => {
     {
       Icon: GitHubIcon,
       label: 'GitHub',
-      href: socialLinks.github,
+      href: config.social.github,
       ariaLabel: 'GitHub',
     },
     {
       Icon: LinkedInIcon,
       label: 'LinkedIn',
-      href: socialLinks.linkedin,
+      href: config.social.linkedin,
       ariaLabel: 'LinkedIn',
     },
     {
       Icon: EmailIcon,
       label: 'Correo electrónico',
-      href: socialLinks.email,
+      href: config.social.email,
       ariaLabel: 'Email',
     },
   ]
