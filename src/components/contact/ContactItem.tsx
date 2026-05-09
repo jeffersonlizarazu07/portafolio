@@ -1,22 +1,18 @@
-import type { ContactItemProps } from "@/types/Contact";
-import { Stack, Box, Typography } from '@mui/material';
+import type { ContactItemProps } from '@/types/Contact'
+import { Stack, Box, Typography } from '@mui/material'
 
-export const ContactItem = ({
-  icon,
-  title,
-  value,
-}: ContactItemProps) => {
+export const ContactItem = ({ icon, title, value }: ContactItemProps) => {
   return (
     <Stack
-      direction={{ xs: "column", sm: "row" }}
+      direction={{ xs: 'column', sm: 'row' }}
       spacing={3}
-      alignItems={{ xs: "flex-start", sm: "center" }}
+      alignItems={{ xs: 'flex-start', sm: 'center' }}
       sx={{
         p: 2,
         borderRadius: 2,
-        transition: "0.3s",
-        "&:hover": {
-          bgcolor: "action.hover",
+        transition: '0.3s',
+        '&:hover': {
+          bgcolor: 'action.hover',
         },
       }}
     >
@@ -25,23 +21,23 @@ export const ContactItem = ({
           width: 48,
           height: 48,
           borderRadius: 2,
-          bgcolor: "background.contact",
+          bgcolor: 'background.contact',
 
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "primary.main",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'primary.main',
         }}
       >
         {icon}
       </Box>
 
       <Box>
-        <Typography variant="caption" color="text.secondary" fontSize="15px">
+        <Typography variant='caption' color='text.secondary' fontSize='15px'>
           {title}
         </Typography>
         <Typography fontWeight={600}>{value}</Typography>
       </Box>
     </Stack>
-  );
-};
+  )
+}

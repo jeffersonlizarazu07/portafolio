@@ -6,7 +6,7 @@
  * URLs de redes sociales
  */
 export interface SocialLinks {
-  github: string;
-  linkedin: string;
-  email: string;
+  github: string
+  linkedin: string
+  email: string
 }

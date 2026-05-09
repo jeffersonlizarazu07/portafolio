@@ -1,6 +1,6 @@
-import { Stack } from "@mui/material";
-import { DirectContact } from "./DirectContact";
-import { SocialChannels } from "./SocialChannels";
+import { Stack } from '@mui/material'
+import { DirectContact } from './DirectContact'
+import { SocialChannels } from './SocialChannels'
 
 export const ContactSidebar = () => {
   return (
@@ -8,5 +8,5 @@ export const ContactSidebar = () => {
       <DirectContact />
       <SocialChannels />
     </Stack>
-  );
-};
+  )
+}

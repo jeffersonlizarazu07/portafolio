@@ -6,7 +6,7 @@
 :root {
   /* Fuente del proyecto - fallback a system-ui */
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  
+
   /* Mejoras de renderizado */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -26,7 +26,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B1623;
+  background: #0b1623;
 }
 
 ::-webkit-scrollbar-thumb {

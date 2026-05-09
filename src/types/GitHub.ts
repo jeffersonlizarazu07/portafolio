@@ -6,24 +6,24 @@
  * Representa un repositorio de GitHub
  */
 export interface GitHubRepo {
-  title: string;
-  description: string;
-  tech: string[];
-  url: string;
-  stars: number;
-  image: string;
-  language: string | null;
+  title: string
+  description: string
+  tech: string[]
+  url: string
+  stars: number
+  image: string
+  language: string | null
 }
 
 /**
  * Return type del hook useGitHubRepos
  */
 export interface UseGitHubReposReturn {
-  repos: GitHubRepo[];
-  filteredRepos: GitHubRepo[];
-  loading: boolean;
-  error: string | null;
-  technologies: string[];
-  filter: string;
-  setFilter: (filter: string) => void;
+  repos: GitHubRepo[]
+  filteredRepos: GitHubRepo[]
+  loading: boolean
+  error: string | null
+  technologies: string[]
+  filter: string
+  setFilter: (filter: string) => void
 }

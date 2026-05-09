@@ -6,6 +6,6 @@
  * Representa un enlace de navegación
  */
 export interface NavLink {
-  to: string;
-  label: string;
+  to: string
+  label: string
 }

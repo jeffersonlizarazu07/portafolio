@@ -1,20 +1,20 @@
-import { type FC } from "react";
-import { TextField, type TextFieldProps } from "@mui/material";
-import type { UseFormRegisterReturn } from "react-hook-form";
+import { type FC } from 'react'
+import { TextField, type TextFieldProps } from '@mui/material'
+import type { UseFormRegisterReturn } from 'react-hook-form'
 
-interface NeonFieldProps extends Omit<TextFieldProps, "color" | "name"> {
-  label: string;
-  name: string;
-  color?: string;
-  inputColor?: string;
-  multiline?: boolean;
-  rows?: number;
-  type?: string;
+interface NeonFieldProps extends Omit<TextFieldProps, 'color' | 'name'> {
+  label: string
+  name: string
+  color?: string
+  inputColor?: string
+  multiline?: boolean
+  rows?: number
+  type?: string
   // React Hook Form props
-  registerProps?: UseFormRegisterReturn;
-  error?: boolean;
-  helperText?: string;
-  onFocus?: () => void;
+  registerProps?: UseFormRegisterReturn
+  error?: boolean
+  helperText?: string
+  onFocus?: () => void
 }
 
 export const NeonField: FC<NeonFieldProps> = ({
@@ -22,9 +22,9 @@ export const NeonField: FC<NeonFieldProps> = ({
   name,
   multiline = false,
   rows = 1,
-  type = "text",
+  type = 'text',
   color,
-  inputColor = "#ffffff",
+  inputColor = '#ffffff',
   registerProps,
   error,
   helperText,
@@ -32,7 +32,7 @@ export const NeonField: FC<NeonFieldProps> = ({
 }) => {
   // registerProps ya viene con el nombre incluido (resultado de register("name"))
   // No necesita llamarse de nuevo
-  const registerFn = registerProps || { name, onChange: () => {}, onBlur: () => {}, ref: null };
+  const registerFn = registerProps || { name, onChange: () => {}, onBlur: () => {}, ref: null }
 
   return (
     <TextField
@@ -49,36 +49,34 @@ export const NeonField: FC<NeonFieldProps> = ({
       onFocus={onFocus}
       ref={registerFn.ref}
       sx={{
-        "& .MuiInputLabel-root": { color: color },
-        "& .MuiInputLabel-root.Mui-focused": { color: color },
-        "& .MuiInputLabel-root.Mui-error": { color: "#f44336" },
-        "& .MuiInputBase-input": { color: inputColor },
-        "& .MuiFormHelperText-root": { color: error ? "#f44336" : color },
-        "& .MuiOutlinedInput-root": {
-          transition: "0.3s",
-          "& fieldset": {
-            borderColor: error ? "#f44336" : color || "divider",
+        '& .MuiInputLabel-root': { color: color },
+        '& .MuiInputLabel-root.Mui-focused': { color: color },
+        '& .MuiInputLabel-root.Mui-error': { color: '#f44336' },
+        '& .MuiInputBase-input': { color: inputColor },
+        '& .MuiFormHelperText-root': { color: error ? '#f44336' : color },
+        '& .MuiOutlinedInput-root': {
+          transition: '0.3s',
+          '& fieldset': {
+            borderColor: error ? '#f44336' : color || 'divider',
           },
-          "&:hover fieldset": {
-            borderColor: error ? "#f44336" : "primary.main",
+          '&:hover fieldset': {
+            borderColor: error ? '#f44336' : 'primary.main',
           },
-          "&.Mui-focused fieldset": {
-            borderColor: error ? "#f44336" : "primary.main",
-            boxShadow: error
-              ? "0 0 10px rgba(244,67,54,0.4)"
-              : "0 0 10px rgba(43,108,238,0.4)",
+          '&.Mui-focused fieldset': {
+            borderColor: error ? '#f44336' : 'primary.main',
+            boxShadow: error ? '0 0 10px rgba(244,67,54,0.4)' : '0 0 10px rgba(43,108,238,0.4)',
           },
-          "&.Mui-error fieldset": {
-            borderColor: "#f44336",
+          '&.Mui-error fieldset': {
+            borderColor: '#f44336',
           },
-          "& input:-webkit-autofill": {
-            WebkitBoxShadow: "0 0 0 1000px #0b1a2b inset",
+          '& input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 1000px #0b1a2b inset',
             WebkitTextFillColor: inputColor,
-            borderRadius: "inherit",
-            transition: "background-color 9999s ease-in-out 0s",
+            borderRadius: 'inherit',
+            transition: 'background-color 9999s ease-in-out 0s',
           },
         },
       }}
     />
-  );
-};
+  )
+}

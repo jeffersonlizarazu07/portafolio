@@ -5,12 +5,12 @@
 
 export const config = {
   github: {
-    username: "jeffersonlizarazu07",
+    username: 'jeffersonlizarazu07',
   },
   portfolio: {
-    title: "Mi Portafolio",
-    description: "Desarrollador Full Stack",
+    title: 'Mi Portafolio',
+    description: 'Desarrollador Full Stack',
   },
-} as const;
+} as const
 
-export type Config = typeof config;
+export type Config = typeof config

@@ -1,65 +1,65 @@
-import { Stack, Link, Typography } from "@mui/material";
-import EmailIcon from "@mui/icons-material/Email";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { socialLinks } from "@/constants/socialLinks";
+import { Stack, Link, Typography } from '@mui/material'
+import EmailIcon from '@mui/icons-material/Email'
+import GitHubIcon from '@mui/icons-material/GitHub'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import { socialLinks } from '@/constants/socialLinks'
 
 type SocialLinksProps = {
-  showLabels?: boolean;
-};
+  showLabels?: boolean
+}
 
 export const SocialLinks = ({ showLabels = true }: SocialLinksProps) => {
   const socialLinksArray = [
     {
       Icon: GitHubIcon,
-      label: "GitHub",
+      label: 'GitHub',
       href: socialLinks.github,
-      ariaLabel: "GitHub",
+      ariaLabel: 'GitHub',
     },
     {
       Icon: LinkedInIcon,
-      label: "LinkedIn",
+      label: 'LinkedIn',
       href: socialLinks.linkedin,
-      ariaLabel: "LinkedIn",
+      ariaLabel: 'LinkedIn',
     },
     {
       Icon: EmailIcon,
-      label: "Correo electrónico",
+      label: 'Correo electrónico',
       href: socialLinks.email,
-      ariaLabel: "Email",
+      ariaLabel: 'Email',
     },
-  ];
+  ]
 
   return (
     <Stack
-      direction={{ xs: "column", sm: "row" }}
+      direction={{ xs: 'column', sm: 'row' }}
       spacing={{ xs: 2, sm: 4 }}
-      color="grey.500"
+      color='grey.500'
       sx={{
-        "& a:hover": {
-          color: { color: (theme) => theme.palette.grey[500] },
-          transform: "scale(1.2)",
+        '& a:hover': {
+          color: { color: theme => theme.palette.grey[500] },
+          transform: 'scale(1.2)',
         },
       }}
     >
       {socialLinksArray.map(({ Icon, label, href, ariaLabel }) => (
         <Link
           sx={{
-            display: "inline-flex",
-            alignItems: "center",
+            display: 'inline-flex',
+            alignItems: 'center',
             gap: 1,
           }}
-          underline="none"
+          underline='none'
           key={label}
           href={href}
           aria-label={ariaLabel}
-          target="_blank"
-          rel="noopener noreferrer"
+          target='_blank'
+          rel='noopener noreferrer'
         >
           <Icon />
           {showLabels && <Typography>{label}</Typography>}
         </Link>
       ))}
     </Stack>
-  );
-};
+  )
+}

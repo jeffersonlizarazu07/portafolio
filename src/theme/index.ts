@@ -1,10 +1,10 @@
 /**
  * MUI Theme Configuration
- * 
+ *
  * Sistema de diseño centralizado para el portfolio.
  * Soporta dark/light mode via theme provider.
  */
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles'
 
 /**
  * Paleta de colores del tema
@@ -13,39 +13,39 @@ import { createTheme } from "@mui/material/styles";
  */
 export const palette = {
   primary: {
-    main: "#2b6cee",
-    light: "#4a7cd2",
+    main: '#2b6cee',
+    light: '#4a7cd2',
   },
   background: {
-    default: "#0B1623",
-    secondary: "#101622",
-    paper: "#1A2233",
-    tech: "#16223a",
-    contact: "#1e293b",
+    default: '#0B1623',
+    secondary: '#101622',
+    paper: '#1A2233',
+    tech: '#16223a',
+    contact: '#1e293b',
   },
   text: {
-    primary: "#ffffff",
-    secondary: "#64748b",
-    disabled: "#94a3b8",
-    label: "#94a3b8",
+    primary: '#ffffff',
+    secondary: '#64748b',
+    disabled: '#94a3b8',
+    label: '#94a3b8',
   },
   error: {
-    main: "#f44336",
+    main: '#f44336',
   },
   success: {
-    main: "#27c93f",
+    main: '#27c93f',
   },
   warning: {
-    main: "#ffbd2e",
+    main: '#ffbd2e',
   },
-} as const;
+} as const
 
 /**
  * Tema oscuro (default del portfolio)
  */
 export const darkTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: 'dark',
     primary: {
       main: palette.primary.main,
       light: palette.primary.light,
@@ -64,21 +64,21 @@ export const darkTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
+    fontFamily: 'system-ui, Avenir, Helvetica, Arial, sans-serif',
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
           borderRadius: 12,
-          textTransform: "none",
+          textTransform: 'none',
           fontWeight: 600,
         },
       },
     },
     MuiTextField: {
       defaultProps: {
-        variant: "outlined",
+        variant: 'outlined',
       },
     },
     MuiCard: {
@@ -90,7 +90,7 @@ export const darkTheme = createTheme({
     },
     MuiContainer: {
       defaultProps: {
-        maxWidth: "xl",
+        maxWidth: 'xl',
       },
     },
     MuiChip: {
@@ -102,48 +102,48 @@ export const darkTheme = createTheme({
       },
     },
   },
-});
+})
 
 /**
  * Tema claro (para futuro)
  */
 export const lightTheme = createTheme({
   palette: {
-    mode: "light",
+    mode: 'light',
     primary: {
       main: palette.primary.main,
       light: palette.primary.light,
     },
     background: {
-      default: "#ffffff",
-      paper: "#f5f5f5",
+      default: '#ffffff',
+      paper: '#f5f5f5',
     },
     text: {
-      primary: "#1A2233",
-      secondary: "#64748b",
-      disabled: "#94a3b8",
+      primary: '#1A2233',
+      secondary: '#64748b',
+      disabled: '#94a3b8',
     },
     error: {
       main: palette.error.main,
     },
   },
   typography: {
-    fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
+    fontFamily: 'system-ui, Avenir, Helvetica, Arial, sans-serif',
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
           borderRadius: 12,
-          textTransform: "none",
+          textTransform: 'none',
           fontWeight: 600,
         },
       },
     },
   },
-});
+})
 
 /**
  * Exportar tema activo por defecto (para uso futuro con toggle)
  */
-export const theme = darkTheme;
+export const theme = darkTheme
