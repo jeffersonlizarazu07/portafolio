@@ -1,8 +1,25 @@
+/**
+ * Hook para obtener y filtrar repositorios de GitHub del usuario.
+ * 
+ * ¿Por qué existe?
+ * - Los proyectos del portafolio se muestran directamente desde GitHub,
+ *   evitando tener que mantener manualmente una lista de proyectos.
+ * - Si el usuario actualiza su GitHub, el portafolio se actualiza automáticamente.
+ * 
+ * ¿Por qué usa GitHub API?
+ * - API pública sin autenticación para repositorios públicos.
+ * - Rate limit manejable para portfolios (máximo 100 repos).
+ * 
+ * ¿Por qué busca preview.png dinámicamente?
+ * - Cada repo puede tener su propia captura de pantalla en cualquier ubicación.
+ * - Permite que cualquier repo tenga un preview sin configuración adicional.
+ */
 import { useState, useEffect } from 'react'
 import type { GitHubRepo, UseGitHubReposReturn } from '@/types/GitHub'
 
 // ── Tipos internos (solo para el hook) ──────────────────────────────────────────────
 
+// Respuesta real de GitHub API - no duplicamos campos que no usamos
 interface GitHubAPIResponse {
   name: string
   description: string | null
@@ -14,6 +31,7 @@ interface GitHubAPIResponse {
   languages_url: string
 }
 
+// Árbol de archivos del repo - necesario para buscar preview.png sin saber su ubicación
 interface GitHubTreeItem {
   path: string
   mode: string
@@ -30,15 +48,18 @@ interface GitHubTree {
   truncated: boolean
 }
 
-// ── Helpers ───────────────────────────────────────────────────────
+// ── Constantes ───────────────────────────────────────────────────────
 
+// Por qué URLs hardcoded: Son APIs públicas de GitHub, no cambian
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com'
 const GITHUB_API_BASE = 'https://api.github.com'
-const IMAGE_FILENAME = 'preview.png'
 
 /**
- * Obtiene la ruta relativa de preview.png buscando en el árbol del repo.
- * Funciona con cualquier profundidad: assets/preview.png, frontend/src/assets/preview.png, etc.
+ * Busca la ruta de preview.png en el árbol del repositorio.
+ * 
+ * ¿Por qué buscar en lugar de asumir una ruta fija?
+ * - Los repos pueden tener diferentes estructuras (src/assets/preview.png, docs/preview.png, etc.)
+ * - Permite que cada proyecto tenga su propia captura sin convenciones obligatorias.
  */
 const findPreviewImagePath = async (
   username: string,
@@ -47,7 +68,7 @@ const findPreviewImagePath = async (
   options: RequestInit
 ): Promise<string | null> => {
   try {
-    // Obtener el árbol completo del repo (incluye todos los archivos recursivamente)
+    // El árbol recursivo incluye TODOS los archivos, no solo los del root
     const treeUrl = `${GITHUB_API_BASE}/repos/${username}/${repoName}/git/trees/${branch}?recursive=1`
     const treeResponse = await fetch(treeUrl, options)
 
@@ -55,9 +76,9 @@ const findPreviewImagePath = async (
 
     const treeData = (await treeResponse.json()) as GitHubTree
 
-    // Buscar el archivo preview.png en cualquier ubicación
+    // Busca cualquier archivo que termine en preview.png
     const previewFile = treeData.tree.find(
-      item => item.type === 'blob' && item.path.endsWith(IMAGE_FILENAME)
+      item => item.type === 'blob' && item.path.endsWith('preview.png')
     )
 
     return previewFile?.path ?? null
@@ -67,9 +88,10 @@ const findPreviewImagePath = async (
 }
 
 /**
- * Construye la URL raw para una imagen.
- * Si se pasa la ruta del archivo (buscada dinámicamente), la usa.
- * Si no, retorna null para que el componente sepa que no hay imagen.
+ * Construye la URL para acceder a la imagen raw.
+ * 
+ * ¿Por qué no retornar la URL directamente?
+ * - Si no hay imagen, retornamos null para que el componente muestre el fallback (logo del lenguaje).
  */
 const buildImageUrl = (
   username: string,
@@ -83,6 +105,20 @@ const buildImageUrl = (
 
 // ── Hook ───────────────────────────────────────────────────────
 
+/**
+ * Obtiene repositorios de GitHub con sus lenguajes e imágenes.
+ * 
+ * @param username - Usuario de GitHub whose repositorios obtener
+ * @returns Estado y datos de repositorios para filtrar y mostrar
+ * 
+ * ¿Por qué retorna filteredRepos en lugar de filtrar en el componente?
+ * - El filtrado es parte de la lógica de datos, no de presentación.
+ * - Mantiene el componente dumb y reusable.
+ * 
+ * ¿Por qué tecnologías es un array?
+ * - Necesitamos listar todos los lenguajes únicos para generar los filtros.
+ * - Se calcula una vez y se memoiza en el estado.
+ */
 export const useGitHubRepos = (username: string): UseGitHubReposReturn => {
   const [repos, setRepos] = useState<GitHubRepo[]>([])
   const [loading, setLoading] = useState<boolean>(true)
@@ -90,14 +126,16 @@ export const useGitHubRepos = (username: string): UseGitHubReposReturn => {
   const [technologies, setTechnologies] = useState<string[]>([])
   const [filter, setFilter] = useState<string>('Todos')
 
-  // Filtrar repos basados en la tecnología seleccionada
+  // El filtrado se hace en memoria porque no hay muchos repos
+  // Evitamos una llamada adicional a la API solo para filtrar
   const filteredRepos: GitHubRepo[] =
     filter === 'Todos' ? repos : repos.filter(repo => repo.tech.includes(filter))
 
   useEffect(() => {
     const fetchRepos = async (): Promise<void> => {
       try {
-        // Opciones para la API request (incluye token si está disponible)
+        // Token opcional para aumentar rate limit en desarrollo
+        // El portfolio funciona sin él para repos públicos
         const options: RequestInit = {}
         if (import.meta.env.VITE_GITHUB_TOKEN) {
           options.headers = {
@@ -105,7 +143,8 @@ export const useGitHubRepos = (username: string): UseGitHubReposReturn => {
           }
         }
 
-        // 1. Obtener lista de repositorios
+        // 100 repos es suficiente para un portafolio
+        // ordenar por updated muestra los más recientes primero
         const response = await fetch(
           `${GITHUB_API_BASE}/users/${username}/repos?sort=updated&per_page=100`
         )
@@ -116,27 +155,28 @@ export const useGitHubRepos = (username: string): UseGitHubReposReturn => {
 
         const data = (await response.json()) as GitHubAPIResponse[]
 
-        // Filtrar solo repos públicos y no forkados
+        // Solo repos públicos y no forkados - son los relevantes para el portafolio
+        // Los forks muestran trabajo de otros, los privados no son accesibles
         const publicRepos = data.filter(
           (repo): boolean => repo.visibility === 'public' && !repo.fork
         )
 
-        // 2. Por cada repo, obtener TODOS sus lenguajes y buscar preview.png
+        // Promise.all para paralelizar - cada repo tiene su propia llamada a languages_url
+        // Esto es mucho más rápido que sequentially await
         const reposWithAllLanguages = await Promise.all(
           publicRepos.map(async (repo: GitHubAPIResponse): Promise<GitHubRepo> => {
             try {
-              // Llamada a languages_ur l para obtener todos los lenguajes
+              // languages_url retorna {JavaScript: 1234, TypeScript: 5678}
+              // Object.keys() extrae solo los nombres de los lenguajes
               const langResponse = await fetch(repo.languages_url, options)
               const langData = (await langResponse.json()) as Record<string, number>
-
-              // Object.ke ys() extrae solo los nombres: ["TypeScript", "JavaScript", "CSS"]
               const tech: string[] = Object.keys(langData)
 
-              // Buscar preview.png en cualquier profundidad del repo (prueba main y master)
+              // Buscar preview.png en main primero, luego master
+              // main es el nuevo default en GitHub, pero algunos repos antiguos usan master
               let imagePath: string | null = null
               let image: string | null = null
 
-              // Probar "main" primero, luego "master"
               for (const branch of ['main', 'master']) {
                 imagePath = await findPreviewImagePath(username, repo.name, branch, options)
                 if (imagePath) {
@@ -151,11 +191,12 @@ export const useGitHubRepos = (username: string): UseGitHubReposReturn => {
                 tech: tech,
                 url: repo.html_url,
                 stars: repo.stargazers_count,
-                image: image ?? '', // string vacía = sin imagen = fallback en componente
+                image: image ?? '',
                 language: repo.language || tech[0] || null,
               }
             } catch {
-              // Si falla la llamada de lenguajes, usar el principal
+              // Fallback graceful: si falla languages, mostramos lo que tenemos de GitHub API
+              // No fallamos todo el hook por un repo individual
               return {
                 title: repo.name,
                 description: repo.description || 'Sin descripción disponible',
@@ -171,9 +212,9 @@ export const useGitHubRepos = (username: string): UseGitHubReposReturn => {
 
         setRepos(reposWithAllLanguages)
 
-        // Extraer TODAS las tecnologías únicas de todos los repos
+        // Extraer lenguajes únicos y ordenar alfabéticamente
+        // Sorted para UX consistente en los filtros
         const allTechs = reposWithAllLanguages.flatMap(repo => repo.tech)
-        // Set para eliminar duplicados, luego ordenar alfabéticamente
         const uniqueTechs = [...new Set(allTechs)].sort()
         setTechnologies(uniqueTechs)
       } catch (err) {

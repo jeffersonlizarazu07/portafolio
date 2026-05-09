@@ -1,15 +1,30 @@
 /**
  * MUI Theme Configuration
- *
+ * 
  * Sistema de diseño centralizado para el portfolio.
- * Soporta dark/light mode via theme provider.
+ * Permite cambiar colores y estilos desde un solo lugar.
+ * 
+ * ¿Por qué no usar directamente colores hex en componentes?
+ * - Si necesitas cambiar el color primario, cambias aquí y se actualiza en todo.
+ * - Para implementar dark/light mode, solo cambias el theme activo.
+ * - El IDE autocomplete ayuda a elegir tokens correctos.
  */
 import { createTheme } from '@mui/material/styles'
 
 /**
  * Paleta de colores del tema
- * Usar con: theme.palette.primary.main, etc.
- * O importar directamente: import { palette } from "@/theme"
+ * 
+ * ¿Por qué estos colores específicos?
+ * - background.default (#0B1623): Azul muy oscuro, no negro puro.
+ *   Un negro puro puede sentirse "agresivo", este tono es más profesional.
+ * - primary (#2b6cee): Azul eléctrico que contrasta bien con el fondo oscuro.
+ *   Es moderno pero no agresivo.
+ * - text.secondary (#64748b): Gris que no compite con el texto principal.
+ * 
+ * ¿Por qué separar background en default, secondary, paper, tech, contact?
+ * - Cada sección tiene un propósito visual diferente.
+ * - Projects necesita menor contraste que Home.
+ * - Tech y Contact tienen elementos más densos que necesitan fondos sutilmente distintos.
  */
 export const palette = {
   primary: {
@@ -17,17 +32,17 @@ export const palette = {
     light: '#4a7cd2',
   },
   background: {
-    default: '#0B1623',
-    secondary: '#101622',
-    paper: '#1A2233',
-    tech: '#16223a',
-    contact: '#1e293b',
+    default: '#0B1623', // Home, Contact, About
+    secondary: '#101622', // Projects - un poco más claro para variar
+    paper: '#1A2233', // Cards y elementos elevados
+    tech: '#16223a', // Sección de tecnologías - cards con borde
+    contact: '#1e293b', // Items de contacto - ligeramente diferenciado
   },
   text: {
     primary: '#ffffff',
-    secondary: '#64748b',
-    disabled: '#94a3b8',
-    label: '#94a3b8',
+    secondary: '#64748b', // Texto que no es главный pero necesita ser legible
+    disabled: '#94a3b8', // Estados disabled
+    label: '#94a3b8', // Labels de formularios, placeholders
   },
   error: {
     main: '#f44336',
@@ -42,6 +57,18 @@ export const palette = {
 
 /**
  * Tema oscuro (default del portfolio)
+ * 
+ * ¿Por qué borderRadius: 12 para buttons?
+ * - Redondeado pronuncié que se siente moderno pero no infantil.
+ * - 12px es un buen balance entre moderno y profesional.
+ * 
+ * ¿Por qué textTransform: 'none'?
+ * - Evitamos que MUI uppercase los botones automáticamente.
+ * - Queremos controlar el texto visible nosotros.
+ * 
+ * ¿Por qué maxWidth: 'xl' en Container default?
+ * - Evita que el contenido se estire demasiado en pantallas grandes.
+ * - xl = 1920px, suficiente para la mayoría de monitores.
  */
 export const darkTheme = createTheme({
   palette: {
@@ -106,6 +133,10 @@ export const darkTheme = createTheme({
 
 /**
  * Tema claro (para futuro)
+ * 
+ * ¿Por qué invertir los colores de background pero mantener text.secondary?
+ * - En modo claro, el texto secundario debe ser menos visible que en modo oscuro.
+ * - Los grises funcionan bien en ambos temas sin cambios.
  */
 export const lightTheme = createTheme({
   palette: {
@@ -144,6 +175,10 @@ export const lightTheme = createTheme({
 })
 
 /**
- * Exportar tema activo por defecto (para uso futuro con toggle)
+ * Exportar tema activo por defecto
+ * 
+ * ¿Por qué exportar theme si ya está darkTheme?
+ * - Para implementar el toggle futuro sin cambiar imports en toda la app.
+ * - Solo cambias aquí el tema activo.
  */
 export const theme = darkTheme
