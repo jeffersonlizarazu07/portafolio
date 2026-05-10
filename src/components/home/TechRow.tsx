@@ -4,8 +4,20 @@ export const TechRow = () => {
   return (
     <Box
       sx={{
-        borderTop: '1px solid rgba(255,255,255,0.1)',
+        borderTop: theme =>
+          theme.palette.mode === 'dark'
+            ? '1px solid rgba(255, 255, 255, 0.1)'
+            : '3px solid #E2E8F0',
+        borderBottom: theme =>
+          theme.palette.mode === 'dark'
+            ? '1px solid rgba(255, 255, 255, 0.1)'
+            : '2px solid #E2E8F0',
         py: 10,
+        mt: 5,
+        width: '100vw',
+        position: 'relative',
+        left: '50%',
+        mx: '-50vw',
       }}
     >
       <Container maxWidth='xl'>

@@ -10,17 +10,26 @@ import {
 } from '@mui/material'
 import { Link } from 'react-router-dom'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
+import LightModeIcon from '@mui/icons-material/LightMode'
 import { config } from '@/config'
 import { NavLinks } from './common/NavLinks'
+import { useThemeMode } from '@/context/ThemeContext'
 
 export const Header = () => {
+  const { mode, toggleTheme } = useThemeMode()
+
   return (
     <AppBar
       position='fixed'
       elevation={0}
       sx={{
         backdropFilter: 'blur(12px)',
-        background: 'rgba(15,31,48,0.7)',
+        background: theme =>
+          theme.palette.mode === 'dark' ? 'rgba(15,31,48,0.7)' : 'rgba(255,255,255,0.7)',
+        borderBottom: theme =>
+          theme.palette.mode === 'dark'
+            ? '1px solid rgba(255,255,255,0.1)'
+            : '1px solid rgba(0,0,0,0.1)',
       }}
     >
       <Container maxWidth='xl'>
@@ -50,10 +59,14 @@ export const Header = () => {
             >
               J
             </Box>
-            <Link to='/'>
+            <Link to='/' style={{ textDecoration: 'none' }}>
               <Typography
                 variant='h6'
-                sx={{ display: { xs: 'none', sm: 'block', color: 'text.primary' } }}
+                sx={{
+                  display: { xs: 'none', sm: 'block' },
+                  color: 'text.primary',
+                  textDecoration: 'none',
+                }}
               >
                 PORTAFOLIO
               </Typography>
@@ -63,8 +76,14 @@ export const Header = () => {
 
           {/* Right Actions */}
           <Stack direction='row' spacing={2} alignItems='center'>
-            <IconButton color='inherit'>
-              <DarkModeIcon />
+            <IconButton
+              onClick={toggleTheme}
+              sx={{
+                color: 'text.primary',
+              }}
+              aria-label='Cambiar tema'
+            >
+              {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
             </IconButton>
             <Button href={config.cv.url} variant='contained' target='_blank'>
               Resume

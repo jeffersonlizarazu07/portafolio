@@ -13,6 +13,7 @@
  */
 import { type FC } from 'react'
 import { TextField, type TextFieldProps } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import type { UseFormRegisterReturn } from 'react-hook-form'
 
 interface NeonFieldProps extends Omit<TextFieldProps, 'color' | 'name'> {
@@ -43,6 +44,7 @@ export const NeonField: FC<NeonFieldProps> = ({
   helperText,
   onFocus,
 }) => {
+  const theme = useTheme()
   // Si registerProps no viene, creamos un mock para que el componente funcione
   // sin React Hook Form (útil para testing o uso fuera del formulario)
   const registerFn = registerProps || { name, onChange: () => {}, onBlur: () => {}, ref: null }
@@ -85,9 +87,7 @@ export const NeonField: FC<NeonFieldProps> = ({
           // Focus: aquí está el efecto glow característico
           '&.Mui-focused fieldset': {
             borderColor: error ? '#f44336' : 'primary.main',
-            boxShadow: error
-              ? '0 0 10px rgba(244,67,54,0.4)'
-              : '0 0 10px rgba(43,108,238,0.4)',
+            boxShadow: error ? '0 0 10px rgba(244,67,54,0.4)' : '0 0 10px rgba(43,108,238,0.4)',
           },
           '&.Mui-error fieldset': {
             borderColor: '#f44336',
@@ -95,7 +95,7 @@ export const NeonField: FC<NeonFieldProps> = ({
           // Autofill: el browser sugiere credenciales con fondo blanco
           // Este override hace que el autofill tenga el color del theme
           '& input:-webkit-autofill': {
-            WebkitBoxShadow: '0 0 0 1000px #0b1a2b inset',
+            WebkitBoxShadow: `0 0 0 1000px ${theme.palette.background.default} inset`,
             WebkitTextFillColor: inputColor,
             borderRadius: 'inherit',
             // Trampa: el transition de 9999s evita el flash de color al autofillear

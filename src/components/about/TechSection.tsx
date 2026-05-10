@@ -63,7 +63,8 @@ export const TechSection = () => {
             <Grid size={{ xs: 6, md: 4, lg: 2 }} key={index}>
               <Card
                 sx={{
-                  backgroundColor: 'background.tech',
+                  backgroundColor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#16223a' : '#F2ECE7',
                   textAlign: 'center',
                   transition: '0.3s',
                   border: '1px solid',
@@ -71,7 +72,10 @@ export const TechSection = () => {
                   '&:hover': {
                     transform: 'translateY(-10px)',
                     borderColor: 'primary.main',
-                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+                    boxShadow: (theme) =>
+                      theme.palette.mode === 'dark'
+                        ? '0 20px 40px rgba(0,0,0,0.3)'
+                        : '0 20px 40px rgba(0,0,0,0.1)',
                   },
                 }}
               >
@@ -94,7 +98,9 @@ export const TechSection = () => {
                       '& svg': {
                         width: '100%',
                         height: '100%',
-                        color: 'primary.main',
+                        color: (theme) =>
+                          theme.palette.mode === 'dark' ? 'primary.main' : '#0F172A',
+                        fill: 'currentColor',
                       },
                       '& img': {
                         width: '100%',
@@ -122,7 +128,8 @@ export const TechSection = () => {
               sx={{
                 p: 4,
                 height: '100%',
-                backgroundColor: 'background.tech',
+                backgroundColor: (theme) =>
+                  theme.palette.mode === 'dark' ? '#16223a' : '#f1f5f9',
                 border: '1px solid',
                 borderColor: 'divider',
                 borderRadius: 2,
@@ -151,7 +158,8 @@ export const TechSection = () => {
               sx={{
                 p: 4,
                 height: '100%',
-                backgroundColor: 'background.tech',
+                backgroundColor: (theme) =>
+                  theme.palette.mode === 'dark' ? '#16223a' : '#f1f5f9',
                 border: '1px solid',
                 borderColor: 'divider',
                 borderRadius: 2,
@@ -175,9 +183,15 @@ export const TechSection = () => {
                           p: 2,
                           height: '100%',
                           minHeight: 140,
-                          backgroundColor: 'rgba(97, 218, 251, 0.05)',
+                          backgroundColor: (theme) =>
+                            theme.palette.mode === 'dark'
+                              ? 'rgba(97, 218, 251, 0.05)'
+                              : 'rgba(43, 108, 238, 0.05)',
                           border: '1px solid',
-                          borderColor: 'rgba(97, 218, 251, 0.2)',
+                          borderColor: (theme) =>
+                            theme.palette.mode === 'dark'
+                              ? 'rgba(97, 218, 251, 0.2)'
+                              : 'rgba(43, 108, 238, 0.15)',
                           borderRadius: 2,
                         }}
                       >
@@ -192,7 +206,10 @@ export const TechSection = () => {
                                 label={cert.institution}
                                 size='small'
                                 sx={{
-                                  bgcolor: 'rgba(97, 218, 251, 0.1)',
+                                  bgcolor: (theme) =>
+                                    theme.palette.mode === 'dark'
+                                      ? 'rgba(97, 218, 251, 0.1)'
+                                      : 'rgba(43, 108, 238, 0.1)',
                                   color: 'primary.main',
                                   fontWeight: 600,
                                 }}
@@ -201,7 +218,10 @@ export const TechSection = () => {
                                 label={cert.plataform}
                                 size='small'
                                 sx={{
-                                  bgcolor: 'rgba(97, 218, 251, 0.1)',
+                                  bgcolor: (theme) =>
+                                    theme.palette.mode === 'dark'
+                                      ? 'rgba(97, 218, 251, 0.1)'
+                                      : 'rgba(43, 108, 238, 0.1)',
                                   color: 'primary.main',
                                   fontWeight: 600,
                                 }}
@@ -218,7 +238,10 @@ export const TechSection = () => {
                                 color: 'primary.main',
                                 textTransform: 'none',
                                 '&:hover': {
-                                  backgroundColor: 'rgba(97, 218, 251, 0.1)',
+                                  backgroundColor: (theme) =>
+                                    theme.palette.mode === 'dark'
+                                      ? 'rgba(97, 218, 251, 0.1)'
+                                      : 'rgba(43, 108, 238, 0.1)',
                                 },
                               }}
                             >

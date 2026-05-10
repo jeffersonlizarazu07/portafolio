@@ -25,7 +25,10 @@ export const Hero = () => {
             <Stack spacing={4}>
               <Typography
                 sx={{
-                  background: 'rgba(15,31,48,0.7)',
+                  background: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(15,31,48,0.7)'
+                      : 'rgba(43,108,238,0.1)',
                   px: 2,
                   py: 1,
                   borderRadius: 5,
@@ -59,7 +62,7 @@ export const Hero = () => {
                 digitales.
               </Typography>
 
-              <Typography color='grey.400' maxWidth={500}>
+              <Typography color='text.secondary' maxWidth={500}>
                 He trabajado en el desarrollo de soluciones web utilizando React en el frontend y
                 Node.js (Express) en el backend. Me enfoco en crear aplicaciones funcionales,
                 escalables y orientadas a resolver problemas reales.

@@ -16,11 +16,13 @@ import { useForm, UseFormRegister } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Box, Grid, Stack, Snackbar, Alert, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { NeonField } from './NeonField'
 import { GlassButton } from '../../ui/GlassButton'
 import { ContactHeader } from './ContactHeader'
 import { config } from '@/config'
 import emailjs from '@emailjs/browser'
+import { theme } from '@/theme'
 
 /**
  * Schema de validación con Zod.
@@ -196,6 +198,7 @@ const useSpamProtection = () => {
  * Mejor UX que 'onChange' (valida mientras escribís).
  */
 export const ContactForm = () => {
+  const theme = useTheme()
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const { spamError, validateSubmission, handleInteraction } = useSpamProtection()
 
@@ -214,7 +217,12 @@ export const ContactForm = () => {
     if (!validateSubmission(data)) return
 
     try {
-      await emailjs.send(config.email.serviceId, config.email.templateId, data, config.email.publicKey)
+      await emailjs.send(
+        config.email.serviceId,
+        config.email.templateId,
+        data,
+        config.email.publicKey
+      )
       console.log('Email enviado a Outlook - SUCCESS!')
       // Resetear formulario después de éxito
       reset()
@@ -236,6 +244,7 @@ export const ContactForm = () => {
                 label={field.label}
                 name={field.name}
                 color={field.color}
+                inputColor={theme.palette.mode === 'dark' ? '#ffffff' : '#000000'}
                 type={field.type}
                 multiline={field.multiline}
                 rows={field.rows}

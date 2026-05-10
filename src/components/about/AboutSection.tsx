@@ -37,7 +37,10 @@ export const AboutSection = () => {
               p: 3,
               borderRadius: 3,
               textAlign: 'center',
-              boxShadow: '0 10px 40px rgba(0,0,0,0.4)',
+              boxShadow: (theme) =>
+                theme.palette.mode === 'dark'
+                  ? '0 10px 40px rgba(0,0,0,0.4)'
+                  : '0 10px 40px rgba(0,0,0,0.15)',
             }}
           >
             <Typography variant='h4' fontWeight={800}>

@@ -16,9 +16,9 @@ export const HeaderSection = ({ technologies, filter, setFilter }: HeaderSection
           proyectos
         </Box>
       </Typography>
-      <Typography color='grey.400' marginBottom='2rem'>
+      <Typography color='text.secondary' marginBottom='2rem'>
         A continuación se presentan algunos de los proyectos que he desarrollado y en los que he
-        participado, enfoados en el desarrollo de aplicaciones web modernas.
+        participado, enfocados en el desarrollo de aplicaciones web modernas.
       </Typography>
 
       {/* FILTER BUTTONS - DINÁMICOS BASADOS EN TECNOLOGÍAS */}

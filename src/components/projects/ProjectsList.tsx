@@ -95,7 +95,10 @@ export const ProjectsList = ({ projects, loading, error }: ProjectsListProps) =>
                 sx={{
                   position: 'absolute',
                   inset: 0,
-                  bgcolor: 'rgba(16,22,34,0.95)',
+                  bgcolor: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(16,22,34,0.95)'
+                      : 'rgba(255,255,255,0.95)',
                   p: 4,
                   display: 'flex',
                   flexDirection: 'column',
@@ -109,7 +112,7 @@ export const ProjectsList = ({ projects, loading, error }: ProjectsListProps) =>
                     {project.title}
                   </Typography>
 
-                  <Typography variant='body2' color='grey.400' mb={2}>
+                  <Typography variant='body2' color='text.secondary' mb={2}>
                     {project.description}
                   </Typography>
 
@@ -120,7 +123,10 @@ export const ProjectsList = ({ projects, loading, error }: ProjectsListProps) =>
                         label={tech}
                         size='small'
                         sx={{
-                          bgcolor: 'rgba(43,108,238,0.2)',
+                          bgcolor: (theme) =>
+                            theme.palette.mode === 'dark'
+                              ? 'rgba(43,108,238,0.2)'
+                              : 'rgba(43,108,238,0.15)',
                           color: 'primary.main',
                           fontWeight: 600,
                         }}

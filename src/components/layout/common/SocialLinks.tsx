@@ -34,7 +34,7 @@ export const SocialLinks = ({ showLabels = true }: SocialLinksProps) => {
     <Stack
       direction={{ xs: 'column', sm: 'row' }}
       spacing={{ xs: 2, sm: 4 }}
-      color='grey.500'
+      color='text.secondary'
       sx={{
         '& a:hover': {
           color: { color: theme => theme.palette.grey[500] },

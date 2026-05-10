@@ -1,10 +1,13 @@
 import { Box, Typography, Paper } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
 export const CodeImage = () => {
-  const sym = '#89ddff' // Color para símbolos (Azul/Gris)
-  const key = '#82aaff' // Color para propiedades
-  const val = '#c3e88d' // Color para valores (Strings)
-  const kw = '#c792ea' // Color para palabras reservadas
+  const theme = useTheme()
+  const sym = theme.palette.mode === 'dark' ? '#89ddff' : '#1a1a1a' // Color para símbolos (Azul/Gris)
+  const key = theme.palette.mode === 'dark' ? '#82aaff' : '#086527' // Color para propiedades
+  const val = theme.palette.mode === 'dark' ? '#c3e88d' : '#24292e' // Color para valores (Strings)
+  const kw = theme.palette.mode === 'dark' ? '#c792ea' : '#1a1a1a' // Color para palabras reservadas
+  const themeNameColor = theme.palette.mode === 'dark' ? '#ffcb6b' : '#b07d0a'
 
   return (
     <Box sx={{ position: 'relative', display: { xs: 'none', lg: 'block' } }}>
@@ -14,8 +17,11 @@ export const CodeImage = () => {
           width: '34.375rem',
           p: 3,
           borderRadius: 2,
-          bgcolor: '#242527',
-          border: '1px solid rgba(255, 255, 255, 0.05)',
+          bgcolor: theme => (theme.palette.mode === 'dark' ? '#242527' : '#e2f0cd'),
+          border: theme =>
+            theme.palette.mode === 'dark'
+              ? '1px solid rgba(255, 255, 255, 0.05)'
+              : '1px solid rgba(0, 0, 0, 0.1)',
           transition: 'transform 0.5s',
           '&:hover': { transform: 'scale(1.02)' },
         }}
@@ -46,7 +52,14 @@ export const CodeImage = () => {
               bgcolor: '#27c93f',
             }}
           />
-          <Typography variant='caption' sx={{ ml: 2, color: '#ffffff99', fontFamily: 'monospace' }}>
+          <Typography
+            variant='caption'
+            sx={{
+              ml: 2,
+              color: theme => (theme.palette.mode === 'dark' ? '#ffffff99' : '#24292e'),
+              fontFamily: 'monospace',
+            }}
+          >
             ThemeConfig.ts
           </Typography>
         </Box>
@@ -58,12 +71,12 @@ export const CodeImage = () => {
             fontFamily: '"Fira Code", monospace',
             fontSize: '0.85rem',
             lineHeight: 1.7,
-            color: '#a6accd',
+            color: theme => (theme.palette.mode === 'dark' ? '#a6accd' : '#24292e'),
             margin: 0,
           }}
         >
           <span style={{ color: kw }}>export const</span>{' '}
-          <span style={{ color: '#ffcb6b' }}>theme</span> ={' '}
+          <span style={{ color: themeNameColor }}>theme</span> ={' '}
           <span style={{ color: kw }}>createTheme</span>
           <span style={{ color: sym }}>{'({'}</span>
           {`

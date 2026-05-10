@@ -11,7 +11,10 @@ export const Footer = () => {
       component='footer'
       sx={{
         bgcolor: 'background.default',
-        borderTop: '1px solid rgba(255,255,255,0.1)',
+        borderTop: (theme) =>
+          theme.palette.mode === 'dark'
+            ? '1px solid rgba(255,255,255,0.1)'
+            : '1px solid rgba(0,0,0,0.1)',
         py: 4,
         color: 'text.primary',
       }}
@@ -28,7 +31,7 @@ export const Footer = () => {
               {name}
             </Typography>
 
-            <Typography variant='body2' color='grey.500'>
+            <Typography variant='body2' color='text.secondary'>
               Desarrollador Full Stack
             </Typography>
           </Box>
@@ -38,7 +41,7 @@ export const Footer = () => {
           <SocialLinks showLabels={false} />
         </Stack>
         <Box pt={1.5}>
-          <Typography variant='caption' color='grey.500'>
+          <Typography variant='caption' color='text.secondary'>
             © {actualYear} {name}.
           </Typography>
         </Box>
