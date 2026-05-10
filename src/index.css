@@ -17,6 +17,43 @@
 body {
   margin: 0;
   min-width: 320px;
+  /* min-height y background lo maneja cada página */
+}
+
+/* Scrollbar personalizada para WebKit - Tema Oscuro (default) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1623;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Scrollbar para Tema Claro */
+body[data-theme='light'] ::-webkit-scrollbar-track {
+  background: #F7F3F0;
+}
+
+body[data-theme='light'] ::-webkit-scrollbar-thumb {
+  background: #c9c2bb;
+}
+
+body[data-theme='light'] ::-webkit-scrollbar-thumb:hover {
+  background: #b0a99a;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
   /* min-height y background los maneja cada página */
 }
 
