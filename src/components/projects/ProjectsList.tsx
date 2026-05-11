@@ -10,6 +10,7 @@ import {
   CardActionArea,
 } from '@mui/material'
 import { getLanguageLogo } from '../../utils/languageLogos'
+import { useThemeMode } from '../../context/ThemeContext'
 import type { GitHubRepo } from '../../types/GitHub'
 
 // Recibe los proyectos DESDE Props (no del hook)
@@ -20,6 +21,9 @@ type ProjectsListProps = {
 }
 
 export const ProjectsList = ({ projects, loading, error }: ProjectsListProps) => {
+  const { mode } = useThemeMode()
+  const logoColor = mode === 'dark' ? 'white' : 'black'
+
   if (loading) {
     return (
       <Grid container spacing={4}>
@@ -45,12 +49,16 @@ export const ProjectsList = ({ projects, loading, error }: ProjectsListProps) =>
     event: React.SyntheticEvent<HTMLImageElement>,
     language: string | null
   ) => {
-    event.currentTarget.src = getLanguageLogo(language)
+    const fallback = getLanguageLogo(language, logoColor)
+    // Si la URL actual YA es el fallback, salimos para evitar loop infinito.
+    // Ocurría cuando el fallback también daba 404 (SimpleIcons no tiene slug "code").
+    if (event.currentTarget.src === fallback) return
+    event.currentTarget.src = fallback
   }
 
   // Determina la imagen a mostrar: usa project.image si existe, si no usa el logo del lenguaje
   const getDisplayImage = (project: GitHubRepo): string => {
-    return project.image || getLanguageLogo(project.language)
+    return project.image || getLanguageLogo(project.language, logoColor)
   }
 
   return (
@@ -76,6 +84,8 @@ export const ProjectsList = ({ projects, loading, error }: ProjectsListProps) =>
                 component='img'
                 image={getDisplayImage(project)}
                 alt={project.title}
+                loading={index < 3 ? 'eager' : 'lazy'}
+                fetchPriority={index < 3 ? 'high' : 'auto'}
                 onError={e => handleImageError(e, project.language)}
                 sx={{
                   display: 'flex',
@@ -95,7 +105,7 @@ export const ProjectsList = ({ projects, loading, error }: ProjectsListProps) =>
                 sx={{
                   position: 'absolute',
                   inset: 0,
-                  bgcolor: (theme) =>
+                  bgcolor: theme =>
                     theme.palette.mode === 'dark'
                       ? 'rgba(16,22,34,0.95)'
                       : 'rgba(255,255,255,0.95)',
@@ -123,7 +133,7 @@ export const ProjectsList = ({ projects, loading, error }: ProjectsListProps) =>
                         label={tech}
                         size='small'
                         sx={{
-                          bgcolor: (theme) =>
+                          bgcolor: theme =>
                             theme.palette.mode === 'dark'
                               ? 'rgba(43,108,238,0.2)'
                               : 'rgba(43,108,238,0.15)',

@@ -76,14 +76,33 @@ export const languageLogos: Record<string, string> = {
   XML: 'https://cdn.simpleicons.org/xml/white',
 }
 
-// Fallback genérico cuando no hay logo disponible
-export const defaultLogo = 'https://cdn.simpleicons.org/code/white'
+// ── Fallback SVG inline ────────────────────────────────────────────────
+// SimpleIcons NO tiene un icono con slug "code" (retorna 404).
+// En vez de depender de un CDN externo que puede fallar, usamos un SVG inline
+// como data URI. Nunca dará 404, no depende de red, y se adapta al tema.
+const getFallbackSvg = (color: string): string => {
+  const hex = color === 'white' ? '#ffffff' : '#222222'
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="${hex}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>`
+  return `data:image/svg+xml;base64,${btoa(svg)}`
+}
 
 /**
- * Obtiene la URL del logo para un lenguaje dado.
- * Si el lenguaje no está en el mapa, retorna el logo genérico.
+ * Obtiene la URL del logo para un lenguaje dado con el color según el tema.
+ *
+ * @param language - Nombre del lenguaje (null → logo genérico SVG inline)
+ * @param color - Color del icono ('white' para tema dark, 'black' para tema light)
+ *
+ * SimpleIcons soporta colores como sufijo en la URL:
+ *   /white → icono blanco (visible en fondo oscuro)
+ *   /black → icono negro (visible en fondo claro)
+ *
+ * El fallback para lenguajes no mapeados es un SVG inline de un icono </>.
+ * Nunca falla porque es autónomo — no depende de CDN externo.
  */
-export const getLanguageLogo = (language: string | null): string => {
-  if (!language) return defaultLogo
-  return languageLogos[language] ?? defaultLogo
+export const getLanguageLogo = (language: string | null, color: string = 'white'): string => {
+  if (!language) return getFallbackSvg(color)
+  const url = languageLogos[language]
+  if (!url) return getFallbackSvg(color)
+  // Reemplaza el sufijo de color (/white, /black, etc.) por el color solicitado
+  return url.replace(/\/\w+$/, `/${color}`)
 }

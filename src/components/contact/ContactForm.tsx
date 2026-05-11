@@ -22,7 +22,6 @@ import { GlassButton } from '../../ui/GlassButton'
 import { ContactHeader } from './ContactHeader'
 import { config } from '@/config'
 import emailjs from '@emailjs/browser'
-import { theme } from '@/theme'
 
 /**
  * Schema de validación con Zod.
