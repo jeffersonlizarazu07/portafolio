@@ -146,14 +146,7 @@ export const useGitHubRepos = (username: string): UseGitHubReposReturn => {
 
     const fetchRepos = async (): Promise<void> => {
       try {
-        // Token opcional para aumentar rate limit en desarrollo
-        // El portfolio funciona sin él para repos públicos
         const options: RequestInit = {}
-        if (import.meta.env.VITE_GITHUB_TOKEN) {
-          options.headers = {
-            Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
-          }
-        }
 
         // 100 repos es suficiente para un portafolio
         // ordenar por updated muestra los más recientes primero
