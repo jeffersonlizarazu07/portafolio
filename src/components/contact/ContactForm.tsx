@@ -143,6 +143,19 @@ const SuccessNotification = ({ open, onClose }: { open: boolean; onClose: () => 
   </Snackbar>
 )
 
+const ErrorNotification = ({ open, onClose }: { open: boolean; onClose: () => void }) => (
+  <Snackbar
+    open={open}
+    autoHideDuration={8000}
+    onClose={onClose}
+    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+  >
+    <Alert onClose={onClose} severity='error' variant='filled' sx={{ width: '100%' }}>
+      Error al enviar el mensaje. Por favor, intentá de nuevo más tarde.
+    </Alert>
+  </Snackbar>
+)
+
 /**
  * Hook para protección anti-spam.
  *
@@ -205,6 +218,7 @@ const useSpamProtection = () => {
 export const ContactForm = () => {
   const theme = useTheme()
   const [openSnackbar, setOpenSnackbar] = useState(false)
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false)
   const { spamError, validateSubmission, handleInteraction } = useSpamProtection()
 
   const {
@@ -234,6 +248,7 @@ export const ContactForm = () => {
       setOpenSnackbar(true)
     } catch (error) {
       console.log('FAILED...', error)
+      setOpenErrorSnackbar(true)
     }
   }
 
@@ -277,6 +292,7 @@ export const ContactForm = () => {
       </Box>
 
       <SuccessNotification open={openSnackbar} onClose={() => setOpenSnackbar(false)} />
+      <ErrorNotification open={openErrorSnackbar} onClose={() => setOpenErrorSnackbar(false)} />
     </Stack>
   )
 }
