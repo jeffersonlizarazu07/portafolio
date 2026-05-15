@@ -37,7 +37,13 @@ export const SocialLinks = ({ showLabels = true }: SocialLinksProps) => {
       color='text.secondary'
       sx={{
         '& a:hover': {
-          color: { color: theme => theme.palette.grey[500] },
+          // ✅ CORRECTO: función directa en la propiedad color.
+          // ❌ ANTES: { color: theme => theme.palette.grey[500] } — objeto anidado.
+          //    MUI sx NO invoca funciones dentro de objetos anidados, entonces
+          //    la función NUNCA se ejecutaba y el color hover no cambiaba.
+          //    El spread de sx merge ve `color: { color: fn }` y trata el objeto
+          //    como un valor literal, no como una función evaluable.
+          color: theme => theme.palette.grey[500],
           transform: 'scale(1.2)',
         },
       }}

@@ -53,8 +53,13 @@ const contactSchema = z.object({
     .min(1, 'El mensaje es requerido')
     .min(10, 'El mensaje debe tener al menos 10 caracteres')
     .max(500, 'El mensaje no puede exceder 500 caracteres'),
-  // Honeypot: campo oculto que los bots llenan y humanos no ven
-  hp_field: z.string().max(0, 'Spam detectado'),
+  // Honeypot: campo oculto para detectar bots.
+  // Usamos .optional() en vez de .max(0) porque la validación anti-span
+  // DEBE manejarse en validateSubmission (líneas 163-167), no en Zod.
+  // Zod solo necesita permitir que el valor pase para que RHF lo incluya
+  // en data. Si usáramos .max(0), Zod rechazaría antes de que
+  // validateSubmission pueda verificar el honeypot.
+  hp_field: z.string().optional(),
 })
 
 type ContactFormData = z.infer<typeof contactSchema>
@@ -102,6 +107,7 @@ const HoneypotField = ({ register }: { register: UseFormRegister<ContactFormData
     <Box
       component='input'
       type='text'
+      name={hpRegister.name}
       onChange={hpRegister.onChange}
       onBlur={hpRegister.onBlur}
       ref={hpRegister.ref}
