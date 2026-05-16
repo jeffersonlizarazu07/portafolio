@@ -11,7 +11,6 @@ interface ImportMetaEnv {
   readonly VITE_GMAIL_SERVICE_ID: string
   readonly VITE_OUTLOOK_SERVICE_ID: string
   readonly VITE_TEMPLATE_ID: string
-  readonly VITE_MY_TOKEN: string
 }
 
 interface ImportMeta {
