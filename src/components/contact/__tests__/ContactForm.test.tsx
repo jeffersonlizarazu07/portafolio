@@ -232,7 +232,9 @@ describe('ContactForm', () => {
     // CUBRE: líneas 171-172 — validación de tiempo mínimo
     // Configurar minSubmitTime alto para que el envío "rápido" falle.
     const configModule = await import('@/config')
-    ;(configModule.config as any).spamProtection.minSubmitTime = 9999
+    ;(
+      configModule.config as { spamProtection: { minSubmitTime: number } }
+    ).spamProtection.minSubmitTime = 9999
 
     const user = userEvent.setup()
     renderWithTheme(<ContactForm />)
@@ -254,7 +256,9 @@ describe('ContactForm', () => {
     })
 
     // Reset para no afectar otros tests
-    ;(configModule.config as any).spamProtection.minSubmitTime = 0
+    ;(
+      configModule.config as { spamProtection: { minSubmitTime: number } }
+    ).spamProtection.minSubmitTime = 0
   })
 
   // ── SNACKBAR ONCLOSE ────────────────────────────────────────────────
