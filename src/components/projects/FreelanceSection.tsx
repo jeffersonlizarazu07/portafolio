@@ -9,7 +9,7 @@ export const FreelanceSection = () => {
       textAlign='center'
       mt={20}
       pt={10}
-      borderTop={(theme) =>
+      borderTop={theme =>
         theme.palette.mode === 'dark'
           ? '1px solid rgba(255,255,255,0.1)'
           : '1px solid rgba(0,0,0,0.1)'
@@ -30,7 +30,13 @@ export const FreelanceSection = () => {
             Iniciar Proyecto
           </Button>
         </Link>
-        <Button href={config.cv.url} variant='outlined' size='large' target='_blank'>
+        <Button
+          href={config.cv.url}
+          variant='outlined'
+          size='large'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           Ver CV
         </Button>
       </Stack>

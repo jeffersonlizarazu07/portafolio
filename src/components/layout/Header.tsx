@@ -85,7 +85,12 @@ export const Header = () => {
             >
               {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
             </IconButton>
-            <Button href={config.cv.url} variant='contained' target='_blank'>
+            <Button
+              href={config.cv.url}
+              variant='contained'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               Resume
             </Button>
           </Stack>

@@ -37,7 +37,7 @@ export const AboutSection = () => {
               p: 3,
               borderRadius: 3,
               textAlign: 'center',
-              boxShadow: (theme) =>
+              boxShadow: theme =>
                 theme.palette.mode === 'dark'
                   ? '0 10px 40px rgba(0,0,0,0.4)'
                   : '0 10px 40px rgba(0,0,0,0.15)',
@@ -93,6 +93,7 @@ export const AboutSection = () => {
               startIcon={<DownloadIcon />}
               href={config.cv.url}
               target='_blank'
+              rel='noopener noreferrer'
             >
               Descargar HV
             </Button>
