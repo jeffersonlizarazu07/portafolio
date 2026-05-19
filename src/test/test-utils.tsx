@@ -20,6 +20,10 @@ import { MemoryRouter } from 'react-router-dom'
 const testTheme = createTheme({
   palette: {
     mode: 'dark',
+    techAccent: {
+      main: '#61DAFB',
+      light: '#88E1FC',
+    },
   },
 })
 
