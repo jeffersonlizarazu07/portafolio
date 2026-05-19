@@ -1,266 +1,43 @@
-import { Box, Stack, Typography, Grid, Card, CardContent, Chip, Button } from '@mui/material'
-import { ReactIcon } from '../../assets/tech-icons/React'
-import { TypeScriptIcon } from '../../assets/tech-icons/TypeScript'
-import { NodeIcon } from '../../assets/tech-icons/Node'
-import { TailwindIcon } from '../../assets/tech-icons/Tailwind'
-import { ExpressIcon } from '../../assets/tech-icons/Express'
-import { DockerIcon } from '../../assets/tech-icons/Docker'
-import LinkIcon from '@mui/icons-material/Link'
+/**
+ * Sección de tecnologías, experiencia y certificaciones.
+ *
+ * Orquestador que compone los subcomponentes.
+ * Cambia solo si cambia el layout general de la sección.
+ */
+import { Box, Stack, Typography, Grid } from '@mui/material'
+import { TechStackGrid } from './TechStackGrid'
+import { ExperienceCard } from './ExperienceCard'
+import { CertificationsGrid } from './CertificationsGrid'
 
-const techStack = [
-  { name: 'React', icon: <ReactIcon /> },
-  { name: 'TypeScript', icon: <TypeScriptIcon /> },
-  { name: 'Node.js', icon: <NodeIcon /> },
-  { name: 'Express.js', icon: <ExpressIcon /> },
-  { name: 'Tailwind', icon: <TailwindIcon /> },
-  { name: 'Docker', icon: <DockerIcon /> },
-]
-
-const certifications = [
-  {
-    institution: 'Duke University',
-    title: 'Programming Foundations with JavaScript, HTML and CSS.',
-    url: 'https://coursera.org/verify/YTAQCYJK66NM',
-    icon: <LinkIcon />,
-    buttonLabel: 'URL',
-    plataform: 'Coursera',
-  },
-  {
-    institution: 'Meta',
-    title: 'Introducción al desarrollo de back-end.',
-    url: 'https://coursera.org/verify/SWRQLLIUVW5B',
-    icon: <LinkIcon />,
-    buttonLabel: 'URL',
-    plataform: 'Coursera',
-  },
-]
-
-export const TechSection = () => {
-  return (
-    <Box>
-      <Stack spacing={10}>
-        {/* Header */}
-        <Stack
-          direction={{ xs: 'column', md: 'row' }}
-          alignItems='center'
-          spacing={{ xs: 2, md: 4 }}
-        >
-          <Box>
-            <Typography variant='h4' fontWeight={800}>
-              Mi Ecosistema
-            </Typography>
-            <Typography color='text.primary' maxWidth={500}>
-              Me especializo en el desarrollo full stack con JavaScript y tecnologías modernas del
-              ecosistema web, complementando mi experiencia con conocimientos en otras herramientas
-              y lenguajes orientados a la construcción de software.
-            </Typography>
-          </Box>
-        </Stack>
-
-        {/* Tech Grid */}
-        <Grid container spacing={4}>
-          {techStack.map((tech, index) => (
-            <Grid size={{ xs: 6, md: 4, lg: 2 }} key={index}>
-              <Card
-                sx={{
-                  backgroundColor: (theme) =>
-                    theme.palette.mode === 'dark' ? '#16223a' : '#F2ECE7',
-                  textAlign: 'center',
-                  transition: '0.3s',
-                  border: '1px solid',
-                  borderColor: 'divider',
-                  '&:hover': {
-                    transform: 'translateY(-10px)',
-                    borderColor: 'primary.main',
-                    boxShadow: (theme) =>
-                      theme.palette.mode === 'dark'
-                        ? '0 20px 40px rgba(0,0,0,0.3)'
-                        : '0 20px 40px rgba(0,0,0,0.1)',
-                  },
-                }}
-              >
-                <CardContent
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: 2,
-                    p: 3,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: 40,
-                      height: 40,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      '& svg': {
-                        width: '100%',
-                        height: '100%',
-                        color: (theme) =>
-                          theme.palette.mode === 'dark' ? 'primary.main' : '#0F172A',
-                        fill: 'currentColor',
-                      },
-                      '& img': {
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain',
-                      },
-                    }}
-                  >
-                    {tech.icon}
-                  </Box>
-                  <Typography fontWeight={700} color='text.secondary'>
-                    {tech.name}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-
-        {/* Experience & Certifications */}
-        <Grid container spacing={4} sx={{ mb: 15 }}>
-          {/* Experience Card */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Box
-              sx={{
-                p: 4,
-                height: '100%',
-                backgroundColor: (theme) =>
-                  theme.palette.mode === 'dark' ? '#16223a' : '#f1f5f9',
-                border: '1px solid',
-                borderColor: 'divider',
-                borderRadius: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-              }}
-            >
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems='center'>
-                <Typography variant='h2' fontWeight={800} color='primary.main'>
-                  1+
-                </Typography>
-                <Typography variant='h5' color='text.primary'>
-                  años de experiencia
-                </Typography>
-              </Stack>
-              <Typography variant='body1' color='text.secondary' mt={2}>
-                Desarrollando soluciones web modernas y escalables
-              </Typography>
-            </Box>
-          </Grid>
-
-          {/* Certifications */}
-          <Grid size={{ xs: 12, md: 8 }}>
-            <Box
-              sx={{
-                p: 4,
-                height: '100%',
-                backgroundColor: (theme) =>
-                  theme.palette.mode === 'dark' ? '#16223a' : '#f1f5f9',
-                border: '1px solid',
-                borderColor: 'divider',
-                borderRadius: 2,
-              }}
-            >
-              <Stack spacing={3}>
-                <Typography
-                  variant='caption'
-                  color='text.secondary'
-                  fontWeight={700}
-                  letterSpacing={2}
-                >
-                  CERTIFICACIONES
-                </Typography>
-
-                <Grid container spacing={3}>
-                  {certifications.map((cert, index) => (
-                    <Grid size={{ xs: 12, sm: 6 }} key={index}>
-                      <Box
-                        sx={{
-                          p: 2,
-                          height: '100%',
-                          minHeight: 140,
-                          backgroundColor: (theme) =>
-                            theme.palette.mode === 'dark'
-                              ? 'rgba(97, 218, 251, 0.05)'
-                              : 'rgba(43, 108, 238, 0.05)',
-                          border: '1px solid',
-                          borderColor: (theme) =>
-                            theme.palette.mode === 'dark'
-                              ? 'rgba(97, 218, 251, 0.2)'
-                              : 'rgba(43, 108, 238, 0.15)',
-                          borderRadius: 2,
-                        }}
-                      >
-                        <Stack spacing={2}>
-                          <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            justifyContent='space-between'
-                            alignItems={{ xs: 'flex-start', sm: 'center' }}
-                          >
-                            <Box>
-                              <Chip
-                                label={cert.institution}
-                                size='small'
-                                sx={{
-                                  bgcolor: (theme) =>
-                                    theme.palette.mode === 'dark'
-                                      ? 'rgba(97, 218, 251, 0.1)'
-                                      : 'rgba(43, 108, 238, 0.1)',
-                                  color: 'primary.main',
-                                  fontWeight: 600,
-                                }}
-                              />
-                              <Chip
-                                label={cert.plataform}
-                                size='small'
-                                sx={{
-                                  bgcolor: (theme) =>
-                                    theme.palette.mode === 'dark'
-                                      ? 'rgba(97, 218, 251, 0.1)'
-                                      : 'rgba(43, 108, 238, 0.1)',
-                                  color: 'primary.main',
-                                  fontWeight: 600,
-                                }}
-                              />
-                            </Box>
-                            <Button
-                              variant='text'
-                              size='small'
-                              startIcon={<LinkIcon />}
-                              href={cert.url}
-                              target='_blank'
-                              rel='noopener noreferrer'
-                              sx={{
-                                color: 'primary.main',
-                                textTransform: 'none',
-                                '&:hover': {
-                                  backgroundColor: (theme) =>
-                                    theme.palette.mode === 'dark'
-                                      ? 'rgba(97, 218, 251, 0.1)'
-                                      : 'rgba(43, 108, 238, 0.1)',
-                                },
-                              }}
-                            >
-                              {cert.buttonLabel}
-                            </Button>
-                          </Stack>
-                          <Typography variant='body2' color='text.primary' fontWeight={500}>
-                            {cert.title}
-                          </Typography>
-                        </Stack>
-                      </Box>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Stack>
-            </Box>
-          </Grid>
-        </Grid>
+export const TechSection = () => (
+  <Box>
+    <Stack spacing={10}>
+      {/* Header */}
+      <Stack direction={{ xs: 'column', md: 'row' }} alignItems='center' spacing={{ xs: 2, md: 4 }}>
+        <Box>
+          <Typography variant='h4' fontWeight={800}>
+            Mi Ecosistema
+          </Typography>
+          <Typography color='text.primary' maxWidth={500}>
+            Me especializo en el desarrollo full stack con JavaScript y tecnologías modernas del
+            ecosistema web, complementando mi experiencia con conocimientos en otras herramientas y
+            lenguajes orientados a la construcción de software.
+          </Typography>
+        </Box>
       </Stack>
-    </Box>
-  )
-}
+
+      {/* Tech Grid */}
+      <TechStackGrid />
+
+      {/* Experience & Certifications */}
+      <Grid container spacing={4} sx={{ mb: 15 }}>
+        <Grid size={{ xs: 12, md: 4 }}>
+          <ExperienceCard />
+        </Grid>
+        <Grid size={{ xs: 12, md: 8 }}>
+          <CertificationsGrid />
+        </Grid>
+      </Grid>
+    </Stack>
+  </Box>
+)
