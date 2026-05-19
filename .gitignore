@@ -47,6 +47,7 @@ skills-lock.json
 .windsurf/workflows/sdd-new.md
 .playwright-mcp/
 .windsurf/
+.atl
 .atl/skill-registry.md
 scripts/check-responsive.cjs
 docs/RESPIVE-AUDIT.md
