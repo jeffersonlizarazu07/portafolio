@@ -161,7 +161,7 @@ describe('ContactForm', () => {
     const mockSend = vi.mocked(emailjsModule.default.send)
     mockSend.mockClear()
 
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
     // skipPointerEventsCheck: 0 permite interactuar con elementos ocultos
     const user = userEvent.setup({ pointerEventsCheck: 0 })
@@ -186,7 +186,7 @@ describe('ContactForm', () => {
     // Enviar
     await user.click(screen.getByRole('button', { name: /enviar mensaje/i }))
 
-    // validateSubmission detecta el honeypot → loggea y retorna false
+    // validateSubmission detecta el honeypot → warn + retorna false
     // → onSubmit NO ejecuta emailjs.send
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith('Spam detectado: honeypot activado')
@@ -301,7 +301,7 @@ describe('ContactForm', () => {
     const mockSend = vi.mocked(emailjsModule.default.send)
     mockSend.mockRejectedValueOnce(new Error('EmailJS error'))
 
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     const user = userEvent.setup()
     renderWithTheme(<ContactForm />)
@@ -316,9 +316,9 @@ describe('ContactForm', () => {
 
     await user.click(screen.getByRole('button', { name: /enviar mensaje/i }))
 
-    // El catch block loggea "FAILED..." y NO muestra éxito
+    // El catch block loggea el error con console.error y NO muestra éxito
     await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('FAILED...', expect.any(Error))
+      expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error))
     })
     expect(screen.queryByText(/mensaje enviado exitosamente/i)).not.toBeInTheDocument()
 
