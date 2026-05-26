@@ -1,6 +1,6 @@
 import { Box, Container, Grid } from '@mui/material'
-import { ContactForm } from '../components/contact/ContactForm'
-import { ContactSidebar } from '../components/contact/ContactSidebar'
+import { ContactForm } from '@/components/contact/ContactForm'
+import { ContactSidebar } from '@/components/contact/ContactSidebar'
 
 export const ContactPage = () => {
   return (
@@ -8,7 +8,6 @@ export const ContactPage = () => {
       sx={{
         bgcolor: 'background.default',
         color: 'text.primary',
-        overflowX: 'hidden',
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',

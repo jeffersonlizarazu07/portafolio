@@ -1,7 +1,7 @@
 import { Grid, Typography, Skeleton, Snackbar } from '@mui/material'
-import type { GitHubRepo } from '../../types/GitHub'
-import { useImageFallback } from '../../hooks/useImageFallback'
-import { useDeploymentNavigation } from '../../hooks/useDeploymentNavigation'
+import type { GitHubRepo } from '@/types/GitHub'
+import { useImageFallback } from '@/hooks/useImageFallback'
+import { useDeploymentNavigation } from '@/hooks/useDeploymentNavigation'
 import { ProjectCard } from './ProjectCard'
 
 // Recibe los proyectos DESDE Props (no del hook)

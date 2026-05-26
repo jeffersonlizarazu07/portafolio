@@ -16,7 +16,7 @@
 import { HeaderSection } from './HeaderSection'
 import { ProjectsList } from './ProjectsList'
 import { FreelanceSection } from './FreelanceSection'
-import { useGitHubRepos } from '../../hooks/useGitHubRepos'
+import { useGitHubRepos } from '@/hooks/useGitHubRepos'
 import { config } from '@/config'
 
 export const ProjectsContainer = () => {

@@ -1,5 +1,5 @@
 import { Container, Box } from '@mui/material'
-import { ProjectsContainer } from '../components/projects/ProjectsContainer'
+import { ProjectsContainer } from '@/components/projects/ProjectsContainer'
 
 export const ProjectsPage = () => {
   return (

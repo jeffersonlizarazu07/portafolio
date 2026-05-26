@@ -2,7 +2,7 @@ import { Grid, Box, Typography, Button, Stack, Chip, Link } from '@mui/material'
 import { Link as Router } from 'react-router-dom'
 import DownloadIcon from '@mui/icons-material/Download'
 import { config } from '@/config'
-import photo from '../../assets/photo.jpg'
+import photo from '@/assets/photo.jpg'
 import { navLinksArray } from '@/constants/navLinksArray'
 
 export const AboutSection = () => {

@@ -5,12 +5,12 @@
  * al layout o al diseño visual.
  */
 import type { ElementType } from 'react'
-import { ReactIcon } from '../../assets/tech-icons/React'
-import { TypeScriptIcon } from '../../assets/tech-icons/TypeScript'
-import { NodeIcon } from '../../assets/tech-icons/Node'
-import { TailwindIcon } from '../../assets/tech-icons/Tailwind'
-import { ExpressIcon } from '../../assets/tech-icons/Express'
-import { DockerIcon } from '../../assets/tech-icons/Docker'
+import { ReactIcon } from '@/assets/tech-icons/React'
+import { TypeScriptIcon } from '@/assets/tech-icons/TypeScript'
+import { NodeIcon } from '@/assets/tech-icons/Node'
+import { TailwindIcon } from '@/assets/tech-icons/Tailwind'
+import { ExpressIcon } from '@/assets/tech-icons/Express'
+import { DockerIcon } from '@/assets/tech-icons/Docker'
 import LinkIcon from '@mui/icons-material/Link'
 
 export interface TechItem {
