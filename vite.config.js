@@ -5,13 +5,18 @@ import svgr from 'vite-plugin-svgr'
 import { visualizer } from 'rollup-plugin-visualizer'
 import path from 'path'
 
+// Solo genera stats.html cuando se ejecuta con ANALYZE=true npm run build
+// En builds normales de producción, el visualizer no se incluye para evitar
+// exponer el mapa interno del bundle (dependencias, chunks, nombres de módulos).
+const shouldAnalyze = process.env.ANALYZE === 'true'
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     svgr(),
-    visualizer({ open: false, gzipSize: true, filename: 'dist/stats.html' }),
-  ],
+    shouldAnalyze && visualizer({ open: false, gzipSize: true, filename: 'dist/stats.html' }),
+  ].filter(Boolean),
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
