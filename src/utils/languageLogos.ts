@@ -66,6 +66,8 @@ export const languageLogos: Record<string, string> = {
   AWS: 'https://cdn.simpleicons.org/amazonaws/white',
   Azure: 'https://cdn.simpleicons.org/microsoftazure/white',
   GCP: 'https://cdn.simpleicons.org/googlecloud/white',
+  Vite: 'https://cdn.simpleicons.org/vite/white',
+  'Tailwind CSS': 'https://cdn.simpleicons.org/tailwindcss/white',
   Vercel: 'https://cdn.simpleicons.org/vercel/white',
   Netlify: 'https://cdn.simpleicons.org/netlify/white',
   Figma: 'https://cdn.simpleicons.org/figma/white',
