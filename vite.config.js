@@ -20,9 +20,21 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom'],
-          'vendor-router': ['react-router-dom'],
+        manualChunks(id) {
+          // MUI + Emotion: cambian poco, buen candidato para caché largo
+          if (id.includes('node_modules/@mui') || id.includes('node_modules/@emotion')) {
+            return 'vendor-mui'
+          }
+          if (
+            id.includes('node_modules/react/') ||
+            id.includes('node_modules/react-dom/') ||
+            id.includes('node_modules/scheduler/')
+          ) {
+            return 'vendor-react'
+          }
+          if (id.includes('node_modules/react-router')) {
+            return 'vendor-router'
+          }
         },
       },
     },
