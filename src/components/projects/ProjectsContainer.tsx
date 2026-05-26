@@ -13,6 +13,7 @@
  * FreelanceSection no recibe props porque es contenido estático que no depende
  * de los datos de GitHub. No necesita saber nada del estado del container.
  */
+import { AnimatedSection } from '@/ui/AnimatedSection'
 import { HeaderSection } from './HeaderSection'
 import { ProjectsList } from './ProjectsList'
 import { FreelanceSection } from './FreelanceSection'
@@ -32,13 +33,19 @@ export const ProjectsContainer = () => {
   return (
     <>
       {/* Filtros: tecnologías disponibles + filtro activo + setter */}
-      <HeaderSection technologies={technologies} filter={filter} setFilter={setFilter} />
+      <AnimatedSection variant='slideUp' delay={0}>
+        <HeaderSection technologies={technologies} filter={filter} setFilter={setFilter} />
+      </AnimatedSection>
 
       {/* Lista: repos filtrados + estados loading/error */}
-      <ProjectsList projects={filteredRepos} loading={loading} error={error} />
+      <AnimatedSection variant='slideUp' delay={150}>
+        <ProjectsList projects={filteredRepos} loading={loading} error={error} />
+      </AnimatedSection>
 
       {/* Sección estática: proyectos freelance */}
-      <FreelanceSection />
+      <AnimatedSection variant='slideUp' delay={300}>
+        <FreelanceSection />
+      </AnimatedSection>
     </>
   )
 }

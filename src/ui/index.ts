@@ -3,3 +3,4 @@
  */
 
 export { GlassButton } from './GlassButton'
+export { AnimatedSection } from './AnimatedSection'
