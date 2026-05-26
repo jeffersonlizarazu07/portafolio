@@ -311,9 +311,9 @@ describe('ContactForm', () => {
 
     await user.click(screen.getByRole('button', { name: /enviar mensaje/i }))
 
-    // El catch block loggea el error con console.error y NO muestra éxito
+    // El catch block loggea el error con console.error (DEV guard) y NO muestra éxito
     await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error))
+      expect(consoleSpy).toHaveBeenCalledWith('ContactForm: send failed', expect.any(Error))
     })
     expect(screen.queryByText(/mensaje enviado exitosamente/i)).not.toBeInTheDocument()
 

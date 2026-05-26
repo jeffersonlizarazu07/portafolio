@@ -62,7 +62,9 @@ export const ContactForm = () => {
       reset()
       setOpenSnackbar(true)
     } catch (error) {
-      console.error(error)
+      if (import.meta.env.DEV) {
+        console.error('ContactForm: send failed', error)
+      }
       setOpenErrorSnackbar(true)
     }
   }

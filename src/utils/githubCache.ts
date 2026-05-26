@@ -78,7 +78,9 @@ export const setCachedData = (repos: GitHubRepo[], technologies: string[]): void
     localStorage.setItem(CACHE_KEY, JSON.stringify(entry))
   } catch {
     // Si localStorage está lleno (raro), simplemente no cacheamos
-    console.warn('No se pudo guardar en caché (localStorage lleno?)')
+    if (import.meta.env.DEV) {
+      console.warn('No se pudo guardar en caché (localStorage lleno?)')
+    }
   }
 }
 
