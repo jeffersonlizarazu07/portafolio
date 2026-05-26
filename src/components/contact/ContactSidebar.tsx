@@ -4,7 +4,7 @@ import { SocialChannels } from './SocialChannels'
 
 export const ContactSidebar = () => {
   return (
-    <Stack spacing={8}>
+    <Stack spacing={{ xs: 4, md: 8 }}>
       <DirectContact />
       <SocialChannels />
     </Stack>

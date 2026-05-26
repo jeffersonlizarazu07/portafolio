@@ -18,7 +18,9 @@ export const SocialChannels: FC = () => {
         fontWeight={900}
         sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}
       >
-        <RemoveIcon sx={{ width: '100px', fontSize: '80px' }} />
+        <RemoveIcon
+          sx={{ width: { xs: '50px', md: '100px' }, fontSize: { xs: '40px', md: '80px' } }}
+        />
         Canales de contacto
       </Typography>
       {socialsAndIcons.map((item, index) => {

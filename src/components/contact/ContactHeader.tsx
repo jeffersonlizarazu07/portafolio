@@ -15,7 +15,12 @@ export const ContactHeader = () => {
         Contacto
       </Typography>
 
-      <Typography variant='h2' fontWeight={800} mt={2}>
+      <Typography
+        variant='h2'
+        fontWeight={800}
+        mt={2}
+        sx={{ fontSize: { xs: '2.25rem', sm: '3rem', md: '3.75rem' } }}
+      >
         Vamos a construir algo{' '}
         <Box component='span' sx={{ color: 'primary.main' }}>
           extraordinario

@@ -1,6 +1,6 @@
 /**
  * PageLoader - Spinner animado para cuando carga una página.
- * 
+ *
  * ¿Por qué diseñado así?
  * - El spinner circular es el indicador de loading universal.
  * - Animación suave que no distrae.
@@ -17,7 +17,7 @@ export const PageLoader = () => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100vh',
+        height: '100dvh',
         bgcolor: 'background.default',
         gap: 3,
       }}

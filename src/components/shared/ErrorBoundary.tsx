@@ -1,16 +1,16 @@
 /**
  * Error Boundary - Captura errores de componentes hijos.
- * 
+ *
  * ¿Por qué existe este componente?
  * - Si un componente falla durante el render, no crashea toda la app.
  * - Muestra una UI de fallback en vez de pantalla en blanco.
  * - Permite al usuario navegar a otras páginas si una sección falla.
- * 
+ *
  * ¿Cuándo se activa?
  * - Errores durante el render de componentes hijos.
  * - Errores en hooks de componentes hijos.
  * - El boundary NO captura errores en eventos (onClick) ni async (setTimeout).
- * 
+ *
  * ¿Por qué class component?
  * - Error Boundaries SOLO pueden ser class components.
  * - Los hooks (useEffect) no pueden capturar errores de render.
@@ -32,24 +32,30 @@ interface ErrorBoundaryState {
 
 /**
  * Fallback UI cuando ocurre un error.
- * 
+ *
  * ¿Por qué diseñado así?
  * - Muestra mensaje genérico (no exponemos detalles técnicos).
  * - Botón para recargar la página (recovery).
  * - Diseño consistente con el theme del portfolio.
  */
-const FallbackUI = ({ message = 'Algo salió mal', onRetry }: { message?: string; onRetry?: () => void }) => (
+const FallbackUI = ({
+  message = 'Algo salió mal',
+  onRetry,
+}: {
+  message?: string
+  onRetry?: () => void
+}) => (
   <Box
     sx={{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      p: 6,
+      p: { xs: 3, md: 6 },
       textAlign: 'center',
       bgcolor: 'background.paper',
       borderRadius: 3,
-      m: 4,
+      m: { xs: 2, md: 4 },
     }}
   >
     <Typography variant='h6' color='error' gutterBottom>
@@ -100,7 +106,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
 /**
  * Hook para crear un error boundary inline.
- * 
+ *
  * ¿Cuándo usarlo?
  * - Para envolver secciones específicas que podrían fallar.
  * - No sustituye el ErrorBoundary global en App.
