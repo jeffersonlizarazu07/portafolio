@@ -1,13 +1,17 @@
 /**
- * Tests de ContactPage
+ * Tests de ContactPage — composición de ContactForm + ContactSidebar.
  *
- * Renderiza ContactForm + ContactSidebar.
- * ContactForm necesita: @/config (email), @emailjs/browser (send).
- * ContactSidebar necesita: @/config (social urls).
+ * ContactForm se testea aisladamente en ContactForm.test.tsx.
+ * Aquí solo verificamos que la página renderiza ambos sub-componentes.
+ *
+ * NOTA: ContactPage acepta un prop `ContactFormComponent` para inyectar
+ * el componente directamente en lugar de usar React.lazy + Suspense,
+ * que no resuelve correctamente en jsdom. Ver ContactPage.tsx.
  */
 import { describe, it, expect, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithTheme } from '@/test/test-utils'
+import { ContactForm } from '@/components/contact/ContactForm'
 
 // Mock para emailjs (ContactForm.send)
 vi.mock('@emailjs/browser', () => ({
@@ -37,32 +41,35 @@ vi.mock('@/config', () => ({
 
 import { ContactPage } from '../ContactPage'
 
+/** Helper: renderiza ContactPage con ContactForm inyectado (sin lazy) */
+const renderContactPage = () => {
+  renderWithTheme(<ContactPage ContactFormComponent={ContactForm} />)
+}
+
 describe('ContactPage', () => {
   it('renderiza el encabezado del formulario', () => {
-    renderWithTheme(<ContactPage />)
+    renderContactPage()
 
-    // ContactHeader muestra "Vamos a construir algo extraordinario"
     expect(
       screen.getByRole('heading', { name: /vamos a construir algo extraordinario/i })
     ).toBeInTheDocument()
   })
 
   it('renderiza los campos del formulario', () => {
-    renderWithTheme(<ContactPage />)
+    renderContactPage()
 
-    // Label aparece también en <legend>, usamos getAllByText
     const messageLabels = screen.getAllByText(/cuéntame sobre tu proyecto/i)
     expect(messageLabels.length).toBeGreaterThanOrEqual(1)
   })
 
   it('renderiza la sección de canales de contacto', () => {
-    renderWithTheme(<ContactPage />)
+    renderContactPage()
 
     expect(screen.getByText(/canales de contacto/i)).toBeInTheDocument()
   })
 
   it('renderiza el botón de envío', () => {
-    renderWithTheme(<ContactPage />)
+    renderContactPage()
 
     expect(screen.getByRole('button', { name: /enviar mensaje/i })).toBeInTheDocument()
   })

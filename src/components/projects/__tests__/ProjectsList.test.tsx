@@ -132,9 +132,9 @@ describe('ProjectsList', () => {
     const openSpy = vi.spyOn(window, 'open').mockImplementation(() => null)
     renderProjectsList([mockProjects[0]], false, null)
 
-    const rocket = document.querySelector('.rocket-icon')
+    const rocket = screen.getByTestId('RocketLaunchIcon')
     expect(rocket).toBeInTheDocument()
-    fireEvent.click(rocket!)
+    fireEvent.click(rocket)
 
     expect(openSpy).toHaveBeenCalledWith(
       'https://github.com/test/repo-uno',
@@ -144,13 +144,12 @@ describe('ProjectsList', () => {
   })
 
   it('el click en tarjeta CON deployment_url abre el deployment', () => {
-    const openSpy = vi.spyOn(window, 'open').mockImplementation(() => null)
     renderProjectsList([mockProjects[0]], false, null)
 
-    // Click en el título que está dentro del CardActionArea
-    fireEvent.click(screen.getByText('repo-uno'))
-
-    expect(openSpy).toHaveBeenCalledWith('https://midemo.com', '_blank', 'noopener,noreferrer')
+    // La tarjeta ahora es un <a href={deployment_url}> que abre en nueva pestaña
+    const cardLink = screen.getByText('repo-uno').closest('a')
+    expect(cardLink).toHaveAttribute('href', 'https://midemo.com')
+    expect(cardLink).toHaveAttribute('target', '_blank')
   })
 
   it('el click en tarjeta SIN deployment_url muestra snackbar', () => {

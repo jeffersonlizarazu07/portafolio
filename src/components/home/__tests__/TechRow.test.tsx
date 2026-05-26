@@ -13,11 +13,11 @@ describe('TechRow', () => {
   it('renderiza todas las tecnologías', () => {
     renderWithTheme(<TechRow />)
 
-    expect(screen.getByText('REACT')).toBeInTheDocument()
-    expect(screen.getByText('EXPRESS')).toBeInTheDocument()
-    expect(screen.getByText('JAVA')).toBeInTheDocument()
-    expect(screen.getByText('VITE')).toBeInTheDocument()
-    expect(screen.getByText('TAILWIND')).toBeInTheDocument()
-    expect(screen.getByText('VERCEL')).toBeInTheDocument()
+    expect(screen.getByText('React')).toBeInTheDocument()
+    expect(screen.getByText('Express')).toBeInTheDocument()
+    expect(screen.getByText('Java')).toBeInTheDocument()
+    expect(screen.getByText('Vite')).toBeInTheDocument()
+    expect(screen.getByText('Tailwind CSS')).toBeInTheDocument()
+    expect(screen.getByText('Vercel')).toBeInTheDocument()
   })
 })

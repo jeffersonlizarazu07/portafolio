@@ -1,8 +1,9 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, type ComponentType } from 'react'
 import { Box, Container, Grid, CircularProgress } from '@mui/material'
+import { AnimatedSection } from '@/ui/AnimatedSection'
 import { ContactSidebar } from '@/components/contact/ContactSidebar'
 
-const ContactForm = lazy(() =>
+const LazyContactForm = lazy(() =>
   import('@/components/contact/ContactForm').then(m => ({ default: m.ContactForm }))
 )
 
@@ -12,7 +13,12 @@ const formFallback = (
   </Box>
 )
 
-export const ContactPage = () => {
+interface ContactPageProps {
+  /** Override para tests — permite inyectar ContactForm sin React.lazy */
+  ContactFormComponent?: ComponentType
+}
+
+export const ContactPage = ({ ContactFormComponent = LazyContactForm }: ContactPageProps) => {
   return (
     <Box
       sx={{
@@ -46,13 +52,17 @@ export const ContactPage = () => {
       <Container maxWidth='xl' sx={{ position: 'relative', zIndex: 2, marginTop: '6.25rem' }}>
         <Grid container spacing={{ xs: 4, lg: 10 }} alignItems='center' marginBottom='3rem'>
           <Grid size={{ xs: 12, lg: 7 }}>
-            <Suspense fallback={formFallback}>
-              <ContactForm />
-            </Suspense>
+            <AnimatedSection variant='slideUp' delay={0}>
+              <Suspense fallback={formFallback}>
+                <ContactFormComponent />
+              </Suspense>
+            </AnimatedSection>
           </Grid>
 
           <Grid size={{ xs: 12, lg: 5 }}>
-            <ContactSidebar />
+            <AnimatedSection variant='slideUp' delay={200}>
+              <ContactSidebar />
+            </AnimatedSection>
           </Grid>
         </Grid>
       </Container>

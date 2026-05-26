@@ -42,8 +42,8 @@ describe('HomePage', () => {
   it('renderiza TechRow con tecnologías', () => {
     renderWithRouter(<HomePage />)
 
-    expect(screen.getByText('REACT')).toBeInTheDocument()
-    expect(screen.getByText('EXPRESS')).toBeInTheDocument()
+    expect(screen.getByText('React')).toBeInTheDocument()
+    expect(screen.getByText('Express')).toBeInTheDocument()
   })
 
   it('tiene enlace a proyectos y contacto', () => {

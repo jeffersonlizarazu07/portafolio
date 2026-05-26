@@ -65,12 +65,13 @@ describe('ProjectCard', () => {
     expect(onImageError).toHaveBeenCalledTimes(1)
   })
 
-  it('llama onCardClick al hacer click en la tarjeta', () => {
+  it('llama onCardClick al hacer click en tarjeta SIN deployment', () => {
     const onCardClick = vi.fn()
-    renderWithTheme(<ProjectCard {...defaultProps} onCardClick={onCardClick} />)
+    renderWithTheme(
+      <ProjectCard {...defaultProps} project={mockProjectNoDeploy} onCardClick={onCardClick} />
+    )
 
-    // El título está dentro del CardActionArea
-    fireEvent.click(screen.getByText('repo-uno'))
+    fireEvent.click(screen.getByText('repo-sin-deploy'))
     expect(onCardClick).toHaveBeenCalledTimes(1)
   })
 
@@ -78,9 +79,9 @@ describe('ProjectCard', () => {
     const onRocketClick = vi.fn()
     renderWithTheme(<ProjectCard {...defaultProps} onRocketClick={onRocketClick} />)
 
-    const rocket = document.querySelector('.rocket-icon')
+    const rocket = screen.getByTestId('RocketLaunchIcon')
     expect(rocket).toBeInTheDocument()
-    fireEvent.click(rocket!)
+    fireEvent.click(rocket)
     expect(onRocketClick).toHaveBeenCalledTimes(1)
   })
 
@@ -91,8 +92,8 @@ describe('ProjectCard', () => {
       <ProjectCard {...defaultProps} onCardClick={onCardClick} onRocketClick={onRocketClick} />
     )
 
-    const rocket = document.querySelector('.rocket-icon')
-    fireEvent.click(rocket!)
+    const rocket = screen.getByTestId('RocketLaunchIcon')
+    fireEvent.click(rocket)
     expect(onRocketClick).toHaveBeenCalledTimes(1)
     expect(onCardClick).not.toHaveBeenCalled()
   })

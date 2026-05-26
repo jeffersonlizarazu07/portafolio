@@ -176,9 +176,11 @@ describe('ProjectsContainer', () => {
     )
 
     expect(screen.getByRole('button', { name: /todos/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /typescript/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /react/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /node\.js/i })).toBeInTheDocument()
+    // Usamos anchored regex para evitar conflicto con CardActionArea (role="button")
+    // que contiene chips con esos mismos textos
+    expect(screen.getByRole('button', { name: /^typescript$/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /^react$/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /^node\.js$/i })).toBeInTheDocument()
   })
 
   it('llama a setFilter cuando se hace clic en un filtro', async () => {
@@ -196,7 +198,8 @@ describe('ProjectsContainer', () => {
       </ThemeProvider>
     )
 
-    await user.click(screen.getByRole('button', { name: /react/i }))
+    // Anchored regex para evitar conflicto con chips dentro de CardActionArea
+    await user.click(screen.getByRole('button', { name: /^react$/i }))
 
     expect(setFilterMock).toHaveBeenCalledWith('React')
   })
