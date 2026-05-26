@@ -29,8 +29,8 @@ describe('Hero', () => {
   it('muestra el título principal "Full Stack Developer."', () => {
     renderWithRouter(<Hero />)
 
-    // Buscar por rol de heading (h2) que contenga el texto
-    const heading = screen.getByRole('heading', { level: 2 })
+    // Buscar por rol de heading (h1) que contenga el texto
+    const heading = screen.getByRole('heading', { level: 1 })
 
     expect(heading).toBeInTheDocument()
     expect(heading.textContent).toContain('Full Stack')

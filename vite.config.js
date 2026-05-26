@@ -21,19 +21,10 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // MUI + Emotion: cambian poco, buen candidato para caché largo
-          if (id.includes('node_modules/@mui') || id.includes('node_modules/@emotion')) {
-            return 'vendor-mui'
-          }
-          if (
-            id.includes('node_modules/react/') ||
-            id.includes('node_modules/react-dom/') ||
-            id.includes('node_modules/scheduler/')
-          ) {
-            return 'vendor-react'
-          }
-          if (id.includes('node_modules/react-router')) {
-            return 'vendor-router'
+          // Chunk único de vendor: evita problemas de orden de inicialización
+          // entre React, Emotion, MUI y React Router.
+          if (id.includes('node_modules')) {
+            return 'vendor'
           }
         },
       },

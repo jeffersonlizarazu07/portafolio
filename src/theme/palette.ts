@@ -11,8 +11,8 @@ export const palette: {
   warning: { main: string }
 } = {
   primary: {
-    main: '#2b6cee',
-    light: '#4a7cd2',
+    main: '#3b82f6',
+    light: '#60a5fa',
   },
   techAccent: {
     main: '#61DAFB',
@@ -27,7 +27,7 @@ export const palette: {
   },
   text: {
     primary: '#ffffff',
-    secondary: '#64748b',
+    secondary: '#94a3b8',
     disabled: '#94a3b8',
     label: '#94a3b8',
   },

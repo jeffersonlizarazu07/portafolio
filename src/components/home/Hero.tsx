@@ -46,7 +46,7 @@ export const Hero = () => {
 
               <AnimatedSection variant='slideUp' delay={100}>
                 <Typography
-                  variant='h2'
+                  variant='h1'
                   sx={{
                     fontWeight: 800,
                     fontSize: { xs: '2.5rem', lg: '4rem' },

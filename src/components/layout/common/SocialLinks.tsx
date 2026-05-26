@@ -44,7 +44,10 @@ export const SocialLinks = memo(function SocialLinks({ showLabels = true, sx }: 
           sx={{
             display: 'inline-flex',
             alignItems: 'center',
+            justifyContent: 'center',
             gap: 1,
+            minHeight: 44,
+            minWidth: 44,
           }}
           underline='none'
           key={label}
