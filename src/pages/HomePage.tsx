@@ -9,8 +9,8 @@ export const HomePage = () => {
         bgcolor: 'background.default',
         color: 'text.primary',
         overflowX: 'hidden',
-        pt: 6,
-        px: 6,
+        pt: { xs: 0, md: 6 },
+        px: { xs: 2, sm: 4, md: 6 },
         pb: 0,
       }}
     >

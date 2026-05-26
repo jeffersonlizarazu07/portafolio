@@ -1,6 +1,6 @@
 /**
  * Página 404 - Page Not Found
- * 
+ *
  * ¿Por qué diseñada así?
  * - Mensaje claro que explica qué pasó.
  * - Botón para volver al inicio (mejor que "Not Found" a secas).
@@ -19,7 +19,7 @@ export const NotFoundPage = () => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100vh',
+        minHeight: '100dvh',
         width: '100%',
         bgcolor: 'background.default',
         color: 'text.primary',
@@ -41,22 +41,12 @@ export const NotFoundPage = () => {
       </Typography>
 
       {/* Título */}
-      <Typography
-        variant='h4'
-        fontWeight={700}
-        mb={2}
-        textAlign='center'
-      >
+      <Typography variant='h4' fontWeight={700} mb={2} textAlign='center'>
         Página no encontrada
       </Typography>
 
       {/* Descripción */}
-      <Typography
-        color='text.secondary'
-        mb={5}
-        textAlign='center'
-        maxWidth={400}
-      >
+      <Typography color='text.secondary' mb={5} textAlign='center' maxWidth={400}>
         Lo siento, la página que buscas no existe o fue movida.
       </Typography>
 
@@ -67,6 +57,7 @@ export const NotFoundPage = () => {
         variant='contained'
         size='large'
         startIcon={<HomeIcon />}
+        sx={{ width: { xs: '100%', sm: 'auto' } }}
       >
         Volver a la página principal
       </Button>

@@ -7,8 +7,8 @@ export const AboutPage = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        py: 12,
-        px: 6,
+        py: { xs: 6, md: 12 },
+        px: { xs: 2, sm: 4, md: 6 },
         position: 'relative',
         overflow: 'hidden',
         bgcolor: 'background.default',
@@ -19,6 +19,7 @@ export const AboutPage = () => {
       {/* Glow Orbs */}
       <Box
         sx={{
+          display: { xs: 'none', md: 'block' },
           position: 'absolute',
           top: -100,
           left: -100,
@@ -32,6 +33,7 @@ export const AboutPage = () => {
       />
       <Box
         sx={{
+          display: { xs: 'none', md: 'block' },
           position: 'absolute',
           top: '50%',
           right: -100,

@@ -12,7 +12,7 @@ export const ContactPage = () => {
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
-        p: 6,
+        p: { xs: 2, sm: 4, md: 6 },
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -22,7 +22,7 @@ export const ContactPage = () => {
         sx={{
           position: 'fixed',
           inset: 0,
-          display: 'flex',
+          display: { xs: 'none', md: 'flex' },
           alignItems: 'center',
           justifyContent: 'center',
           opacity: 0.03,
@@ -35,7 +35,7 @@ export const ContactPage = () => {
       ></Box>
 
       <Container maxWidth='xl' sx={{ position: 'relative', zIndex: 2, marginTop: '6.25rem' }}>
-        <Grid container spacing={10} alignItems='center' marginBottom='3rem'>
+        <Grid container spacing={{ xs: 4, lg: 10 }} alignItems='center' marginBottom='3rem'>
           <Grid size={{ xs: 12, lg: 7 }}>
             <ContactForm />
           </Grid>
@@ -49,6 +49,7 @@ export const ContactPage = () => {
       {/* Background Glow */}
       <Box
         sx={{
+          display: { xs: 'none', md: 'block' },
           position: 'fixed',
           top: '10%',
           left: '5%',
