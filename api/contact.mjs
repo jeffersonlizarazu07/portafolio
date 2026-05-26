@@ -19,8 +19,8 @@
 
 // ── Orígenes permitidos para CORS ──
 // Solo requests desde estos dominios pueden usar la API.
-// Si el Origin está ausente (curl, server-to-server) se permite igual
-// para mantener compatibilidad con herramientas de testing.
+// Requests sin header Origin (curl, scripts server-side) son bloqueados.
+// Los navegadores modernos siempre envían Origin en POST.
 const ALLOWED_ORIGINS = [
   'https://jefferson-lizarazu-dev.vercel.app',
   'http://localhost:5173',
@@ -29,11 +29,11 @@ const ALLOWED_ORIGINS = [
 
 /**
  * Valida que el origen del request esté en la lista de permitidos.
- * Retorna true si el origen es válido, está ausente, o si hay múltiples
- * orígenes (caso edge de algunos proxies).
+ * Retorna true si el origen es válido o si hay múltiples orígenes
+ * (caso edge de algunos proxies). Requests sin Origin son bloqueados.
  */
 const isOriginAllowed = origin => {
-  if (!origin) return true
+  if (!origin) return false
   // Algunos proxies envían múltiples orígenes separados por espacio
   return origin.split(/\s+/).every(o => ALLOWED_ORIGINS.includes(o))
 }
