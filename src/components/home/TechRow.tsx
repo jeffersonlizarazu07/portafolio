@@ -12,12 +12,13 @@ export const TechRow = () => {
           theme.palette.mode === 'dark'
             ? '1px solid rgba(255, 255, 255, 0.1)'
             : '2px solid #E2E8F0',
-        py: 10,
+        py: { xs: 4, md: 10 },
         mt: 5,
         width: '100vw',
         position: 'relative',
         left: '50%',
         mx: '-50vw',
+        maxWidth: '100%',
       }}
     >
       <Container maxWidth='xl'>

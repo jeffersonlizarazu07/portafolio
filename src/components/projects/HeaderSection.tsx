@@ -9,7 +9,7 @@ type HeaderSectionProps = {
 
 export const HeaderSection = ({ technologies, filter, setFilter }: HeaderSectionProps) => {
   return (
-    <Box maxWidth={600} mb={8} marginTop={6}>
+    <Box maxWidth={600} mb={{ xs: 3, md: 8 }} marginTop={{ xs: 3, md: 6 }}>
       <Typography variant='h3' fontWeight={700} gutterBottom>
         Mis{' '}
         <Box component='span' color='primary.main'>

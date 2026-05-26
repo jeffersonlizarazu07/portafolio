@@ -44,7 +44,7 @@ export const Header = () => {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              height: 80,
+              height: { xs: 64, md: 80 },
               px: { xs: 2, sm: 3, md: 4 },
             }}
           >
@@ -89,7 +89,7 @@ export const Header = () => {
             </IconButton>
 
             {/* Desktop NavLinks */}
-            <NavLinks hideOnXs={false} />
+            <NavLinks />
 
             {/* Right Actions */}
             <Stack direction='row' spacing={2} alignItems='center'>
@@ -129,7 +129,10 @@ export const Header = () => {
           <Typography variant='h6' noWrap>
             PORTAFOLIO
           </Typography>
-          <IconButton sx={{ position: 'absolute' }} onClick={() => setMobileOpen(false)}>
+          <IconButton
+            sx={{ position: 'absolute', right: 8, top: 8 }}
+            onClick={() => setMobileOpen(false)}
+          >
             <MenuIcon fontSize='small' />
           </IconButton>
         </Toolbar>

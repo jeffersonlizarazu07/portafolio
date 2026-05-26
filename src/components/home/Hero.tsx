@@ -11,24 +11,22 @@ export const Hero = () => {
     <Box
       component='main'
       sx={{
-        minHeight: '100vh',
+        minHeight: '100dvh',
         display: 'flex',
         alignItems: 'center',
-        pt: 10,
-        marginTop: '6.25rem',
+        pt: { xs: 4, lg: 10 },
+        marginTop: { xs: '64px', md: '6.25rem' },
       }}
     >
       <Container maxWidth='xl'>
-        <Grid container spacing={10} alignItems='center'>
+        <Grid container spacing={{ xs: 4, lg: 10 }} alignItems='center'>
           {/* LEFT CONTENT */}
           <Grid size={{ xs: 12, lg: 6 }}>
             <Stack spacing={4}>
               <Typography
                 sx={{
-                  background: (theme) =>
-                    theme.palette.mode === 'dark'
-                      ? 'rgba(15,31,48,0.7)'
-                      : 'rgba(43,108,238,0.1)',
+                  background: theme =>
+                    theme.palette.mode === 'dark' ? 'rgba(15,31,48,0.7)' : 'rgba(43,108,238,0.1)',
                   px: 2,
                   py: 1,
                   borderRadius: 5,
@@ -84,7 +82,9 @@ export const Hero = () => {
               <SocialLinks />
             </Stack>
           </Grid>
-          <CodeImage />
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <CodeImage />
+          </Grid>
         </Grid>
       </Container>
     </Box>

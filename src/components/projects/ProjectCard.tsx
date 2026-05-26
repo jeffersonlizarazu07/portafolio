@@ -77,7 +77,7 @@ export const ProjectCard = ({
           alignItems: 'center',
           width: '100%',
           boxSizing: 'border-box',
-          height: 320,
+          height: { xs: 200, md: 320 },
           objectFit: 'contain',
           transition: 'transform .5s ease',
           padding: 2,
@@ -96,7 +96,7 @@ export const ProjectCard = ({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          opacity: 0,
+          opacity: { xs: 1, md: 0 },
           transition: 'opacity .3s ease',
         }}
       >
