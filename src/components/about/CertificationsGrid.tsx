@@ -11,7 +11,7 @@ import { CertificationCard } from './CertificationCard'
 export const CertificationsGrid = () => (
   <Box
     sx={{
-      p: 4,
+      p: { xs: 2, sm: 3, md: 4 },
       height: '100%',
       backgroundColor: 'background.tech',
       border: '1px solid',
@@ -24,7 +24,7 @@ export const CertificationsGrid = () => (
         CERTIFICACIONES
       </Typography>
       <Grid container spacing={3}>
-        {certifications.map((cert) => (
+        {certifications.map(cert => (
           <Grid size={{ xs: 12, sm: 6 }} key={cert.url}>
             <CertificationCard cert={cert} />
           </Grid>

@@ -9,7 +9,7 @@ import { Box, Stack, Typography } from '@mui/material'
 export const ExperienceCard = () => (
   <Box
     sx={{
-      p: 4,
+      p: { xs: 2, md: 4 },
       height: '100%',
       backgroundColor: 'background.tech',
       border: '1px solid',

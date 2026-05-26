@@ -7,7 +7,7 @@ import { navLinksArray } from '@/constants/navLinksArray'
 
 export const AboutSection = () => {
   return (
-    <Grid container spacing={10} alignItems='center' mb={20}>
+    <Grid container spacing={{ xs: 4, lg: 10 }} alignItems='center' mb={{ xs: 8, md: 20 }}>
       {/* Image */}
       <Grid size={{ xs: 12, lg: 5 }}>
         <Box sx={{ position: 'relative', maxWidth: 400, mx: 'auto' }}>
@@ -30,8 +30,8 @@ export const AboutSection = () => {
           <Box
             sx={{
               position: 'absolute',
-              bottom: -20,
-              right: -20,
+              bottom: { xs: -10, sm: -20 },
+              right: { xs: -10, sm: -20 },
               bgcolor: 'primary.main',
               color: 'white',
               p: 3,

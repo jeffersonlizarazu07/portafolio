@@ -11,7 +11,7 @@ import { CertificationsGrid } from './CertificationsGrid'
 
 export const TechSection = () => (
   <Box>
-    <Stack spacing={10}>
+    <Stack spacing={{ xs: 4, md: 10 }}>
       {/* Header */}
       <Stack direction={{ xs: 'column', md: 'row' }} alignItems='center' spacing={{ xs: 2, md: 4 }}>
         <Box>
@@ -30,7 +30,7 @@ export const TechSection = () => (
       <TechStackGrid />
 
       {/* Experience & Certifications */}
-      <Grid container spacing={4} sx={{ mb: 15 }}>
+      <Grid container spacing={4} sx={{ mb: { xs: 6, md: 15 } }}>
         <Grid size={{ xs: 12, md: 4 }}>
           <ExperienceCard />
         </Grid>

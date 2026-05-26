@@ -32,7 +32,7 @@ export const CertificationCard = ({ cert }: { cert: Certification }) => {
           justifyContent='space-between'
           alignItems={{ xs: 'flex-start', sm: 'center' }}
         >
-          <Box>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             <Chip
               label={cert.institution}
               size='small'
