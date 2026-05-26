@@ -1,6 +1,8 @@
 import { Outlet } from 'react-router-dom'
+import { Box } from '@mui/material'
 import { Header } from './Header'
 import { Footer } from './Footer'
+import { SkipToContent } from './SkipToContent'
 
 /**
  * Layout global que envuelve todas las páginas.
@@ -12,8 +14,11 @@ import { Footer } from './Footer'
 export const Layout = () => {
   return (
     <>
+      <SkipToContent />
       <Header />
-      <Outlet />
+      <Box component='main' id='main-content'>
+        <Outlet />
+      </Box>
       <Footer />
     </>
   )

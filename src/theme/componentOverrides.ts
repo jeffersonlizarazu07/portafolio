@@ -19,25 +19,25 @@ export const components: Components<Theme> = {
       variant: 'outlined',
     },
     styleOverrides: {
-      root: {
+      root: ({ theme }: { theme: Theme }) => ({
         '& .MuiOutlinedInput-root': {
           '& fieldset': {
-            borderColor: '#E2E8F0',
+            borderColor: theme.palette.divider,
           },
           '&:hover fieldset': {
-            borderColor: '#2b6cee',
+            borderColor: theme.palette.primary.main,
           },
           '&.Mui-focused fieldset': {
-            borderColor: '#2b6cee',
+            borderColor: theme.palette.primary.main,
           },
         },
         '& .MuiInputLabel-root': {
-          color: '#64748B',
+          color: theme.palette.text.secondary,
         },
         '& .MuiOutlinedInput-input': {
-          color: '#0F172A',
+          color: theme.palette.text.primary,
         },
-      },
+      }),
     },
   },
   MuiCard: {

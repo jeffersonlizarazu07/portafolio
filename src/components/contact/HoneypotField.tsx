@@ -31,6 +31,7 @@ export const HoneypotField = ({ register }: { register: UseFormRegister<ContactF
       }}
       tabIndex={-1}
       autoComplete='off'
+      aria-hidden='true'
     />
   )
 }

@@ -4,10 +4,7 @@
  */
 
 :root {
-  /* Fuente del proyecto - fallback a system-ui */
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-
-  /* Mejoras de renderizado */
+  /* Mejoras de renderizado — la fuente la define MUI via CssBaseline */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -40,37 +37,13 @@ body {
 
 /* Scrollbar para Tema Claro */
 body[data-theme='light'] ::-webkit-scrollbar-track {
-  background: #F7F3F0;
+  background: #f7f3f0;
 }
 
 body[data-theme='light'] ::-webkit-scrollbar-thumb {
-  background: #c9c2bb;
+  background: #a0a0a0;
 }
 
 body[data-theme='light'] ::-webkit-scrollbar-thumb:hover {
-  background: #b0a99a;
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  /* min-height y background los maneja cada página */
-}
-
-/* Scrollbar personalizada para WebKit */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0b1623;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #808080;
 }
