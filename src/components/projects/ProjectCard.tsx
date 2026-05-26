@@ -9,8 +9,19 @@
  * NO maneja lógica, NO usa hooks, NO tiene estado.
  * Todas las funciones y datos vienen por props.
  */
-import { Box, Card, CardMedia, Typography, Stack, Chip, CardActionArea } from '@mui/material'
+import {
+  Box,
+  Card,
+  CardMedia,
+  Typography,
+  Stack,
+  Chip,
+  CardActionArea,
+  Tooltip,
+  Button,
+} from '@mui/material'
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import type { GitHubRepo } from '@/types/GitHub'
 
 type ProjectCardProps = {
@@ -38,29 +49,41 @@ export const ProjectCard = ({
       bgcolor: 'background.paper',
       '&:hover .overlay': { opacity: 1 },
       '&:hover img': { transform: 'scale(1.05)' },
-      '&:hover .rocket-icon': { opacity: 1 },
     }}
   >
-    <RocketLaunchIcon
-      className='rocket-icon'
-      sx={{
-        position: 'absolute',
-        top: 8,
-        right: 8,
-        cursor: 'pointer',
-        zIndex: 1,
-        opacity: 0,
-        transition: 'opacity 0.3s ease',
-      }}
-      onClick={e => {
-        e.stopPropagation()
-        onRocketClick()
-      }}
-    />
+    <Tooltip title='Ver código en GitHub' placement='left'>
+      <RocketLaunchIcon
+        sx={{
+          position: 'absolute',
+          top: 12,
+          right: 12,
+          cursor: 'pointer',
+          zIndex: 1,
+          fontSize: 28,
+          color: 'primary.main',
+          bgcolor: theme =>
+            theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.9)',
+          borderRadius: '50%',
+          p: 0.5,
+          transition: 'transform 0.3s ease',
+          '&:hover': { transform: 'scale(1.15)' },
+        }}
+        onClick={e => {
+          e.stopPropagation()
+          onRocketClick()
+        }}
+      />
+    </Tooltip>
 
     <CardActionArea
       component='a'
-      onClick={onCardClick}
+      href={project.deployment_url || undefined}
+      onClick={(e: React.MouseEvent) => {
+        if (!project.deployment_url) {
+          e.preventDefault()
+          onCardClick()
+        }
+      }}
       target='_blank'
       rel='noopener noreferrer'
       sx={{ cursor: !project.deployment_url ? 'help' : 'pointer' }}
@@ -127,6 +150,20 @@ export const ProjectCard = ({
             ))}
           </Stack>
         </Box>
+
+        {/* Call-to-action: visible en mobile y desktop al hover */}
+        <Button
+          variant='contained'
+          size='small'
+          startIcon={<OpenInNewIcon />}
+          href={project.deployment_url || project.url}
+          target='_blank'
+          rel='noopener noreferrer'
+          onClick={e => e.stopPropagation()}
+          sx={{ alignSelf: 'flex-start', mt: 2 }}
+        >
+          {project.deployment_url ? 'Ver demo' : 'Ver repositorio'}
+        </Button>
       </Box>
     </CardActionArea>
   </Card>

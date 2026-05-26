@@ -11,76 +11,87 @@ import { fetchRepoLanguages, fetchRepoDeploymentUrl } from './githubApi'
 import { findPreviewImage } from './githubPreview'
 
 /**
+ * Procesa un batch de repos con Promise.all para paralelizar,
+ * pero limitado a {batchSize} a la vez para no saturar la API de GitHub.
+ */
+const BATCH_SIZE = 5
+
+async function processRepo(repo: GitHubAPIResponse, username: string): Promise<GitHubRepo> {
+  try {
+    const langData = await fetchRepoLanguages(repo.languages_url)
+    const tech = Object.keys(langData)
+
+    const [image, deploymentUrl] = await Promise.all([
+      (async (): Promise<string> => {
+        for (const branch of ['main', 'master']) {
+          const result = await findPreviewImage(username, repo.name, branch)
+          if (result) return result
+        }
+        return ''
+      })(),
+      fetchRepoDeploymentUrl(username, repo.name),
+    ])
+
+    return {
+      title: repo.name,
+      description: repo.description || 'Sin descripción disponible',
+      tech,
+      url: repo.html_url,
+      stars: repo.stargazers_count,
+      image,
+      language: repo.language || tech[0] || null,
+      deployment_url: deploymentUrl,
+    }
+  } catch {
+    return {
+      title: repo.name,
+      description: repo.description || 'Sin descripción disponible',
+      tech: repo.language ? [repo.language] : [],
+      url: repo.html_url,
+      stars: repo.stargazers_count,
+      image: '',
+      language: repo.language || null,
+      deployment_url: null,
+    }
+  }
+}
+
+/**
+ * Itera sobre los repos en batches de {BATCH_SIZE}.
+ * Evita lanzar N llamadas simultáneas que saturarían el rate limit.
+ */
+async function processInBatches(
+  repos: GitHubAPIResponse[],
+  username: string
+): Promise<GitHubRepo[]> {
+  const results: GitHubRepo[] = []
+  for (let i = 0; i < repos.length; i += BATCH_SIZE) {
+    const batch = repos.slice(i, i + BATCH_SIZE)
+    const batchResults = await Promise.all(batch.map(r => processRepo(r, username)))
+    results.push(...batchResults)
+  }
+  return results
+}
+
+/**
  * Convierte la respuesta de la API de GitHub en nuestro modelo GitHubRepo.
  * - Filtra forks y repos privados
- * - Busca languages y preview para cada repo en paralelo
+ * - Procesa en batches de {BATCH_SIZE} para no saturar rate limit
  * - Fallback graceful si alguno falla
  */
 export const mapRepos = async (
   repos: GitHubAPIResponse[],
   username: string
 ): Promise<GitHubRepo[]> => {
-  // Solo repos públicos y no forkados - son los relevantes para el portafolio
   const publicRepos = repos.filter((repo): boolean => repo.visibility === 'public' && !repo.fork)
 
-  // Promise.all para paralelizar - cada repo tiene su propia llamada
-  const mapped = await Promise.all(
-    publicRepos.map(async (repo): Promise<GitHubRepo> => {
-      try {
-        // languages_url retorna {JavaScript: 1234, TypeScript: 5678}
-        // Object.keys() extrae solo los nombres de los lenguajes
-        const langData = await fetchRepoLanguages(repo.languages_url)
-        const tech = Object.keys(langData)
+  const mapped = await processInBatches(publicRepos, username)
 
-        // Preview + deployment URL en paralelo (son independientes entre sí)
-        const [image, deploymentUrl] = await Promise.all([
-          // Buscar preview.png en cualquier ruta del repo usando Git Trees API
-          // main es el nuevo default en GitHub, pero algunos repos antiguos usan master
-          (async (): Promise<string> => {
-            for (const branch of ['main', 'master']) {
-              const result = await findPreviewImage(username, repo.name, branch)
-              if (result) return result
-            }
-            return ''
-          })(),
-          fetchRepoDeploymentUrl(username, repo.name),
-        ])
-
-        // Log temporal para revisar la data de deployments
-        console.log(`[mapRepos] ${repo.name}: deployment_url = ${deploymentUrl}`)
-
-        return {
-          title: repo.name,
-          description: repo.description || 'Sin descripción disponible',
-          tech,
-          url: repo.html_url,
-          stars: repo.stargazers_count,
-          image,
-          language: repo.language || tech[0] || null,
-          deployment_url: deploymentUrl,
-        }
-      } catch {
-        // Fallback graceful: si falla, mostramos lo que tenemos de GitHub API
-        return {
-          title: repo.name,
-          description: repo.description || 'Sin descripción disponible',
-          tech: repo.language ? [repo.language] : [],
-          url: repo.html_url,
-          stars: repo.stargazers_count,
-          image: '',
-          language: repo.language || null,
-          deployment_url: null,
-        }
-      }
-    })
-  )
-
-  // Log resumen para revisar cuántos repos tienen URL de despliegue
-  const withDeployments = mapped.filter(r => r.deployment_url)
-  console.log(
-    `[mapRepos] Resumen: ${withDeployments.length}/${mapped.length} ` + `repos con despliegue →`,
-    withDeployments.map(r => ({ name: r.title, url: r.deployment_url }))
-  )
+  // Log ligero solo en desarrollo
+  if (import.meta.env.DEV) {
+    const withDeployments = mapped.filter(r => r.deployment_url)
+    console.log(`[mapRepos] ${withDeployments.length}/${mapped.length} repos con despliegue`)
+  }
 
   return mapped
 }

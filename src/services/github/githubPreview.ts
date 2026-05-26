@@ -13,7 +13,7 @@
  * el header Access-Control-Allow-Origin en respuestas HEAD (solo en GET).
  * El navegador bloquea la respuesta por CORS y el HEAD siempre falla.
  */
-import { GITHUB_API_BASE } from './githubApi'
+import { GITHUB_API_BASE, getHeaders } from './githubApi'
 import type { GitHubTree } from './githubApi'
 
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com'
@@ -30,7 +30,7 @@ export const findPreviewImage = async (
 ): Promise<string | null> => {
   try {
     const treeUrl = `${GITHUB_API_BASE}/repos/${username}/${repoName}/git/trees/${branch}?recursive=1`
-    const treeResponse = await fetch(treeUrl)
+    const treeResponse = await fetch(treeUrl, { headers: getHeaders() })
 
     if (!treeResponse.ok) return null
 

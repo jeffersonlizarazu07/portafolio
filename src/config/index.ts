@@ -1,11 +1,11 @@
 /**
  * Configuración centralizada del proyecto.
- * 
+ *
  * ¿Por qué centralizar aquí?
  * - Un solo lugar para cambiar cualquier configuración.
  * - Reduce imports dispersos en el proyecto.
  * - Easy de encontrar y modificar valores.
- * 
+ *
  * ¿Por qué no todo en .env?
  * - Las variables de .env son para secrets (API keys, tokens).
  * - Los valores que no cambian (URLs, usernames) van aquí.
@@ -14,6 +14,9 @@ export const config = {
   // GitHub - usuario cuyos repos se muestran
   github: {
     username: 'jeffersonlizarazu07',
+    // Token opcional: aumenta rate limit de 60 a 5000 req/hora
+    // Se configura en .env como VITE_GITHUB_TOKEN
+    token: import.meta.env.VITE_GITHUB_TOKEN as string | undefined,
   },
 
   // EmailJS - servicio para formulario de contacto
@@ -40,7 +43,7 @@ export const config = {
 
   // Link al CV
   cv: {
-    url: '/public/cv/CV Jefferson Lizarazu.pdf',
+    url: '/cv/CV-Jefferson-Lizarazu.pdf',
   },
 
   // Información del portfolio

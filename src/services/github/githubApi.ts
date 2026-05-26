@@ -38,16 +38,30 @@ export interface GitHubTree {
 // ── Constantes ──
 
 export const GITHUB_API_BASE = 'https://api.github.com'
+const MAX_REPOS = 30 // Suficiente para un portafolio — reduce calls y rate limit
+
+// ── Helpers ──
+
+/**
+ * Retorna headers con autenticación opcional.
+ * Si hay token configurado, el rate limit sube de 60 a 5000 req/hora.
+ */
+export const getHeaders = (): HeadersInit => {
+  const token = import.meta.env.VITE_GITHUB_TOKEN as string | undefined
+  if (!token) return {}
+  return { Authorization: `token ${token}` }
+}
 
 // ── Funciones ──
 
 /**
  * Obtiene los repositorios públicos de un usuario de GitHub.
- * Ordenados por última actualización, máximo 100.
+ * Limitado a los {MAX_REPOS} más recientes por actualización.
  */
 export const fetchUserRepos = async (username: string): Promise<GitHubAPIResponse[]> => {
   const response = await fetch(
-    `${GITHUB_API_BASE}/users/${username}/repos?sort=updated&per_page=100`
+    `${GITHUB_API_BASE}/users/${username}/repos?sort=updated&per_page=${MAX_REPOS}`,
+    { headers: getHeaders() }
   )
 
   if (!response.ok) {
@@ -62,7 +76,7 @@ export const fetchUserRepos = async (username: string): Promise<GitHubAPIRespons
  * Retorna un objeto { lenguaje: bytes, ... }.
  */
 export const fetchRepoLanguages = async (url: string): Promise<Record<string, number>> => {
-  const response = await fetch(url)
+  const response = await fetch(url, { headers: getHeaders() })
 
   if (!response.ok) {
     throw new Error('Error al obtener lenguajes del repositorio')
@@ -87,7 +101,9 @@ export const fetchRepoDeploymentUrl = async (
   username: string,
   repoName: string
 ): Promise<string | null> => {
-  const deployRes = await fetch(`${GITHUB_API_BASE}/repos/${username}/${repoName}/deployments`)
+  const deployRes = await fetch(`${GITHUB_API_BASE}/repos/${username}/${repoName}/deployments`, {
+    headers: getHeaders(),
+  })
 
   // 404 = el repo no tiene despliegues, no es un error
   if (deployRes.status === 404) return null
@@ -102,7 +118,7 @@ export const fetchRepoDeploymentUrl = async (
     return null
   }
 
-  const statusRes = await fetch(`${deployments[0].url}/statuses`)
+  const statusRes = await fetch(`${deployments[0].url}/statuses`, { headers: getHeaders() })
 
   if (!statusRes.ok) return null
 
