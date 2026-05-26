@@ -1,9 +1,10 @@
+import { memo } from 'react'
 import { config } from '@/config'
 import { Box, Typography, Stack, Button, Link } from '@mui/material'
 import { navLinksArray } from '@/constants/navLinksArray'
 import { Link as Router } from 'react-router-dom'
 
-export const FreelanceSection = () => {
+export const FreelanceSection = memo(function FreelanceSection() {
   return (
     <Box
       textAlign='center'
@@ -42,4 +43,4 @@ export const FreelanceSection = () => {
       </Stack>
     </Box>
   )
-}
+})

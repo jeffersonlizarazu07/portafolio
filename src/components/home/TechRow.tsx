@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Box, Container, Stack, Typography, useTheme } from '@mui/material'
 import { getLanguageLogo } from '@/utils/languageLogos'
 
@@ -10,7 +11,7 @@ const techs = [
   { name: 'Vercel', iconKey: 'Vercel' },
 ]
 
-export const TechRow = () => {
+export const TechRow = memo(function TechRow() {
   const theme = useTheme()
   const iconColor = theme.palette.mode === 'dark' ? 'white' : 'black'
 
@@ -72,4 +73,4 @@ export const TechRow = () => {
       </Container>
     </Box>
   )
-}
+})

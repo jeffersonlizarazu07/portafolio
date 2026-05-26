@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Stack, Link, Typography } from '@mui/material'
 import EmailIcon from '@mui/icons-material/Email'
 import GitHubIcon from '@mui/icons-material/GitHub'
@@ -9,7 +10,7 @@ type SocialLinksProps = {
   sx?: any
 }
 
-export const SocialLinks = ({ showLabels = true, sx }: SocialLinksProps) => {
+export const SocialLinks = memo(function SocialLinks({ showLabels = true, sx }: SocialLinksProps) {
   const socialLinksArray = [
     {
       Icon: GitHubIcon,
@@ -58,4 +59,4 @@ export const SocialLinks = ({ showLabels = true, sx }: SocialLinksProps) => {
       ))}
     </Stack>
   )
-}
+})

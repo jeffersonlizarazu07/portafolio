@@ -1,7 +1,8 @@
+import { memo } from 'react'
 import { Box, Typography, Paper } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
-export const CodeImage = () => {
+export const CodeImage = memo(function CodeImage() {
   const theme = useTheme()
   const sym = theme.palette.mode === 'dark' ? '#89ddff' : '#1a1a1a' // Color para símbolos (Azul/Gris)
   const key = theme.palette.mode === 'dark' ? '#82aaff' : '#086527' // Color para propiedades
@@ -136,4 +137,4 @@ export const CodeImage = () => {
       </Paper>
     </Box>
   )
-}
+})
