@@ -6,9 +6,10 @@ import { config } from '@/config'
 
 type SocialLinksProps = {
   showLabels?: boolean
+  sx?: any
 }
 
-export const SocialLinks = ({ showLabels = true }: SocialLinksProps) => {
+export const SocialLinks = ({ showLabels = true, sx }: SocialLinksProps) => {
   const socialLinksArray = [
     {
       Icon: GitHubIcon,
@@ -46,6 +47,7 @@ export const SocialLinks = ({ showLabels = true }: SocialLinksProps) => {
           color: theme => theme.palette.grey[500],
           transform: 'scale(1.2)',
         },
+        ...sx,
       }}
     >
       {socialLinksArray.map(({ Icon, label, href, ariaLabel }) => (

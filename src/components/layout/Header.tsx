@@ -7,95 +7,136 @@ import {
   Toolbar,
   Stack,
   Button,
+  Drawer,
 } from '@mui/material'
 import { Link } from 'react-router-dom'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
+import MenuIcon from '@mui/icons-material/Menu'
 import { config } from '@/config'
 import { NavLinks } from './common/NavLinks'
 import { useThemeMode } from '@/context/ThemeContext'
+import { useState } from 'react'
 
 export const Header = () => {
   const { mode, toggleTheme } = useThemeMode()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <AppBar
-      position='fixed'
-      elevation={0}
-      sx={{
-        backdropFilter: 'blur(12px)',
-        background: theme =>
-          theme.palette.mode === 'dark' ? 'rgba(15,31,48,0.7)' : 'rgba(255,255,255,0.7)',
-        borderBottom: theme =>
-          theme.palette.mode === 'dark'
-            ? '1px solid rgba(255,255,255,0.1)'
-            : '1px solid rgba(0,0,0,0.1)',
-      }}
-    >
-      <Container maxWidth='xl'>
-        <Toolbar
-          disableGutters
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            height: 80,
-            px: { xs: 2, sm: 3, md: 4 },
-          }}
-        >
-          {/* Logo */}
-          <Stack direction='row' spacing={1} alignItems='center'>
-            <Box
-              sx={{
-                width: 32,
-                height: 32,
-                bgcolor: 'primary.main',
-                borderRadius: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontWeight: 'bold',
-              }}
-            >
-              J
-            </Box>
-            <Link to='/' style={{ textDecoration: 'none' }}>
-              <Typography
-                variant='h6'
+    <>
+      <AppBar
+        position='fixed'
+        elevation={0}
+        sx={{
+          backdropFilter: 'blur(12px)',
+          background: theme =>
+            theme.palette.mode === 'dark' ? 'rgba(15,31,48,0.7)' : 'rgba(255,255,255,0.7)',
+          borderBottom: theme =>
+            theme.palette.mode === 'dark'
+              ? '1px solid rgba(255,255,255,0.1)'
+              : '1px solid rgba(0,0,0,0.1)',
+        }}
+      >
+        <Container maxWidth='xl'>
+          <Toolbar
+            disableGutters
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              height: 80,
+              px: { xs: 2, sm: 3, md: 4 },
+            }}
+          >
+            {/* Logo */}
+            <Stack direction='row' spacing={1} alignItems='center'>
+              <Box
                 sx={{
-                  display: { xs: 'none', sm: 'block' },
-                  color: 'text.primary',
-                  textDecoration: 'none',
+                  width: 32,
+                  height: 32,
+                  bgcolor: 'primary.main',
+                  borderRadius: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
                 }}
               >
-                PORTAFOLIO
-              </Typography>
-            </Link>
-          </Stack>
-          <NavLinks />
+                J
+              </Box>
+              <Link to='/' style={{ textDecoration: 'none' }}>
+                <Typography
+                  variant='h6'
+                  sx={{
+                    display: { xs: 'none', sm: 'block' },
+                    color: 'text.primary',
+                    textDecoration: 'none',
+                  }}
+                >
+                  PORTAFOLIO
+                </Typography>
+              </Link>
+            </Stack>
 
-          {/* Right Actions */}
-          <Stack direction='row' spacing={2} alignItems='center'>
+            {/* Mobile Menu Button */}
             <IconButton
-              onClick={toggleTheme}
-              sx={{
-                color: 'text.primary',
-              }}
-              aria-label='Cambiar tema'
+              edge='start'
+              sx={{ display: { xs: 'flex', sm: 'none' } }}
+              onClick={() => setMobileOpen(true)}
+              aria-label='Abrir menú'
             >
-              {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+              <MenuIcon />
             </IconButton>
-            <Button
-              href={config.cv.url}
-              variant='contained'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Resume
-            </Button>
-          </Stack>
+
+            {/* Desktop NavLinks */}
+            <NavLinks hideOnXs={false} />
+
+            {/* Right Actions */}
+            <Stack direction='row' spacing={2} alignItems='center'>
+              <IconButton
+                onClick={toggleTheme}
+                sx={{
+                  color: 'text.primary',
+                }}
+                aria-label='Cambiar tema'
+              >
+                {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+              </IconButton>
+              <Button
+                href={config.cv.url}
+                variant='contained'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                Resume
+              </Button>
+            </Stack>
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        sx={{ width: 250 }}
+        variant='temporary'
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        ModalProps={{
+          keepMounted: true,
+        }}
+      >
+        <Toolbar>
+          <Typography variant='h6' noWrap>
+            PORTAFOLIO
+          </Typography>
+          <IconButton sx={{ position: 'absolute' }} onClick={() => setMobileOpen(false)}>
+            <MenuIcon fontSize='small' />
+          </IconButton>
         </Toolbar>
-      </Container>
-    </AppBar>
+        <Box sx={{ mt: 3, ml: 2 }}>
+          <NavLinks direction='column' spacing={3} hideOnXs={false} />
+        </Box>
+      </Drawer>
+    </>
   )
 }

@@ -11,7 +11,7 @@ export const Footer = () => {
       component='footer'
       sx={{
         bgcolor: 'background.default',
-        borderTop: (theme) =>
+        borderTop: theme =>
           theme.palette.mode === 'dark'
             ? '1px solid rgba(255,255,255,0.1)'
             : '1px solid rgba(0,0,0,0.1)',
@@ -36,9 +36,38 @@ export const Footer = () => {
             </Typography>
           </Box>
 
-          <NavLinks direction='row' spacing={4} />
+          <Stack
+            direction={{ xs: 'column', md: 'row' }}
+            spacing={{ xs: 2, md: 4 }}
+            alignItems={{ xs: 'flex-start', md: 'center' }}
+          >
+            <NavLinks
+              direction='row'
+              spacing={2}
+              sx={{
+                flexWrap: 'wrap',
+                justifyContent: { xs: 'center', md: 'flex-start' },
+                '& > *': {
+                  marginBottom: 2,
+                  '@media (min-width:900px)': {
+                    marginBottom: 0,
+                    marginRight: 2,
+                  },
+                },
+              }}
+            />
 
-          <SocialLinks showLabels={false} />
+            <SocialLinks
+              showLabels={false}
+              sx={{
+                justifyContent: { xs: 'center', md: 'flex-start' },
+                mt: 2,
+                '@media (min-width:900px)': {
+                  mt: 0,
+                },
+              }}
+            />
+          </Stack>
         </Stack>
         <Box pt={1.5}>
           <Typography variant='caption' color='text.secondary'>

@@ -5,9 +5,16 @@ import { navLinksArray } from '../../../constants/navLinksArray'
 type NavLinksProps = {
   direction?: StackProps['direction']
   spacing?: number
+  hideOnXs?: boolean
+  sx?: any
 }
 
-export const NavLinks = ({ direction = 'row', spacing = 4 }: NavLinksProps) => {
+export const NavLinks = ({
+  direction = 'row',
+  spacing = 4,
+  hideOnXs = true,
+  sx,
+}: NavLinksProps) => {
   const location = useLocation()
 
   return (
@@ -15,8 +22,9 @@ export const NavLinks = ({ direction = 'row', spacing = 4 }: NavLinksProps) => {
       direction={direction}
       spacing={spacing}
       sx={{
-        display: { xs: 'none', md: 'flex' },
+        display: hideOnXs ? { xs: 'none', sm: 'flex' } : { xs: 'flex' },
         '& a:hover': { color: theme => theme.palette.grey[500] },
+        ...sx,
       }}
     >
       {navLinksArray.map(({ to, label }) => {
