@@ -11,7 +11,7 @@ export const palette: {
   warning: { main: string }
 } = {
   primary: {
-    main: '#3b82f6',
+    main: '#2b6cee',
     light: '#60a5fa',
   },
   techAccent: {

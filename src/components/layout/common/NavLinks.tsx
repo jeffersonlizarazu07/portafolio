@@ -36,16 +36,16 @@ export const NavLinks = ({
             component={Router}
             underline='none'
             sx={{
-              color: isActive ? 'primary.main' : 'white',
+              color: isActive ? 'primary.light' : 'white',
               borderBottom: isActive ? '2px solid' : '2px solid transparent',
-              borderColor: isActive ? 'primary.main' : 'transparent',
+              borderColor: isActive ? 'primary.light' : 'transparent',
               borderRadius: 0,
               px: 1,
               py: 0.5,
               transition: 'all 0.3s ease',
               '&:hover': {
-                color: 'primary.main',
-                borderColor: 'primary.main',
+                color: 'primary.light',
+                borderColor: 'primary.light',
               },
             }}
           >

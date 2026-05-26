@@ -68,7 +68,9 @@ export const TechRow = memo(function TechRow() {
                   alt={name}
                   sx={{ width: 24, height: 24 }}
                 />
-                <Typography variant='h6'>{name}</Typography>
+                <Typography variant='body2' sx={{ fontWeight: 600 }}>
+                  {name}
+                </Typography>
               </Stack>
             ))}
           </Stack>

@@ -62,7 +62,7 @@ export const Header = () => {
               >
                 <defs>
                   <linearGradient id='logo-gradient' x1='0%' y1='0%' x2='100%' y2='100%'>
-                    <stop offset='0%' stopColor='#3b82f6' />
+                    <stop offset='0%' stopColor='#2b6cee' />
                     <stop offset='100%' stopColor='#60a5fa' />
                   </linearGradient>
                 </defs>
@@ -82,6 +82,7 @@ export const Header = () => {
               <Link to='/' style={{ textDecoration: 'none' }}>
                 <Typography
                   variant='h6'
+                  component='div'
                   sx={{
                     display: { xs: 'none', sm: 'block' },
                     color: 'text.primary',
@@ -143,7 +144,7 @@ export const Header = () => {
         }}
       >
         <Toolbar>
-          <Typography variant='h6' noWrap>
+          <Typography component='div' sx={{ fontWeight: 700, fontSize: '1.25rem' }} noWrap>
             PORTAFOLIO
           </Typography>
           <IconButton

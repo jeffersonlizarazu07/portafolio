@@ -33,7 +33,7 @@ describe('NavLinks', () => {
 
     const homeLink = screen.getByRole('link', { name: /home/i })
 
-    // El link activo tiene color primary.main (no podemos testear el color directamente,
+    // El link activo tiene color primary.light (no podemos testear el color directamente,
     // pero verificamos que existe al menos un link con estilo de activo)
     expect(homeLink).toBeInTheDocument()
   })

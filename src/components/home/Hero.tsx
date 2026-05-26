@@ -1,5 +1,5 @@
-import { Box, Button, Container, Grid, Stack, Typography, Link } from '@mui/material'
-import { Link as Router } from 'react-router-dom'
+import { Box, Button, Container, Grid, Stack, Typography } from '@mui/material'
+import { Link } from 'react-router-dom'
 import CircleIcon from '@mui/icons-material/Circle'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { AnimatedSection } from '@/ui/AnimatedSection'
@@ -75,17 +75,25 @@ export const Hero = () => {
 
               <AnimatedSection variant='slideUp' delay={300}>
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-                  <Link to={navLinksArray[1].to} component={Router} underline='none'>
-                    <Button variant='contained' size='large' endIcon={<ArrowForwardIcon />}>
-                      Ver mis proyectos
-                    </Button>
-                  </Link>
+                  <Button
+                    component={Link}
+                    to={navLinksArray[1].to}
+                    variant='contained'
+                    size='large'
+                    endIcon={<ArrowForwardIcon />}
+                  >
+                    Ver mis proyectos
+                  </Button>
 
-                  <Link to={navLinksArray[3].to} component={Router} underline='none'>
-                    <Button variant='outlined' size='large' sx={{ color: 'text.primary' }}>
-                      Contactarme
-                    </Button>
-                  </Link>
+                  <Button
+                    component={Link}
+                    to={navLinksArray[3].to}
+                    variant='outlined'
+                    size='large'
+                    sx={{ color: 'text.primary' }}
+                  >
+                    Contactarme
+                  </Button>
                 </Stack>
               </AnimatedSection>
 

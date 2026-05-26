@@ -27,7 +27,7 @@ export const Footer = () => {
           spacing={2}
         >
           <Box>
-            <Typography variant='h6' fontWeight='bold' color='inherit'>
+            <Typography variant='h6' component='h2' fontWeight='bold' color='inherit'>
               {name}
             </Typography>
 
