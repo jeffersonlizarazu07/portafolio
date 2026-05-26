@@ -1,4 +1,4 @@
-import { Stack, StackProps, Link } from '@mui/material'
+import { Stack, StackProps, Link, SxProps, Theme } from '@mui/material'
 import { Link as Router, useLocation } from 'react-router-dom'
 import { navLinksArray } from '@/constants/navLinksArray'
 
@@ -6,7 +6,7 @@ type NavLinksProps = {
   direction?: StackProps['direction']
   spacing?: number
   hideOnXs?: boolean
-  sx?: any
+  sx?: SxProps<Theme>
 }
 
 export const NavLinks = ({

@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Stack, Link, Typography } from '@mui/material'
+import { Stack, Link, Typography, SxProps, Theme } from '@mui/material'
 import EmailIcon from '@mui/icons-material/Email'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
@@ -7,7 +7,7 @@ import { config } from '@/config'
 
 type SocialLinksProps = {
   showLabels?: boolean
-  sx?: any
+  sx?: SxProps<Theme>
 }
 
 export const SocialLinks = memo(function SocialLinks({ showLabels = true, sx }: SocialLinksProps) {
