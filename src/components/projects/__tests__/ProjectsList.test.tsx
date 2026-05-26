@@ -1,20 +1,16 @@
 /**
- * Tests de ProjectsList — presentacional, recibe props.
+ * Tests de ProjectsList — componente que orquesta ProjectCard,
+ * useImageFallback y useDeploymentNavigation.
  *
- * Conceptos NUEVOS:
- *
- * 1. Componente presentacional puro — recibe todo por props.
- *    No importa hooks, no llama APIs. Fácil de testear.
- *
- * 2. Loading state → esqueletos (Skeleton de MUI).
- *    No tienen role específico, así que contamos cuántos hay.
- *
- * 3. Error state → mensaje de error centrado.
- *
- * 4. Normal state → tarjetas con imagen, título, descripción, chips.
- *
- * 5. handleImageError → si la imagen no carga, reemplaza src con fallback.
- *    Probamos disparando el evento onError nativo.
+ * Verifica que:
+ *   - Loading → skeletons
+ *   - Error → mensaje
+ *   - Normal → tarjetas con datos correctos
+ *   - Click en cohete → abre GitHub
+ *   - Click en tarjeta con deployment → abre URL
+ *   - Click en tarjeta sin deployment → Snackbar
+ *   - Fallback de imágenes funciona
+ *   - Modo light + lista larga cubre branches
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
@@ -23,9 +19,11 @@ import { ThemeProvider } from '@/context/ThemeContext'
 import { ProjectsList } from '../ProjectsList'
 import type { GitHubRepo } from '@/types/GitHub'
 
-// ProjectsList usa useThemeMode, necesita ThemeProvider de la app
+// ── SETUP ──────────────────────────────────────────────────────────────
+
 beforeEach(() => {
   localStorage.clear()
+  vi.restoreAllMocks()
   window.matchMedia = vi.fn().mockImplementation(() => ({
     matches: false,
     addEventListener: vi.fn(),
@@ -49,6 +47,7 @@ const mockProjects: GitHubRepo[] = [
     stars: 10,
     image: 'https://example.com/preview.png',
     language: 'TypeScript',
+    deployment_url: 'https://midemo.com',
   },
   {
     title: 'repo-dos',
@@ -58,8 +57,11 @@ const mockProjects: GitHubRepo[] = [
     stars: 5,
     image: '',
     language: 'JavaScript',
+    deployment_url: null,
   },
 ]
+
+// ── TESTS ──────────────────────────────────────────────────────────────
 
 describe('ProjectsList', () => {
   // ── LOADING ───────────────────────────────────────────────────────
@@ -67,8 +69,6 @@ describe('ProjectsList', () => {
   it('muestra skeletons cuando está cargando', () => {
     renderProjectsList([], true, null)
 
-    // MUI Skeleton no tiene role="img" con aria-busy.
-    // Buscamos por clase CSS porque es la forma más confiable aquí.
     const skeletons = document.querySelectorAll('.MuiSkeleton-root')
     expect(skeletons.length).toBe(6)
   })
@@ -111,15 +111,6 @@ describe('ProjectsList', () => {
     expect(screen.getByText('JavaScript')).toBeInTheDocument()
   })
 
-  it('cada tarjeta enlaza al repo en nueva pestaña', () => {
-    renderProjectsList(mockProjects, false, null)
-
-    const links = screen.getAllByRole('link')
-    expect(links[0]).toHaveAttribute('href', 'https://github.com/test/repo-uno')
-    expect(links[0]).toHaveAttribute('target', '_blank')
-    expect(links[0]).toHaveAttribute('rel', 'noopener noreferrer')
-  })
-
   it('usa image del proyecto cuando existe', () => {
     renderProjectsList(mockProjects, false, null)
 
@@ -135,16 +126,50 @@ describe('ProjectsList', () => {
     expect(images[1]).toHaveAttribute('src', 'https://cdn.simpleicons.org/javascript/white')
   })
 
+  // ── DEPLOYMENT NAVIGATION ──────────────────────────────────────────
+
+  it('el icono de cohete abre el repositorio de GitHub en nueva pestaña', () => {
+    const openSpy = vi.spyOn(window, 'open').mockImplementation(() => null)
+    renderProjectsList([mockProjects[0]], false, null)
+
+    const rocket = document.querySelector('.rocket-icon')
+    expect(rocket).toBeInTheDocument()
+    fireEvent.click(rocket!)
+
+    expect(openSpy).toHaveBeenCalledWith(
+      'https://github.com/test/repo-uno',
+      '_blank',
+      'noopener,noreferrer'
+    )
+  })
+
+  it('el click en tarjeta CON deployment_url abre el deployment', () => {
+    const openSpy = vi.spyOn(window, 'open').mockImplementation(() => null)
+    renderProjectsList([mockProjects[0]], false, null)
+
+    // Click en el título que está dentro del CardActionArea
+    fireEvent.click(screen.getByText('repo-uno'))
+
+    expect(openSpy).toHaveBeenCalledWith('https://midemo.com', '_blank', 'noopener,noreferrer')
+  })
+
+  it('el click en tarjeta SIN deployment_url muestra snackbar', () => {
+    renderProjectsList([mockProjects[1]], false, null)
+
+    // Click en tarjeta sin deployment
+    fireEvent.click(screen.getByText('repo-dos'))
+
+    expect(screen.getByText('Demo no disponible actualmente!')).toBeInTheDocument()
+  })
+
   // ── IMAGE ERROR ───────────────────────────────────────────────────
 
   it('reemplaza src con fallback cuando la imagen falla', () => {
     renderProjectsList([mockProjects[0]], false, null)
 
     const img = screen.getByRole('img')
-    // Disparar onError manualmente
     fireEvent.error(img)
 
-    // Debería cambiar al fallback de lenguaje (TypeScript → simpleicons)
     expect(img).toHaveAttribute('src', 'https://cdn.simpleicons.org/typescript/white')
   })
 
@@ -153,27 +178,16 @@ describe('ProjectsList', () => {
 
     const img = screen.getByRole('img')
 
-    // Disparar onError una vez (cambia a fallback)
     fireEvent.error(img)
     const firstSrc = img.getAttribute('src')
 
-    // Disparar onError de nuevo — no debería cambiar porque ya es el fallback
     fireEvent.error(img)
     expect(img).toHaveAttribute('src', firstSrc)
   })
 
   // ── MODO LIGHT + LISTA LARGA ────────────────────────────────────────
 
-  it('renderiza en modo light con 4 proyectos (cubre líneas 25, 87-88, 108-111, 136-139)', () => {
-    // CUBRE:
-    // L25:  const logoColor = mode === 'dark' ? 'white' : 'black'  → 'black'
-    // L87:  loading={index < 3 ? 'eager' : 'lazy'}                 → 'lazy'
-    // L88:  fetchPriority={index < 3 ? 'high' : 'auto'}            → 'auto'
-    // L108-111: sx ternario mode === 'dark' → light branch
-    // L136-139: sx ternario mode === 'dark' → light branch
-    //
-    // Forzamos modo light escribiendo en localStorage ANTES del render.
-    // beforeEach() limpia localStorage, así que esto NO afecta otros tests.
+  it('renderiza en modo light con 4 proyectos', () => {
     localStorage.setItem('portfolio-theme-mode', 'light')
 
     const longMockProjects: GitHubRepo[] = [
@@ -186,6 +200,7 @@ describe('ProjectsList', () => {
         stars: 3,
         image: 'https://example.com/preview3.png',
         language: 'Python',
+        deployment_url: null,
       },
       {
         title: 'repo-cuatro',
@@ -195,12 +210,12 @@ describe('ProjectsList', () => {
         stars: 1,
         image: '',
         language: 'Go',
+        deployment_url: null,
       },
     ]
 
     renderProjectsList(longMockProjects, false, null)
 
-    // Verificar que los 4 proyectos se renderizan
     expect(screen.getByText('repo-uno')).toBeInTheDocument()
     expect(screen.getByText('repo-dos')).toBeInTheDocument()
     expect(screen.getByText('repo-tres')).toBeInTheDocument()
@@ -216,10 +231,7 @@ describe('ProjectsList', () => {
     expect(images[3]).toHaveAttribute('fetchpriority', 'auto')
 
     // En light mode, logoColor = 'black'
-    // repo-dos (index=1, image='') → fallback con 'black'
     expect(images[1]).toHaveAttribute('src', 'https://cdn.simpleicons.org/javascript/black')
-
-    // repo-cuatro (index=3, image='') → fallback con 'black'
     expect(images[3]).toHaveAttribute('src', 'https://cdn.simpleicons.org/go/black')
   })
 })

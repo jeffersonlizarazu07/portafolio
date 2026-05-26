@@ -13,6 +13,7 @@ export interface GitHubRepo {
   stars: number
   image: string
   language: string | null
+  deployment_url?: string | null
 }
 
 /**

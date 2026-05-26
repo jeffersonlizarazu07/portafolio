@@ -16,6 +16,7 @@ export interface GitHubAPIResponse {
   html_url: string
   stargazers_count: number
   languages_url: string
+  deployments_url: string
 }
 
 export interface GitHubTreeItem {
@@ -68,4 +69,44 @@ export const fetchRepoLanguages = async (url: string): Promise<Record<string, nu
   }
 
   return response.json() as Promise<Record<string, number>>
+}
+
+/**
+ * Obtiene la URL de despliegue (environment_url) de un repositorio.
+ *
+ * Flujo de la API de Deployments de GitHub:
+ *   1. GET /repos/{owner}/{repo}/deployments → lista de deployments
+ *   2. GET .../deployments/{id}/statuses → status del deployment activo
+ *   3. El status más reciente contiene environment_url si el repo está desplegado
+ *
+ * @param username - Dueño del repositorio
+ * @param repoName - Nombre del repositorio
+ * @returns La URL del entorno desplegado, o null si no hay deployment activo
+ */
+export const fetchRepoDeploymentUrl = async (
+  username: string,
+  repoName: string
+): Promise<string | null> => {
+  const deployRes = await fetch(`${GITHUB_API_BASE}/repos/${username}/${repoName}/deployments`)
+
+  // 404 = el repo no tiene despliegues, no es un error
+  if (deployRes.status === 404) return null
+
+  if (!deployRes.ok) {
+    throw new Error(`Error al obtener despliegues para ${repoName}: ${deployRes.status}`)
+  }
+
+  const deployments = await deployRes.json()
+
+  if (!Array.isArray(deployments) || deployments.length === 0) {
+    return null
+  }
+
+  const statusRes = await fetch(`${deployments[0].url}/statuses`)
+
+  if (!statusRes.ok) return null
+
+  const statuses = await statusRes.json()
+
+  return statuses[0]?.environment_url ?? null
 }
