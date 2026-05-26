@@ -14,6 +14,8 @@ export const AboutSection = () => {
           <Box
             component='img'
             src={photo}
+            loading='lazy'
+            fetchPriority='low'
             sx={{
               width: '100%',
               borderRadius: 3,

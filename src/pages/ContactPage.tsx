@@ -1,6 +1,16 @@
-import { Box, Container, Grid } from '@mui/material'
-import { ContactForm } from '@/components/contact/ContactForm'
+import { lazy, Suspense } from 'react'
+import { Box, Container, Grid, CircularProgress } from '@mui/material'
 import { ContactSidebar } from '@/components/contact/ContactSidebar'
+
+const ContactForm = lazy(() =>
+  import('@/components/contact/ContactForm').then(m => ({ default: m.ContactForm }))
+)
+
+const formFallback = (
+  <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+    <CircularProgress />
+  </Box>
+)
 
 export const ContactPage = () => {
   return (
@@ -36,7 +46,9 @@ export const ContactPage = () => {
       <Container maxWidth='xl' sx={{ position: 'relative', zIndex: 2, marginTop: '6.25rem' }}>
         <Grid container spacing={{ xs: 4, lg: 10 }} alignItems='center' marginBottom='3rem'>
           <Grid size={{ xs: 12, lg: 7 }}>
-            <ContactForm />
+            <Suspense fallback={formFallback}>
+              <ContactForm />
+            </Suspense>
           </Grid>
 
           <Grid size={{ xs: 12, lg: 5 }}>

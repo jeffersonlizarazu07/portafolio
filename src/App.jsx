@@ -1,5 +1,5 @@
-import { lazy, Suspense } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { lazy, Suspense, useEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 import { ErrorBoundary } from './components/shared/ErrorBoundary'
 import { PageLoader } from './components/shared/PageLoader'
@@ -19,6 +19,25 @@ const NotFoundPage = lazy(() =>
 )
 
 function App() {
+  const location = useLocation()
+
+  // Prefetch de páginas probables cuando el navegador está idle.
+  // Si el usuario está en Home, prefetch Projects y About (las más probables).
+  // Si está en otra ruta, no prefetcheamos nada (ya es muy específico).
+  useEffect(() => {
+    if (location.pathname !== '/') return
+
+    const idle = requestIdleCallback(
+      () => {
+        import('./pages/ProjectsPage')
+        import('./pages/AboutPage')
+      },
+      { timeout: 2000 }
+    )
+
+    return () => cancelIdleCallback(idle)
+  }, [location.pathname])
+
   return (
     <ErrorBoundary>
       <Suspense fallback={<PageLoader />}>

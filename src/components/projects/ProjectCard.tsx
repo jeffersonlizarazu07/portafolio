@@ -51,7 +51,7 @@ export const ProjectCard = ({
       '&:hover img': { transform: 'scale(1.05)' },
     }}
   >
-    <Tooltip title='Ver código en GitHub' placement='left'>
+    <Tooltip title='Repositorio en GitHub' placement='left'>
       <RocketLaunchIcon
         sx={{
           position: 'absolute',
