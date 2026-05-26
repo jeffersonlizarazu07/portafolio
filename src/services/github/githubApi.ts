@@ -42,16 +42,6 @@ const MAX_REPOS = 30 // Suficiente para un portafolio — reduce calls y rate li
 
 // ── Helpers ──
 
-/**
- * Retorna headers con autenticación opcional.
- * Si hay token configurado, el rate limit sube de 60 a 5000 req/hora.
- */
-export const getHeaders = (): HeadersInit => {
-  const token = import.meta.env.VITE_GITHUB_TOKEN as string | undefined
-  if (!token) return {}
-  return { Authorization: `token ${token}` }
-}
-
 // ── Funciones ──
 
 /**
@@ -61,7 +51,7 @@ export const getHeaders = (): HeadersInit => {
 export const fetchUserRepos = async (username: string): Promise<GitHubAPIResponse[]> => {
   const response = await fetch(
     `${GITHUB_API_BASE}/users/${username}/repos?sort=updated&per_page=${MAX_REPOS}`,
-    { headers: getHeaders() }
+    {}
   )
 
   if (!response.ok) {
@@ -76,7 +66,7 @@ export const fetchUserRepos = async (username: string): Promise<GitHubAPIRespons
  * Retorna un objeto { lenguaje: bytes, ... }.
  */
 export const fetchRepoLanguages = async (url: string): Promise<Record<string, number>> => {
-  const response = await fetch(url, { headers: getHeaders() })
+  const response = await fetch(url, {})
 
   if (!response.ok) {
     throw new Error('Error al obtener lenguajes del repositorio')
@@ -102,7 +92,7 @@ export const fetchRepoDeploymentUrl = async (
   repoName: string
 ): Promise<string | null> => {
   const deployRes = await fetch(`${GITHUB_API_BASE}/repos/${username}/${repoName}/deployments`, {
-    headers: getHeaders(),
+    headers: {},
   })
 
   // 404 = el repo no tiene despliegues, no es un error
@@ -118,7 +108,7 @@ export const fetchRepoDeploymentUrl = async (
     return null
   }
 
-  const statusRes = await fetch(`${deployments[0].url}/statuses`, { headers: getHeaders() })
+  const statusRes = await fetch(`${deployments[0].url}/statuses`, {})
 
   if (!statusRes.ok) return null
 

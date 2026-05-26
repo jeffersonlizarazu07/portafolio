@@ -12,11 +12,12 @@
  */
 export const config = {
   // GitHub - usuario cuyos repos se muestran
+  // NOTA: No usamos token de autenticación.
+  // La API pública de GitHub da 60 req/hora POR IP visitante,
+  // y el caché en localStorage reduce las llamadas a ~1 por visitante.
+  // Un token VITE_ se expondría en el bundle del cliente y no es seguro.
   github: {
     username: 'jeffersonlizarazu07',
-    // Token opcional: aumenta rate limit de 60 a 5000 req/hora
-    // Se configura en .env como VITE_GITHUB_TOKEN
-    token: import.meta.env.VITE_GITHUB_TOKEN as string | undefined,
   },
 
   // EmailJS - servicio para formulario de contacto
