@@ -20,14 +20,6 @@ export const config = {
     username: 'jeffersonlizarazu07',
   },
 
-  // EmailJS - servicio para formulario de contacto
-  // Los valores vienen de variables de entorno para seguridad
-  email: {
-    publicKey: import.meta.env.VITE_API_KEY_EMAILJS as string,
-    serviceId: import.meta.env.VITE_OUTLOOK_SERVICE_ID as string,
-    templateId: import.meta.env.VITE_TEMPLATE_ID as string,
-  },
-
   // Protección anti-spam
   // ¿Por qué estos valores específicos?
   // - 5 segundos mínimo: suficiente para un humano, muy rápido para bots

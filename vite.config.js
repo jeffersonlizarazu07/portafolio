@@ -10,8 +10,21 @@ import path from 'path'
 // exponer el mapa interno del bundle (dependencias, chunks, nombres de módulos).
 const shouldAnalyze = process.env.ANALYZE === 'true'
 
+// Proxy para desarrollo local:
+// Frontend (Vite, puerto 5173) → /api/* → vercel dev (puerto 3000)
+// La serverless function api/contact.mjs vive en vercel dev
+const DEV_API_TARGET = 'http://localhost:3000'
+
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api': {
+        target: DEV_API_TARGET,
+        changeOrigin: true,
+      },
+    },
+  },
   plugins: [
     react(),
     svgr(),

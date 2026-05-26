@@ -26,19 +26,15 @@ import { ContactForm } from '../ContactForm'
 
 // ── MOCKS ──────────────────────────────────────────────────────────────
 
-// Mockear emailjs para NO enviar emails reales
-vi.mock('@emailjs/browser', () => ({
-  default: {
-    send: vi.fn().mockResolvedValue({ status: 200, text: 'OK' }),
-  },
-}))
+// Mockear fetch global para no enviar requests reales a /api/contact
+const fetchMock = vi.fn()
+global.fetch = fetchMock
 
 // Mockear config con spam protection desactivada (minSubmitTime = 0)
 // para no tener que esperar 5 segundos en cada test
 vi.mock('@/config', () => ({
   config: {
     spamProtection: { minSubmitTime: 0 },
-    email: { publicKey: 'test-key', serviceId: 'test-service', templateId: 'test-template' },
     social: { github: '', linkedin: '', email: '' },
     github: { username: '' },
     cv: { url: '' },
@@ -49,6 +45,11 @@ vi.mock('@/config', () => ({
 // ── TESTS ──────────────────────────────────────────────────────────────
 
 describe('ContactForm', () => {
+  // Resetear mock de fetch antes de cada test
+  beforeEach(() => {
+    fetchMock.mockReset()
+    fetchMock.mockResolvedValue({ ok: true, json: async () => ({ message: 'OK' }) })
+  })
   // ── RENDERIZADO ───────────────────────────────────────────────────────
 
   it('renderiza el encabezado del formulario', () => {
@@ -150,17 +151,13 @@ describe('ContactForm', () => {
   // ── SPAM: HONEYPOT ──────────────────────────────────────────────────
 
   it('NO envía el formulario cuando el honeypot tiene contenido (validateSubmission lo detecta)', async () => {
-    // CUBRE: líneas 163-167 — validateSubmission detecta hp_field con contenido
-    // y retorna false sin llamar a emailjs.send.
+    // CUBRE: validateSubmission detecta hp_field con contenido
+    // y retorna false sin llamar a la API.
     //
     // ANTES: Zod tenía z.string().max(0) y bloqueaba antes de validateSubmission.
     // AHORA: Zod usa .optional() y DELEGA la validación a validateSubmission.
     // Esto es CORRECTO porque la lógica anti-span debe estar UNIFICADA en
     // validateSubmission, no dividida entre Zod y una función.
-    const emailjsModule = await import('@emailjs/browser')
-    const mockSend = vi.mocked(emailjsModule.default.send)
-    mockSend.mockClear()
-
     const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
     // skipPointerEventsCheck: 0 permite interactuar con elementos ocultos
@@ -187,11 +184,11 @@ describe('ContactForm', () => {
     await user.click(screen.getByRole('button', { name: /enviar mensaje/i }))
 
     // validateSubmission detecta el honeypot → warn + retorna false
-    // → onSubmit NO ejecuta emailjs.send
+    // → onSubmit NO ejecuta fetch a /api/contact
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith('Spam detectado: honeypot activado')
     })
-    expect(mockSend).not.toHaveBeenCalled()
+    expect(fetchMock).not.toHaveBeenCalled()
 
     consoleSpy.mockRestore()
   })
@@ -294,12 +291,10 @@ describe('ContactForm', () => {
     })
   }, 15000)
 
-  it('NO muestra notificación si emailjs falla (catch block)', async () => {
-    // Hacer que emailjs.send rechace UNA VEZ (mockRejectedValueOnce)
+  it('NO muestra notificación si la API falla (catch block)', async () => {
+    // Hacer que fetch rechace UNA VEZ (mockRejectedValueOnce)
     // Así no afecta otros tests en el mismo archivo
-    const emailjsModule = await import('@emailjs/browser')
-    const mockSend = vi.mocked(emailjsModule.default.send)
-    mockSend.mockRejectedValueOnce(new Error('EmailJS error'))
+    fetchMock.mockRejectedValueOnce(new Error('API error'))
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 

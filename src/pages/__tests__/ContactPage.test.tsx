@@ -13,21 +13,13 @@ import { screen } from '@testing-library/react'
 import { renderWithTheme } from '@/test/test-utils'
 import { ContactForm } from '@/components/contact/ContactForm'
 
-// Mock para emailjs (ContactForm.send)
-vi.mock('@emailjs/browser', () => ({
-  default: {
-    send: vi.fn().mockResolvedValue({ status: 200, text: 'OK' }),
-  },
-}))
+// Mock para fetch global (ContactForm.sendContactEmail)
+const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ message: 'OK' }) })
+global.fetch = fetchMock
 
 // Mock para config (ContactForm + SocialChannels)
 vi.mock('@/config', () => ({
   config: {
-    email: {
-      publicKey: 'test-key',
-      serviceId: 'test-service',
-      templateId: 'test-template',
-    },
     spamProtection: { minSubmitTime: 0 },
     social: {
       linkedin: 'https://linkedin.com/in/test',
