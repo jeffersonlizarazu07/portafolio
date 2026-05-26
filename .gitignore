@@ -52,3 +52,4 @@ skills-lock.json
 scripts/check-responsive.cjs
 docs/RESPIVE-AUDIT.md
 docs/ARCHITECTURE-AUDIT.md
+skills/apply-mui-responsive-fixes/SKILL.md
