@@ -54,6 +54,7 @@ export const NeonField: FC<NeonFieldProps> = ({
       fullWidth
       label={label}
       name={name}
+      id={`neonfield-${name}`}
       error={error}
       helperText={helperText}
       multiline={multiline}

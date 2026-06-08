@@ -54,6 +54,7 @@ const MOCK_API_REPOS = [
     html_url: 'https://github.com/testuser/repo-uno',
     stargazers_count: 10,
     languages_url: 'https://api.github.com/repos/testuser/repo-uno/languages',
+    default_branch: 'main',
   },
   {
     name: 'repo-dos',
@@ -64,6 +65,7 @@ const MOCK_API_REPOS = [
     html_url: 'https://github.com/testuser/repo-dos',
     stargazers_count: 5,
     languages_url: 'https://api.github.com/repos/testuser/repo-dos/languages',
+    default_branch: 'main',
   },
   // Repo forkeado — debe ser filtrado
   {
@@ -75,6 +77,7 @@ const MOCK_API_REPOS = [
     html_url: 'https://github.com/testuser/repo-fork',
     stargazers_count: 0,
     languages_url: '',
+    default_branch: 'main',
   },
 ]
 

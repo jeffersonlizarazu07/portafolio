@@ -10,7 +10,8 @@
  */
 import { describe, it, expect, vi } from 'vitest'
 import { screen } from '@testing-library/react'
-import { renderWithTheme } from '@/test/test-utils'
+import { renderWithRouter } from '@/test/test-utils'
+import { MemoryRouter } from 'react-router-dom'
 import { ContactForm } from '@/components/contact/ContactForm'
 
 // Mock para fetch global (ContactForm.sendContactEmail)
@@ -35,7 +36,9 @@ import { ContactPage } from '../ContactPage'
 
 /** Helper: renderiza ContactPage con ContactForm inyectado (sin lazy) */
 const renderContactPage = () => {
-  renderWithTheme(<ContactPage ContactFormComponent={ContactForm} />)
+  renderWithRouter(<ContactPage ContactFormComponent={ContactForm} />, {
+    initialEntries: ['/contact'],
+  })
 }
 
 describe('ContactPage', () => {

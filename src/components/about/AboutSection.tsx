@@ -47,7 +47,7 @@ export const AboutSection = () => {
                     : '0 10px 40px rgba(0,0,0,0.15)',
               }}
             >
-              <Typography variant='h4' fontWeight={800}>
+              <Typography variant='h4' component='span' fontWeight={800}>
                 1
               </Typography>
               <Typography variant='caption' sx={{ letterSpacing: 2 }}>

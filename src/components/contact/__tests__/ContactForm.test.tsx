@@ -19,9 +19,10 @@
  */
 import { describe, it, expect, vi } from 'vitest'
 import { screen, waitFor, fireEvent, render } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { renderWithTheme } from '@/test/test-utils'
+import { renderWithRouter } from '@/test/test-utils'
 import { ContactForm } from '../ContactForm'
 
 // ── MOCKS ──────────────────────────────────────────────────────────────
@@ -53,14 +54,14 @@ describe('ContactForm', () => {
   // ── RENDERIZADO ───────────────────────────────────────────────────────
 
   it('renderiza el encabezado del formulario', () => {
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     expect(screen.getByText(/contacto/i)).toBeInTheDocument()
     expect(screen.getByText(/extraordinario/i)).toBeInTheDocument()
   })
 
   it('renderiza todos los campos del formulario', () => {
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     expect(screen.getByLabelText(/nombre/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/correo electrónico/i)).toBeInTheDocument()
@@ -69,7 +70,7 @@ describe('ContactForm', () => {
   })
 
   it('renderiza el botón de enviar', () => {
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     expect(screen.getByRole('button', { name: /enviar mensaje/i })).toBeInTheDocument()
   })
@@ -79,7 +80,7 @@ describe('ContactForm', () => {
   it('muestra errores de validación al enviar el formulario vacío', async () => {
     // Arrange: crear usuario virtual y renderizar
     const user = userEvent.setup()
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     // Act: hacer clic en enviar sin llenar campos
     await user.click(screen.getByRole('button', { name: /enviar mensaje/i }))
@@ -95,7 +96,7 @@ describe('ContactForm', () => {
 
   it('muestra error para correo electrónico inválido', async () => {
     const user = userEvent.setup()
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     // Escribir email inválido
     const emailInput = screen.getByLabelText(/correo electrónico/i)
@@ -111,7 +112,7 @@ describe('ContactForm', () => {
 
   it('muestra error si el asunto tiene menos de 5 caracteres', async () => {
     const user = userEvent.setup()
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     await user.type(screen.getByLabelText(/asunto/i), 'Hola')
 
@@ -126,7 +127,7 @@ describe('ContactForm', () => {
 
   it('envía el formulario exitosamente y muestra notificación', async () => {
     const user = userEvent.setup()
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     // Llenar todos los campos con datos válidos
     await user.type(screen.getByLabelText(/nombre/i), 'Jefferson')
@@ -162,7 +163,7 @@ describe('ContactForm', () => {
 
     // skipPointerEventsCheck: 0 permite interactuar con elementos ocultos
     const user = userEvent.setup({ pointerEventsCheck: 0 })
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     // Llenar campos válidos (userEvent.type dispara onFocus → hasInteracted = true)
     await user.type(screen.getByLabelText(/nombre/i), 'Jefferson')
@@ -198,7 +199,7 @@ describe('ContactForm', () => {
   it('muestra error de spam si no se interactuó con el formulario', async () => {
     // CUBRE: líneas 176-177 — if (!hasInteracted) → spamError
     // Usamos fireEvent.change para llenar campos SIN disparar onFocus.
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     // Llenar campos SIN hacer focus (fireEvent.change no enfoca)
     fireEvent.change(screen.getByLabelText(/nombre/i), { target: { value: 'Jefferson' } })
@@ -234,7 +235,7 @@ describe('ContactForm', () => {
     ).spamProtection.minSubmitTime = 9999
 
     const user = userEvent.setup()
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     // Llenar campos (esto establece hasInteracted = true)
     await user.type(screen.getByLabelText(/nombre/i), 'Jefferson')
@@ -263,7 +264,7 @@ describe('ContactForm', () => {
   it('cierra el Snackbar al hacer clic en el botón de cerrar', async () => {
     // CUBRE: línea 273 — onClose={() => setOpenSnackbar(false)}
     const user = userEvent.setup()
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     // Enviar formulario exitosamente
     await user.type(screen.getByLabelText(/nombre/i), 'Jefferson')
@@ -299,7 +300,7 @@ describe('ContactForm', () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     const user = userEvent.setup()
-    renderWithTheme(<ContactForm />)
+    renderWithRouter(<ContactForm />)
 
     await user.type(screen.getByLabelText(/nombre/i), 'Jefferson')
     await user.type(screen.getByLabelText(/correo electrónico/i), 'test@email.com')
@@ -333,9 +334,11 @@ describe('ContactForm', () => {
 
     const user = userEvent.setup()
     render(
-      <ThemeProvider theme={lightTheme}>
-        <ContactForm />
-      </ThemeProvider>
+      <MemoryRouter>
+        <ThemeProvider theme={lightTheme}>
+          <ContactForm />
+        </ThemeProvider>
+      </MemoryRouter>
     )
 
     await user.type(screen.getByLabelText(/nombre/i), 'Jefferson')

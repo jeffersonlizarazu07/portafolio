@@ -17,6 +17,7 @@ export interface GitHubAPIResponse {
   stargazers_count: number
   languages_url: string
   deployments_url: string
+  default_branch: string
 }
 
 export interface GitHubTreeItem {

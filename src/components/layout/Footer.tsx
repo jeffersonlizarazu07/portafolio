@@ -44,6 +44,7 @@ export const Footer = () => {
             <NavLinks
               direction='row'
               spacing={2}
+              hideOnXs={false}
               sx={{
                 flexWrap: 'wrap',
                 justifyContent: { xs: 'center', md: 'flex-start' },

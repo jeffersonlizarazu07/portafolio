@@ -14,6 +14,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useSearchParams } from 'react-router-dom'
 import { Box, Grid, Stack, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { NeonField } from './NeonField'
@@ -36,6 +37,8 @@ import { sendContactEmail } from '@/services/emailService'
  */
 export const ContactForm = () => {
   const theme = useTheme()
+  const [searchParams] = useSearchParams()
+  const prefillMessage = searchParams.get('mensaje') || ''
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false)
   const { spamError, validateSubmission, handleInteraction } = useSpamProtection({
@@ -50,6 +53,9 @@ export const ContactForm = () => {
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     mode: 'onTouched',
+    defaultValues: {
+      message: prefillMessage,
+    },
   })
 
   const onSubmit = async (data: ContactFormData) => {

@@ -22,13 +22,7 @@ async function processRepo(repo: GitHubAPIResponse, username: string): Promise<G
     const tech = Object.keys(langData)
 
     const [image, deploymentUrl] = await Promise.all([
-      (async (): Promise<string> => {
-        for (const branch of ['main', 'master']) {
-          const result = await findPreviewImage(username, repo.name, branch)
-          if (result) return result
-        }
-        return ''
-      })(),
+      findPreviewImage(username, repo.name, repo.default_branch).then(r => r ?? ''),
       fetchRepoDeploymentUrl(username, repo.name),
     ])
 
