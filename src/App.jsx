@@ -14,6 +14,9 @@ const ContactPage = lazy(() =>
 const ProjectsPage = lazy(() =>
   import('./pages/ProjectsPage').then(m => ({ default: m.ProjectsPage }))
 )
+const BusinessSolutionsPage = lazy(() =>
+  import('./pages/BusinessSolutionsPage').then(m => ({ default: m.BusinessSolutionsPage }))
+)
 const NotFoundPage = lazy(() =>
   import('./pages/NotFoundPage').then(m => ({ default: m.NotFoundPage }))
 )
@@ -31,6 +34,7 @@ function App() {
       () => {
         import('./pages/ProjectsPage')
         import('./pages/AboutPage')
+        import('./pages/BusinessSolutionsPage')
       },
       { timeout: 2000 }
     )
@@ -46,6 +50,7 @@ function App() {
             <Route path='/' element={<HomePage />} />
             <Route path='/about' element={<AboutPage />} />
             <Route path='/projects' element={<ProjectsPage />} />
+            <Route path='/solutions' element={<BusinessSolutionsPage />} />
             <Route path='/contact' element={<ContactPage />} />
           </Route>
           <Route path='*' element={<NotFoundPage />} />

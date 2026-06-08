@@ -34,6 +34,12 @@ export const config = {
     email: 'mailto:jeffersonlizarazu@hotmail.com?cc=jeffersonliza21@gmail.com',
   },
 
+  // Demo de catálogo para Soluciones B2B
+  // Actualizar con URL real del deploy cuando esté lista
+  business: {
+    catalogDemoUrl: 'https://demo-storage-catalog.vercel.app/',
+  },
+
   // Link al CV
   cv: {
     url: '/cv/CV-Jefferson-Lizarazu.pdf',
