@@ -93,16 +93,18 @@ export const AboutSection = () => {
             </Typography>
 
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} flexWrap='wrap'>
-              <Button
-                variant='contained'
-                size='large'
-                startIcon={<DownloadIcon />}
-                href={config.cv.url}
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                Descargar HV
-              </Button>
+              {config.cv.url && (
+                <Button
+                  variant='contained'
+                  size='large'
+                  startIcon={<DownloadIcon />}
+                  href={config.cv.url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  Descargar HV
+                </Button>
+              )}
 
               <Button variant='outlined' size='large'>
                 <Link to={getNavPath('Contacto')} component={Router} underline='none'>

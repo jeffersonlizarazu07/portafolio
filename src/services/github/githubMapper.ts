@@ -87,12 +87,6 @@ export const mapRepos = async (
 
   const mapped = await processInBatches(publicRepos, username)
 
-  // Log ligero solo en desarrollo
-  if (import.meta.env.DEV) {
-    const withDeployments = mapped.filter(r => r.deployment_url)
-    console.log(`[mapRepos] ${withDeployments.length}/${mapped.length} repos con despliegue`)
-  }
-
   return mapped
 }
 

@@ -152,14 +152,32 @@ export const ProjectCard = ({
         </Box>
 
         {/* Call-to-action: visible en mobile y desktop al hover */}
+        {/*
+          NOTA: Usamos component="span" + window.open() en lugar de href
+          porque este Button vive DENTRO de CardActionArea component="a".
+          HTML no permite <a> dentro de <a> (ni <button> por ser interactive content).
+          El span con role button + teclado mantiene la accesibilidad.
+        */}
         <Button
           variant='contained'
           size='small'
           startIcon={<OpenInNewIcon />}
-          href={project.deployment_url || project.url}
-          target='_blank'
-          rel='noopener noreferrer'
-          onClick={e => e.stopPropagation()}
+          component='span'
+          role='button'
+          tabIndex={0}
+          onClick={e => {
+            e.stopPropagation()
+            const url = project.deployment_url || project.url
+            window.open(url, '_blank', 'noopener,noreferrer')
+          }}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              e.stopPropagation()
+              const url = project.deployment_url || project.url
+              window.open(url, '_blank', 'noopener,noreferrer')
+            }
+          }}
           sx={{ alignSelf: 'flex-start', mt: 2 }}
         >
           {project.deployment_url ? 'Ver demo' : 'Ver repositorio'}

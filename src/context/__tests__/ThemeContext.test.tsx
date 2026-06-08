@@ -20,7 +20,7 @@
  *    actualiza el atributo data-theme en el body.
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ThemeProvider, useThemeMode } from '../ThemeContext'
 
@@ -213,7 +213,9 @@ describe('ThemeContext', () => {
     })
 
     // Simular que la preferencia del sistema cambia a light
-    handleChange({ matches: true } as MediaQueryListEvent)
+    act(() => {
+      handleChange({ matches: true } as MediaQueryListEvent)
+    })
 
     await waitFor(() => {
       expect(screen.getByTestId('theme-mode')).toHaveTextContent('light')
@@ -291,7 +293,9 @@ describe('ThemeContext', () => {
     })
 
     // Simular que el sistema cambia a dark
-    handleChange({ matches: false } as MediaQueryListEvent)
+    act(() => {
+      handleChange({ matches: false } as MediaQueryListEvent)
+    })
 
     await waitFor(() => {
       expect(screen.getByTestId('theme-mode')).toHaveTextContent('dark')

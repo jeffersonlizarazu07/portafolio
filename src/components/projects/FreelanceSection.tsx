@@ -31,15 +31,17 @@ export const FreelanceSection = memo(function FreelanceSection() {
             Iniciar Proyecto
           </Button>
         </Link>
-        <Button
-          href={config.cv.url}
-          variant='outlined'
-          size='large'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Ver CV
-        </Button>
+        {config.cv.url && (
+          <Button
+            href={config.cv.url}
+            variant='outlined'
+            size='large'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Ver CV
+          </Button>
+        )}
       </Stack>
     </Box>
   )
