@@ -24,7 +24,7 @@ export const ContactPage = ({ ContactFormComponent = LazyContactForm }: ContactP
       sx={{
         bgcolor: 'background.default',
         color: 'text.primary',
-        minHeight: '100vh',
+        minHeight: '100dvh',
         display: 'flex',
         alignItems: 'center',
         p: { xs: 2, sm: 4, md: 6 },

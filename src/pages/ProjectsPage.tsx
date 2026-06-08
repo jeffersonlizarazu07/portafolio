@@ -7,7 +7,7 @@ export const ProjectsPage = () => {
       sx={{
         bgcolor: 'background.secondary',
         color: 'text.primary',
-        minHeight: '100vh',
+        minHeight: '100dvh',
         px: { xs: 2, sm: 4, md: 6 },
       }}
     >

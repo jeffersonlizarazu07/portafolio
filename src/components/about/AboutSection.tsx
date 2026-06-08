@@ -50,8 +50,8 @@ export const AboutSection = () => {
               <Typography variant='h4' component='span' fontWeight={800}>
                 1
               </Typography>
-              <Typography variant='caption' sx={{ letterSpacing: 2 }}>
-                YEARS EXP
+              <Typography variant='caption' sx={{ letterSpacing: 2, p: 1 }}>
+                YEAR EXP
               </Typography>
             </Box>
           </Box>

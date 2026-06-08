@@ -24,7 +24,7 @@ export const BusinessSolutionsPage = () => {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
+        minHeight: '100dvh',
         py: { xs: 6, md: 12 },
         px: { xs: 2, sm: 4, md: 6 },
         position: 'relative',
