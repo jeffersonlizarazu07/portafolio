@@ -4,7 +4,7 @@ import DownloadIcon from '@mui/icons-material/Download'
 import { AnimatedSection } from '@/ui/AnimatedSection'
 import { config } from '@/config'
 import photo from '@/assets/photo.jpg'
-import { navLinksArray } from '@/constants/navLinksArray'
+import { getNavPath } from '@/constants/navLinksArray'
 
 export const AboutSection = () => {
   return (
@@ -105,7 +105,7 @@ export const AboutSection = () => {
               </Button>
 
               <Button variant='outlined' size='large'>
-                <Link to={navLinksArray[3].to} component={Router} underline='none'>
+                <Link to={getNavPath('Contacto')} component={Router} underline='none'>
                   Contacto
                 </Link>
               </Button>

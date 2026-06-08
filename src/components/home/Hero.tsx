@@ -5,7 +5,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { AnimatedSection } from '@/ui/AnimatedSection'
 import { CodeImage } from '../home/CodeImage'
 import { SocialLinks } from '../layout/common/SocialLinks'
-import { navLinksArray } from '@/constants/navLinksArray'
+import { getNavPath } from '@/constants/navLinksArray'
 
 export const Hero = () => {
   return (
@@ -77,7 +77,7 @@ export const Hero = () => {
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
                   <Button
                     component={Link}
-                    to={navLinksArray[1].to}
+                    to={getNavPath('Proyectos')}
                     variant='contained'
                     size='large'
                     endIcon={<ArrowForwardIcon />}
@@ -87,7 +87,7 @@ export const Hero = () => {
 
                   <Button
                     component={Link}
-                    to={navLinksArray[3].to}
+                    to={getNavPath('Contacto')}
                     variant='outlined'
                     size='large'
                     sx={{ color: 'text.primary' }}

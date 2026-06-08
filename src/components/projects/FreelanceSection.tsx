@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { config } from '@/config'
 import { Box, Typography, Stack, Button, Link } from '@mui/material'
-import { navLinksArray } from '@/constants/navLinksArray'
+import { getNavPath } from '@/constants/navLinksArray'
 import { Link as Router } from 'react-router-dom'
 
 export const FreelanceSection = memo(function FreelanceSection() {
@@ -26,7 +26,7 @@ export const FreelanceSection = memo(function FreelanceSection() {
       </Typography>
 
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} justifyContent='center'>
-        <Link to={navLinksArray[3].to} component={Router} underline='none'>
+        <Link to={getNavPath('Contacto')} component={Router} underline='none'>
           <Button variant='contained' size='large'>
             Iniciar Proyecto
           </Button>
